@@ -24,7 +24,7 @@ const NavBar = () => {
           </ul>
           <div className="w-auto h-[4rem] flex justify-end items-center gap-[10px]">
             <div>Search</div>
-            <div>Cart</div>
+            <Link to="/cart">Cart</Link>
             <div className="w-[100px] h-[50px] flex flex-row justify-center items-center gap-[10px]">
               {/* <h3 className="text-purple-600">Profile</h3>
               <div className="w-[50px] h-[50px] rounded-[50%] bg-[#8B5CF6]"></div> */}
