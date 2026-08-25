@@ -10,26 +10,29 @@ import Signin from "../Pages/Signin";
 import Signup from "../Pages/Signup";
 import NotFound from "../Pages/NotFound";
 import Main from "../Pages/Main";
+import Context from "../Context/Context";
 
 const AppRoute = () => {
   return (
     <>
       <Router>
-        <Routes>
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="*" element={<NotFound />} />
+        <Context>
+          <Routes>
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="*" element={<NotFound />} />
 
-          <Route element={<Main />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/product" element={<Products />} />
-            <Route path="/productdetail" element={<ProductDetail />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/orders" element={<Orders />} />
-          </Route>
-        </Routes>
+            <Route element={<Main />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/product" element={<Products />} />
+              <Route path="/productdetail" element={<ProductDetail />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/orders" element={<Orders />} />
+            </Route>
+          </Routes>
+        </Context>
       </Router>
     </>
   );
