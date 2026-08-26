@@ -2,31 +2,54 @@
   "Login": [
     {
       "email": "www.darkghost87@gmail.com",
+      "password": "12345",
+      "id": "0uzVemuyTDw"
+    },
+    {
+      "email": "www.darkghost87@gmail.com",
       "password": "123456",
-      "id": "vu0UJ1EjbN4"
+      "id": "XeuQV3U9bQ0"
     },
     {
-      "": "1234567890",
-      "id": "C9KW-S_SREM"
+      "id": "2Pij6Vc5jbg"
     },
     {
-      "id": "aqAkBYBxodE"
+      "email": "www.darkghost87@gmail.com",
+      "password": "1387",
+      "id": "Y8ZIPjenkaI"
     },
     {
-      "": "123456789",
-      "id": "XAXRVu5ucGo"
+      "email": "www.darkghost87@gmail.com",
+      "password": "22849628666",
+      "id": "hlTeHJG2fFE"
     },
     {
-      "": "123456789",
-      "id": "v_A7DXBeP5c"
+      "email": "www.darkghost87@gmail.com",
+      "password": "1387",
+      "id": "R2wSR_63A6Q"
+    }
+  ],
+  "Register": [
+    {
+      "fullName": "Amir Mohammad Korouni",
+      "userName": "Amir_Ko_1837",
+      "email": "www.darkghost87@gmail.com",
+      "password": "1387",
+      "id": "SY-kkATe-9c"
     },
     {
-      "": "12345678",
-      "id": "15YXN2zWhOI"
+      "fullname": "Amir Korouni",
+      "username": "Amir8713",
+      "email": "www.darkghost87@gmail.com",
+      "password": "1387",
+      "id": "oYNNyZtsyec"
     },
     {
-      "": "12345",
-      "id": "BgU8ABRoo3E"
+      "fullname": "Amir Korouni",
+      "username": "Amir_K_8713",
+      "email": "www.darkghost87@gmail.com",
+      "password": "13878713",
+      "id": "8f5m8Llp3Lg"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

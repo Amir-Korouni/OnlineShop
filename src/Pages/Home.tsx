@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import { AuthContext } from "../Context/Context";
+import { AuthContext } from "../Context/ContextProvider";
 
 const Home = () => {
-  const users = useContext(AuthContext);
+  const Users = useContext(AuthContext);
   return (
     <>
       <div>
-        <p>{users.users?.email}</p>
-        <p>{users.users?.password}</p>
+        <p>Welcome {Users.users?.email}</p>
+        <p>{Users.users?.password}</p>
       </div>
     </>
   );

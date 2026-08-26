@@ -10,17 +10,16 @@ import Signin from "../Pages/Signin";
 import Signup from "../Pages/Signup";
 import NotFound from "../Pages/NotFound";
 import Main from "../Pages/Main";
-import Context from "../Context/Context";
+import ContextProvider from "../Context/ContextProvider";
 
 const AppRoute = () => {
   return (
     <>
       <Router>
-        <Context>
+        <ContextProvider>
           <Routes>
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="*" element={<NotFound />} />
 
             <Route element={<Main />}>
               <Route path="/" element={<Home />} />
@@ -31,8 +30,10 @@ const AppRoute = () => {
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/orders" element={<Orders />} />
             </Route>
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
-        </Context>
+        </ContextProvider>
       </Router>
     </>
   );

@@ -1,13 +1,20 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaGithub } from "react-icons/fa";
 import { FaThreads } from "react-icons/fa6";
-import { data, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import type { UserLogin } from "../Types/User";
-import { AuthContext } from "../Context/Context";
+import { AuthContext } from "../Context/ContextProvider";
+
+type SignInError = {
+  email: string;
+  password: string;
+};
 
 const Signin = () => {
   const [User, setUser] = useState({} as UserLogin);
+  const [error, setError] = useState<SignInError | null>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...User, [e.target.name]: e.target.value });
   };
@@ -19,6 +26,7 @@ const Signin = () => {
   const UsersData = { ...User };
   const SubmitForm = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     fetch("http://localhost:8000/Login", {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -36,81 +44,121 @@ const Signin = () => {
 
         return data;
       })
-      .then((fetchedData) => {
-        users.setUser(fetchedData);
+      .then((response) => {
+        console.log("API data" + response);
+
+        users.setUser(response);
         history("/");
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         console.log(err.message);
       });
   };
   console.log(users.users?.email, users.users?.password);
   return (
     <>
-      <section className="w-full h-[100vh] bg-[#07070A] text-[#F5F5F5] flex justify-center items-center">
-        <section className="w-[55%] h-[70%] bg-[#111116] flex gap-[10px] justify-center items-center text-[#F5F5F5] border border-[#27272A] rounded duration-[0.8s] shadow-[0_8px_20px_rgba(59,130,246,0.30)]">
+      <section className="w-full  h-[100vh] bg-[#07070A] text-[#F5F5F5] flex justify-center items-center gap-5 sm:gap-6 md:gap-8 lg:gap-0">
+        <section className="w-[60%] h-auto bg-[#111116] flex gap-[10px] justify-center items-center text-[#F5F5F5] border border-[#27272A] rounded duration-[0.8s] shadow-[0_8px_20px_rgba(59,130,246,0.30)]">
           <form
             action=""
-            className="w-[50%] h-[90%] flex flex-col gap-[35px] items-start p-[8px] px-[15px]"
+            className="w-[50%] h-full flex flex-col gap-4 sm:gap-5 md:gap-6 items-start p-4 sm:p-5 md:p-6 lg:p-8"
             onSubmit={(e) => SubmitForm(e)}
           >
-            <div className="flex flex-col justify-start items-start">
-              <h1>Sign in</h1>
-              <p>Welcome back to head phone shop.</p>
+            <div className="flex flex-col justify-start items-start  gap-1 sm:gap-2">
+              <h2 className="text-xl sm:text-2xl md:text-3xl">Sign in</h2>
+              <p className="text-xs sm:text-sm md:text-base">
+                Welcome back to head phone shop.
+              </p>
             </div>
-            <div className="w-full flex flex-col justify-start items-start gap-[8px]">
-              <label htmlFor="Email">Email</label>
+            <div className="w-full flex flex-col justify-start items-start">
+              <label htmlFor="Email" className="text-sm sm:text-lg">
+                Email
+              </label>
               <input
+                name="email"
                 type="email"
                 value={User.email}
+                // required
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
+              <div className="w-full h-[1.5rem]">
+                {error && (
+                  <p className="size-full bg-red-800">
+                    {error.email || error.password}
+                  </p>
+                )}
+              </div>
             </div>
-            <div className="w-full flex flex-col justify-cetner items-start gap-[8px] mt-[20px]">
-              <label htmlFor="Password">Password</label>
+            <div className="w-full flex flex-col justify-cetner items-start gap-[8px] mt-[5px]">
+              <label htmlFor="Password" className="text-sm sm:text-lg">
+                Password
+              </label>
               <input
+                name="password"
                 type="password"
+                // required
                 value={User.password}
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
+              <div className="w-full h-[1.5rem]">
+                {error && (
+                  <p className="size-full bg-red-800">
+                    {error.email || error.password}
+                  </p>
+                )}
+              </div>
             </div>
-            <div className="w-full h-[4rem]">
-              <h3>sign in with another way:</h3>
+            <div className="w-full h-[4rem] gap-2 sm:gap-3 md:gap-4 mt-1 sm:mt-2">
+              <h3 className="text-sm sm:text-base md:text-lg">
+                sign in with another way:
+              </h3>
               <div className="w-full flex justify-around items-center mt-[5px]">
-                <button className="w-[50px] h-[2rem] bg-[#27272A] flex justify-cetner items-center cursor-pointer rounded duration-[0.4s] hover:shadow-[0_5px_30px_rgba(59,130,246,0.30)]">
+                <Link
+                  to="/signingoogle"
+                  className="sm:w-11 md:w-9 h-8 sm:h-9 md:h-8 bg-[#27272A] flex justify-cetner items-center cursor-pointer rounded duration-[0.4s] hover:shadow-[0_5px_30px_rgba(59,130,246,0.30)]"
+                >
                   <FcGoogle
                     to="/signingoogle"
                     size={24}
-                    className="size-full flex justify-center p-[3px]"
+                    className="size-full flex justify-center p-[3px] "
                   />
-                </button>
-                <button className="w-[50px] h-[2rem] bg-[#27272A] flex justify-cetner items-center cursor-pointer rounded duration-[0.4s] hover:shadow-[0_5px_30px_rgba(59,130,246,0.30)]">
+                </Link>
+                <Link
+                  to="/signinfacebook"
+                  className="sm:w-11 md:w-9 h-8 sm:h-9 md:h-8 bg-[#27272A] flex justify-cetner items-center cursor-pointer rounded duration-[0.4s] hover:shadow-[0_5px_30px_rgba(59,130,246,0.30)]"
+                >
                   <FaFacebook
                     to="/signinfacebook"
                     size={24}
                     className="size-full flex justify-center p-[3px]"
                   />
-                </button>
-                <button className="w-[50px] h-[2rem] bg-[#27272A] flex justify-cetner items-center cursor-pointer rounded duration-[0.4s] hover:shadow-[0_5px_30px_rgba(59,130,246,0.30)]">
+                </Link>
+                <Link
+                  to="/signingithub"
+                  className="sm:w-11 md:w-9 h-8 sm:h-9 md:h-8 bg-[#27272A] flex justify-cetner items-center cursor-pointer rounded duration-[0.4s] hover:shadow-[0_5px_30px_rgba(59,130,246,0.30)]"
+                >
                   <FaGithub
                     to="/signingithub"
                     size={24}
                     className="size-full flex justify-center p-[3px]"
                   />
-                </button>
-                <button className="w-[50px] h-[2rem] bg-[#27272A] flex justify-cetner items-center cursor-pointer rounded duration-[0.4s] hover:shadow-[0_5px_30px_rgba(59,130,246,0.30)]">
+                </Link>
+                <Link
+                  to="/signinthreads"
+                  className="sm:w-11 md:w-9 h-8 sm:h-9 md:h-8 bg-[#27272A] flex justify-cetner items-center cursor-pointer rounded duration-[0.4s] hover:shadow-[0_5px_30px_rgba(59,130,246,0.30)]"
+                >
                   <FaThreads
                     to="/signinthreads"
                     size={24}
                     className="size-full flex justify-center p-[3px]"
                   />
-                </button>
+                </Link>
               </div>
             </div>
-            <div className="w-full h-full flex justify-between items-end mt-[10px]">
-              <p className="w-[250px]">
+            <div className="w-full h-[4rem] flex justify-between items-end mt-[10px]">
+              <p className="w-full sm:w-auto max-w-[250px] text-xs sm:text-sm md:text-base float-right">
                 If you don't have an account, you can{" "}
                 <Link
                   to="/signup"

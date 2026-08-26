@@ -12,15 +12,16 @@ type ContextProp = {
 
 export const AuthContext = createContext({} as AuthContextType);
 
-const Context = ({ children }: ContextProp) => {
+const ContextProvider = ({ children }: ContextProp) => {
   const [users, setUser] = useState<UserLogin | null>(null);
+  console.log("Context users:", users);
   return (
     <>
       <AuthContext.Provider value={{ users, setUser }}>
-        <h2>{children}</h2>
+        {children}
       </AuthContext.Provider>
     </>
   );
 };
 
-export default Context;
+export default ContextProvider;

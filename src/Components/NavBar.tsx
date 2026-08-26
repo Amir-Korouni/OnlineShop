@@ -6,7 +6,11 @@ const NavBar = () => {
       <section className="w-full h-[5rem] bg-[#0A0A0F] p-[5px] rounded-lg">
         <nav className="size-full bg-[#1F1F27] flex justify-between align-center rounded-lg border-b border-[#A855F7] px-[10px]">
           <div className="flex justify-center items-center w-[150px]">
-            <img src="" alt="Logo" />
+            <img
+              src="https://images.openai.com/static-rsc-4/wNPXVNAU9v2wOHpER_gEANKPirezSehdScdB0ZDqCdIQ5G2ccwrCbmjfLcD0x3DLhhwLJjlAaMY1IEjl_imz4iieDuZMfkkt1LSExKzWBBCp8eGmdaa1APb-46kjGSS0NRCA4tsNu9rC2tq3HmhX1NXxsB_ElFtKbY9TDhlGMtAlmShKvdfR0nZPwWLdQzqo?purpose=fullsize"
+              alt="Logo"
+              className="w-full h-[2rem] object-contain"
+            />
           </div>
           <ul className="w-[50%] h-[4rem] flex justify-between items-center ">
             <li className="text-center hover:text-[#A855F7] duration-200">

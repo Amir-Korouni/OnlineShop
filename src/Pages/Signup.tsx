@@ -1,7 +1,144 @@
+import { useState } from "react";
+import type { UserRegister } from "../Types/User";
+import { Link, useNavigate } from "react-router-dom";
+
 const Signup = () => {
+  const [SignUpUser, setSignUpUser] = useState({} as UserRegister);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSignUpUser({ ...SignUpUser, [e.target.name]: e.target.value });
+  };
+
+  const history = useNavigate();
+
+  const SignUpBody = { ...SignUpUser };
+  const SubmitForm = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    fetch("http://localhost:8000/Register", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(SignUpBody),
+    })
+      .then(async (res) => {
+        const data = await res.json();
+
+        console.log("STATUS:", res.status);
+        console.log("RESPONSE:", data);
+
+        if (!res.ok) {
+          throw new Error("Some things went wrong.");
+        }
+
+        return data;
+      })
+      .then((data) => {
+        console.log(data);
+        console.log("New User was added.");
+        history("/signin");
+      })
+      .catch((err: Error) => {
+        console.log(err.message);
+      });
+  };
   return (
     <>
-      <h2>Signup page</h2>
+      <section className="w-full  h-[100vh] bg-[#07070A] text-[#F5F5F5] flex justify-center items-center gap-5 sm:gap-6 md:gap-8 lg:gap-0">
+        <section className="w-[60%] h-auto bg-[#111116] flex gap-[10px] justify-center items-center text-[#F5F5F5] border border-[#27272A] rounded duration-[0.8s] shadow-[0_8px_20px_rgba(59,130,246,0.30)]">
+          <div className="w-[50%] h-full">
+            <img
+              src="https://images.openai.com/static-rsc-4/y9qCU0Yq8tlsuDw6u11Bi9seiVgDbwn8rP_4Gelj9vpgyNlboj71USMuz60h0Nfub9nj5eL6KNap2qy5MhFKR0tqaZODarQvYgLyFfGvBpguSkZHMmuyNisu8MMnNbJkdRUjfI5s6495nl3q5XKlJoPokcB_HNZddLOIMrzfdqBOkhQnwhxI-ZffalN00V09?purpose=fullsize"
+              alt="Headphone Icone"
+              className="w-[100%] h-[100%] object-cover"
+            />
+          </div>
+
+          <form
+            action=""
+            className="w-[50%] h-full flex flex-col gap-4 sm:gap-5 md:gap-6 items-start p-4 sm:p-5 md:p-6 lg:p-8"
+            onSubmit={(e) => SubmitForm(e)}
+            
+          >
+            <div className="flex flex-col justify-start items-start  gap-1 sm:gap-2">
+              <h2 className="text-xl sm:text-2xl md:text-3xl">Sign up</h2>
+              <p className="text-xs sm:text-sm md:text-base">
+                Please Sign up / Register
+              </p>
+            </div>
+
+            <div className="w-full flex flex-col justify-start items-start gap-[8px]">
+              <label htmlFor="fullname" className="text-sm sm:text-lg ">
+                FullName
+              </label>
+              <input
+                name="fullname"
+                type="text"
+                value={SignUpUser?.fullname}
+                onChange={(e) => handleChange(e)}
+                required
+                className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
+              />
+            </div>
+            <div className="w-full flex flex-col justify-start items-start gap-[8px]">
+              <label htmlFor="Email" className="text-sm sm:text-lg ">
+                UserName
+              </label>
+              <input
+                name="username"
+                type="text"
+                value={SignUpUser?.username}
+                onChange={(e) => handleChange(e)}
+                required
+                className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
+              />
+            </div>
+            <div className="w-full flex flex-col justify-start items-start gap-[8px]">
+              <label htmlFor="Email" className="text-sm sm:text-lg ">
+                Email
+              </label>
+              <input
+                name="email"
+                type="email"
+                value={SignUpUser?.email}
+                required
+                onChange={(e) => handleChange(e)}
+                className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
+              />
+            </div>
+            <div className="w-full flex flex-col justify-cetner items-start gap-[8px] mt-[20px]">
+              <label htmlFor="Password" className="text-sm sm:text-lg">
+                Password
+              </label>
+              <input
+                name="password"
+                type="password"
+                value={SignUpUser?.password}
+                required
+                onChange={(e) => handleChange(e)}
+                className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
+              />
+            </div>
+
+            <div className="w-full h-[4rem] flex flex-col justify-between items-end gap-[10px] mt-[10px]">
+              <button
+                type="submit"
+                className="w-full h-[50px] bg-[#8B5CF6] cursor-pointer rounded hover:bg-[#A855F7] transition-colors duration-300"
+              >
+                Sign up
+              </button>
+              <p className="w-full flex justify-center ">
+                If you have already account, please{" "}
+                <Link
+                  to="/signin"
+                  className="text-[#A855F7] duration-[0.4s] bg-[#111116] hover:bg-[#A855F7] hover:text-[#07070A] px-[5px] rounded"
+                >
+                  Sign in
+                </Link>
+              </p>
+            </div>
+          </form>
+        </section>
+      </section>
     </>
   );
 };
