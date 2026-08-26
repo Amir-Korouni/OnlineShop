@@ -31,7 +31,7 @@ const Signin = () => {
         console.log("SERVER RESPONSE:", data);
 
         if (!res.ok) {
-          throw new Error(data.message || "any exist problem.");
+          throw new Error(data.message || "any problem is exist.");
         }
 
         return data;
@@ -42,9 +42,9 @@ const Signin = () => {
       })
       .catch((err) => {
         console.log(err.message);
-      })
-    };
-    console.log(users.users?.email , users.users?.password);
+      });
+  };
+  console.log(users.users?.email, users.users?.password);
   return (
     <>
       <section className="w-full h-[100vh] bg-[#07070A] text-[#F5F5F5] flex justify-center items-center">
