@@ -2,8 +2,16 @@ import { useState } from "react";
 import type { UserRegister } from "../Types/User";
 import { Link, useNavigate } from "react-router-dom";
 
+type SignUpError = {
+  fullname?: string;
+  username?: string;
+  email?: string;
+  password?: string;
+};
+
 const Signup = () => {
   const [SignUpUser, setSignUpUser] = useState({} as UserRegister);
+  const [error, setError] = useState({} as SignUpError);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpUser({ ...SignUpUser, [e.target.name]: e.target.value });
@@ -11,9 +19,42 @@ const Signup = () => {
 
   const history = useNavigate();
 
+  const validate = () => {
+    const newError: SignUpError = {};
+    if (!SignUpBody.fullname) {
+      newError.fullname = "Fullname is required field. Please fill this field.";
+    }
+
+    if (!SignUpUser.username) {
+      newError.username =
+        "Username is required field.  Please fill this field.";
+    }
+
+    if (!SignUpUser.email) {
+      newError.email = "Email is required field. please fill this field.";
+    } else if (!/\S+@\S+\.\S+/.test(SignUpUser.email)) {
+      newError.email = "Enter a valid email";
+    }
+
+    if (!SignUpUser.password) {
+      newError.password = "Password is required field. please fill this field";
+    } else if (SignUpUser.password.length < 6) {
+      SignUpUser.password = "Password must be at least 8 characters";
+    }
+    setError(newError);
+
+    return Object.keys(newError).length === 0;
+  };
+
   const SignUpBody = { ...SignUpUser };
   const SubmitForm = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const isValidate = validate();
+
+    if (isValidate) {
+      return;
+    }
 
     fetch("http://localhost:8000/Register", {
       method: "POST",
@@ -57,7 +98,6 @@ const Signup = () => {
             action=""
             className="w-[50%] h-full flex flex-col gap-4 sm:gap-5 md:gap-6 items-start p-4 sm:p-5 md:p-6 lg:p-8"
             onSubmit={(e) => SubmitForm(e)}
-            
           >
             <div className="flex flex-col justify-start items-start  gap-1 sm:gap-2">
               <h2 className="text-xl sm:text-2xl md:text-3xl">Sign up</h2>
@@ -65,7 +105,16 @@ const Signup = () => {
                 Please Sign up / Register
               </p>
             </div>
-
+            <div className="w-full h-[1.5rem]">
+              {error && (
+                <p className="size-full bg-red-800">
+                  {error.fullname ||
+                    error.username ||
+                    error.email ||
+                    error.password}
+                </p>
+              )}
+            </div>
             <div className="w-full flex flex-col justify-start items-start gap-[8px]">
               <label htmlFor="fullname" className="text-sm sm:text-lg ">
                 FullName
@@ -75,7 +124,6 @@ const Signup = () => {
                 type="text"
                 value={SignUpUser?.fullname}
                 onChange={(e) => handleChange(e)}
-                required
                 className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
             </div>
@@ -88,7 +136,6 @@ const Signup = () => {
                 type="text"
                 value={SignUpUser?.username}
                 onChange={(e) => handleChange(e)}
-                required
                 className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
             </div>
@@ -100,7 +147,6 @@ const Signup = () => {
                 name="email"
                 type="email"
                 value={SignUpUser?.email}
-                required
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
@@ -113,7 +159,6 @@ const Signup = () => {
                 name="password"
                 type="password"
                 value={SignUpUser?.password}
-                required
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />

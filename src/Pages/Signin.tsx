@@ -7,8 +7,8 @@ import type { UserLogin } from "../Types/User";
 import { AuthContext } from "../Context/ContextProvider";
 
 type SignInError = {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 };
 
 const Signin = () => {
@@ -23,9 +23,34 @@ const Signin = () => {
 
   const history = useNavigate();
 
+  const validate = () => {
+    const newError: SignInError = {};
+
+    if (!User.email) {
+      newError.email = "Email is required field. please fill this field.";
+    } else if (!/\S+@\S+\.\S+/.test(User.email)) {
+      newError.email = "Enter a valid email";
+    }
+
+    if (!User.password) {
+      newError.password = "Password is required field. please fill this field";
+    } else if (User.password.length < 6) {
+      User.password = "Password must be at least 8 characters";
+    }
+    setError(newError);
+
+    return Object.keys(newError).length === 0;
+  };
+
   const UsersData = { ...User };
   const SubmitForm = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const isValid = validate();
+
+    if (!isValid) {
+      return;
+    }
 
     fetch("http://localhost:8000/Login", {
       method: "POST",
@@ -70,6 +95,14 @@ const Signin = () => {
                 Welcome back to head phone shop.
               </p>
             </div>
+
+            <div className="w-full h-[1.5rem]">
+              {error && (
+                <p className="size-full bg-red-800">
+                  {error.email || error.password}
+                </p>
+              )}
+            </div>
             <div className="w-full flex flex-col justify-start items-start">
               <label htmlFor="Email" className="text-sm sm:text-lg">
                 Email
@@ -78,17 +111,9 @@ const Signin = () => {
                 name="email"
                 type="email"
                 value={User.email}
-                // required
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
-              <div className="w-full h-[1.5rem]">
-                {error && (
-                  <p className="size-full bg-red-800">
-                    {error.email || error.password}
-                  </p>
-                )}
-              </div>
             </div>
             <div className="w-full flex flex-col justify-cetner items-start gap-[8px] mt-[5px]">
               <label htmlFor="Password" className="text-sm sm:text-lg">
@@ -97,18 +122,10 @@ const Signin = () => {
               <input
                 name="password"
                 type="password"
-                // required
                 value={User.password}
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
-              <div className="w-full h-[1.5rem]">
-                {error && (
-                  <p className="size-full bg-red-800">
-                    {error.email || error.password}
-                  </p>
-                )}
-              </div>
             </div>
             <div className="w-full h-[4rem] gap-2 sm:gap-3 md:gap-4 mt-1 sm:mt-2">
               <h3 className="text-sm sm:text-base md:text-lg">
