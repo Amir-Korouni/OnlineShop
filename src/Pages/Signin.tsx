@@ -12,17 +12,18 @@ type SignInError = {
 };
 
 const Signin = () => {
-  const [User, setUser] = useState({} as UserLogin);
+  const [user, setUser] = useState<UserLogin>({ email: "", password: "" });
   const [error, setError] = useState<SignInError | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...User, [e.target.name]: e.target.value });
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const users = useContext(AuthContext);
+  const usersContext = useContext(AuthContext);
 
   const history = useNavigate();
 
+<<<<<<< Updated upstream
   const validate = () => {
     const newError: SignInError = {};
 
@@ -59,33 +60,66 @@ const Signin = () => {
     })
       .then(async (res) => {
         const data = await res.json();
+=======
+  const usersData = { ...user };
 
-        console.log("STATUS:", res.status);
-        console.log("SERVER RESPONSE:", data);
+  /**
+   * @version 1.0.0
+   * @description This function is sending a POST request(evey users data for sign in such as email & password) for sign in user and wait for response and then it works.
+   * @example Use it for form submit attribute. onSubmit((e)=>SubmitForm);
+   */
+  const SubmitForm = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-        if (!res.ok) {
-          throw new Error(data.message || "any problem is exist.");
-        }
+    console.log("🔥 FORM SUBMITTED");
+>>>>>>> Stashed changes
 
-        return data;
-      })
-      .then((response) => {
-        console.log("API data" + response);
+    usersContext?.setUser({
+      email: user.email,
+      password: user.password,
+    });
 
-        users.setUser(response);
-        history("/");
-      })
-      .catch((err: Error) => {
-        console.log(err.message);
-      });
+    history("/");
+    console.log("🔥 USER SET");
+    console.log("🔥 USER SET");
+
+    // fetch("http://localhost:8000/Login", {
+    //   method: "POST",
+    //   headers: { "content-type": "application/json" },
+    //   body: JSON.stringify(usersData),
+    // })
+    //   .then(async (res) => {
+    //     const data = await res.json();
+
+    //     console.log("STATUS:", res.status);
+    //     console.log("SERVER RESPONSE:", data);
+
+    //     if (!res.ok) {
+    //       throw new Error(data.message || "any problem is exist.");
+    //     }
+
+    //     return data;
+    //   })
+    //   .then((response) => {
+    //     console.log("API data" + response);
+
+    //     usersContext?.setUser(response);
+
+    //     console.log("BEFORE NAVIGATE:", usersContext?.users);
+
+    //     history("/");
+    //   })
+    //   .catch((err: Error) => {
+    //     console.log(err.message);
+    //   });
   };
-  console.log(users.users?.email, users.users?.password);
+  console.log(usersContext?.users?.email, usersContext?.users?.password);
   return (
     <>
       <section className="w-full  h-[100vh] bg-[#07070A] text-[#F5F5F5] flex justify-center items-center gap-5 sm:gap-6 md:gap-8 lg:gap-0">
         <section className="w-[60%] h-auto bg-[#111116] flex gap-[10px] justify-center items-center text-[#F5F5F5] border border-[#27272A] rounded duration-[0.8s] shadow-[0_8px_20px_rgba(59,130,246,0.30)]">
           <form
-            action=""
+            action="/"
             className="w-[50%] h-full flex flex-col gap-4 sm:gap-5 md:gap-6 items-start p-4 sm:p-5 md:p-6 lg:p-8"
             onSubmit={(e) => SubmitForm(e)}
           >
@@ -110,7 +144,12 @@ const Signin = () => {
               <input
                 name="email"
                 type="email"
+<<<<<<< Updated upstream
                 value={User.email}
+=======
+                value={user.email}
+                // required
+>>>>>>> Stashed changes
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
@@ -122,7 +161,12 @@ const Signin = () => {
               <input
                 name="password"
                 type="password"
+<<<<<<< Updated upstream
                 value={User.password}
+=======
+                // required
+                value={user.password}
+>>>>>>> Stashed changes
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />

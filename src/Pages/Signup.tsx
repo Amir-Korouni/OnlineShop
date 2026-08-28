@@ -47,6 +47,12 @@ const Signup = () => {
   };
 
   const SignUpBody = { ...SignUpUser };
+
+  /**
+   * @version 1.0.0
+   * @description This function sending a POST request to backend and wait for response and then sign up users.
+   * @examle Use it for form submit attribute. onSubmit((e)=>SubmitForm);
+   */
   const SubmitForm = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 

@@ -2,12 +2,13 @@ import { useContext } from "react";
 import { AuthContext } from "../Context/ContextProvider";
 
 const Home = () => {
-  const Users = useContext(AuthContext);
+  const users = useContext(AuthContext);
+  console.log("HOME:", users?.users);
   return (
     <>
       <div>
-        <p>Welcome {Users.users?.email}</p>
-        <p>{Users.users?.password}</p>
+        <p>Welcome {users?.users?.email}</p>
+        <p>{users?.users?.password}</p>
       </div>
     </>
   );

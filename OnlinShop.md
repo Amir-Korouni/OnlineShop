@@ -79,3 +79,21 @@ Create account
 │   Create account     │
 └──────────────────────┘
 ```
+
+ok, now we find a prolem in our context and it isn't set data in main page.
+
+Becaus:
+
+```
+ContextProvider
+    ↓
+User = {...}        ✅
+    ↓
+navigate("/")
+    ↓
+ContextProvider UNMOUNT ❌
+    ↓
+ContextProvider MOUNT 🔄
+    ↓
+useState(null)      ❌
+```

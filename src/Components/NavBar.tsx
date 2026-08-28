@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Context/ContextProvider";
 
 const NavBar = () => {
+  const usersCon = useContext(AuthContext);
   return (
     <>
       <section className="w-full h-[5rem] bg-[#0A0A0F] p-[5px] rounded-lg">
@@ -30,8 +33,7 @@ const NavBar = () => {
             <div>Search</div>
             <div>Cart</div>
             <div className="w-[100px] h-[50px] flex flex-row justify-center items-center gap-[10px]">
-              {/* <h3 className="text-purple-600">Profile</h3>
-              <div className="w-[50px] h-[50px] rounded-[50%] bg-[#8B5CF6]"></div> */}
+              {usersCon && usersCon.users?.email}
               <Link to="/signin">
                 <button className="w-[100px] h-[50px] text-wite-700 border rounded-[10px] duration-500 cursor-pointer hover:bg-purple-500 hover:text-zinc-900">
                   Sign in
