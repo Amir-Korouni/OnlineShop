@@ -58,7 +58,7 @@ const Signup = () => {
 
     const isValidate = validate();
 
-    if (isValidate) {
+    if (!isValidate) {
       return;
     }
 

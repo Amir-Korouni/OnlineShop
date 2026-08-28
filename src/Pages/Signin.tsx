@@ -23,44 +23,22 @@ const Signin = () => {
 
   const history = useNavigate();
 
-<<<<<<< Updated upstream
   const validate = () => {
     const newError: SignInError = {};
-
-    if (!User.email) {
-      newError.email = "Email is required field. please fill this field.";
-    } else if (!/\S+@\S+\.\S+/.test(User.email)) {
-      newError.email = "Enter a valid email";
+    if (!usersData.email) {
+      newError.email = "Fullname is required field. Please fill this field.";
     }
 
-    if (!User.password) {
+    if (!usersData.password) {
       newError.password = "Password is required field. please fill this field";
-    } else if (User.password.length < 6) {
-      User.password = "Password must be at least 8 characters";
+    } else if (usersData.password.length < 6) {
+      usersData.password = "Password must be at least 8 characters";
     }
     setError(newError);
 
     return Object.keys(newError).length === 0;
   };
 
-  const UsersData = { ...User };
-  const SubmitForm = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const isValid = validate();
-
-    if (!isValid) {
-      return;
-    }
-
-    fetch("http://localhost:8000/Login", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(UsersData),
-    })
-      .then(async (res) => {
-        const data = await res.json();
-=======
   const usersData = { ...user };
 
   /**
@@ -71,8 +49,12 @@ const Signin = () => {
   const SubmitForm = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const isValidate = validate();
+    if (!isValidate) {
+      return;
+    }
+
     console.log("🔥 FORM SUBMITTED");
->>>>>>> Stashed changes
 
     usersContext?.setUser({
       email: user.email,
@@ -144,12 +126,8 @@ const Signin = () => {
               <input
                 name="email"
                 type="email"
-<<<<<<< Updated upstream
-                value={User.email}
-=======
                 value={user.email}
                 // required
->>>>>>> Stashed changes
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
@@ -161,12 +139,8 @@ const Signin = () => {
               <input
                 name="password"
                 type="password"
-<<<<<<< Updated upstream
-                value={User.password}
-=======
                 // required
                 value={user.password}
->>>>>>> Stashed changes
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
