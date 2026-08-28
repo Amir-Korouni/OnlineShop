@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import type { UserLogin } from "../Types/User";
 
 export type AuthContextType = {
@@ -26,15 +26,6 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 const ContextProvider = ({ children }: ContextProp) => {
   const [users, setUser] = useState<UserLogin | null>(null);
-  console.log("🔥 Context Render:", users);
-
-  useEffect(() => {
-    console.log("🟢 Provider Mounted");
-
-    return () => {
-      console.log("🔴 Provider Unmounted");
-    };
-  }, []);
   return (
     <>
       <AuthContext.Provider value={{ users, setUser }}>

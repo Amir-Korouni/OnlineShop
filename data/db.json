@@ -9,119 +9,6 @@
       "email": "www.darkghost87@gmail.com",
       "password": "123456",
       "id": "XeuQV3U9bQ0"
-    },
-    {
-      "id": "2Pij6Vc5jbg"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "1387",
-      "id": "Y8ZIPjenkaI"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "22849628666",
-      "id": "hlTeHJG2fFE"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "1387",
-      "id": "R2wSR_63A6Q"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "13878713",
-      "id": "b-ft_i1DGro"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "1387",
-      "id": "0kkn1wsaSnc"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "13871387",
-      "id": "5Yz2FMneEz0"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "1387",
-      "id": "eIN82XriOE0"
-    },
-    {
-      "email": "amirkorouni@gmail.com",
-      "password": "13878713",
-      "id": "_Nrrwx-vhqU"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "1387",
-      "id": "EAcIBCC07aM"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "1387",
-      "id": "-jgwss7VWV4"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "13878713",
-      "id": "6qrg8tnpjrY"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "13878713",
-      "id": "XHzMFaHepGs"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "1387",
-      "id": "fJk_tufxcSg"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "13878713",
-      "id": "cBpsbBi2uxQ"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "1387",
-      "id": "IWiXF0MsKqk"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "13878713",
-      "id": "GTBOwnzA86w"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "135678",
-      "id": "nRpTHHu3NUo"
-    },
-    {
-      "email": "amirkorouni@gmail.com",
-      "password": "13879",
-      "id": "FSm1bWLJlTE"
-    },
-    {
-      "email": "GholamNini@gmail.com",
-      "password": "12456",
-      "id": "EWyNVbz_tfE"
-    },
-    {
-      "email": "amirkorouni@gmail.com",
-      "password": "1313",
-      "id": "JyKZTU7pdSQ"
-    },
-    {
-      "email": "fkorouni@gmail.com",
-      "password": "1234567",
-      "id": "BZWV3FJm-0Y"
-    },
-    {
-      "email": "www.darkghost87@gmail.com",
-      "password": "1387",
-      "id": "rNpL-3NRogk"
     }
   ],
   "Register": [
@@ -145,12 +32,6 @@
       "email": "www.darkghost87@gmail.com",
       "password": "13878713",
       "id": "8f5m8Llp3Lg"
-    },
-    {
-      "id": "62fqt_JnHIM"
-    },
-    {
-      "id": "7NFDonk-ZH8"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

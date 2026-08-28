@@ -54,16 +54,12 @@ const Signin = () => {
       return;
     }
 
-    console.log("🔥 FORM SUBMITTED");
-
     usersContext?.setUser({
       email: user.email,
       password: user.password,
     });
 
     history("/");
-    console.log("🔥 USER SET");
-    console.log("🔥 USER SET");
 
     // fetch("http://localhost:8000/Login", {
     //   method: "POST",

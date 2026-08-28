@@ -11,7 +11,7 @@ type SignUpError = {
 
 const Signup = () => {
   const [SignUpUser, setSignUpUser] = useState({} as UserRegister);
-  const [error, setError] = useState({} as SignUpError);
+  const [error, setError] = useState<SignUpError | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpUser({ ...SignUpUser, [e.target.name]: e.target.value });
@@ -94,7 +94,7 @@ const Signup = () => {
         <section className="w-[60%] h-auto bg-[#111116] flex gap-[10px] justify-center items-center text-[#F5F5F5] border border-[#27272A] rounded duration-[0.8s] shadow-[0_8px_20px_rgba(59,130,246,0.30)]">
           <div className="w-[50%] h-full">
             <img
-              src="https://images.openai.com/static-rsc-4/y9qCU0Yq8tlsuDw6u11Bi9seiVgDbwn8rP_4Gelj9vpgyNlboj71USMuz60h0Nfub9nj5eL6KNap2qy5MhFKR0tqaZODarQvYgLyFfGvBpguSkZHMmuyNisu8MMnNbJkdRUjfI5s6495nl3q5XKlJoPokcB_HNZddLOIMrzfdqBOkhQnwhxI-ZffalN00V09?purpose=fullsize"
+              src="https://images.openai.com/static-rsc-4/Ttt2thQGkjlpuH5gus5M7dB68UfYo0KcazxlklR-1K7_YIz3KgR6wGksz2S-s5F7yZdlfVob67uMseRBAF2E6cYsz7Bb1NEWLRl26nkDp_CMKvKlFevwwKfmMTOwhTD08OotbV4z2emOhPJvVZ0el9YJ-gcpJJeYBVQVz41pW9ASG5n-cj3HvhEabDJka7wE?purpose=fullsize"
               alt="Headphone Icone"
               className="w-[100%] h-[100%] object-cover"
             />

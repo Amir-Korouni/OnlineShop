@@ -30,15 +30,18 @@ const NavBar = () => {
             </li>
           </ul>
           <div className="w-auto h-[4rem] flex justify-end items-center gap-[10px]">
-            <div>Search</div>
-            <div>Cart</div>
+            {/* <div>Search</div>
+            <div>Cart</div> */}
             <div className="w-[100px] h-[50px] flex flex-row justify-center items-center gap-[10px]">
-              {usersCon && usersCon.users?.email}
-              <Link to="/signin">
-                <button className="w-[100px] h-[50px] text-wite-700 border rounded-[10px] duration-500 cursor-pointer hover:bg-purple-500 hover:text-zinc-900">
-                  Sign in
-                </button>
-              </Link>
+              {usersCon?.users ? (
+                usersCon.users?.email
+              ) : (
+                <Link to="/signin">
+                  <button className="w-[100px] h-[50px] text-wite-700 border rounded-[10px] duration-500 cursor-pointer hover:bg-purple-500 hover:text-zinc-900">
+                    Sign in
+                  </button>
+                </Link>
+              )}
             </div>
           </div>
         </nav>
