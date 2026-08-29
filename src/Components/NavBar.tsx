@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/ContextProvider";
+import { FaCartPlus, FaSearch } from "react-icons/fa";
 
 const NavBar = () => {
   const usersCon = useContext(AuthContext);
@@ -29,12 +30,23 @@ const NavBar = () => {
               <Link to="/orders">something</Link>
             </li>
           </ul>
-          <div className="w-auto h-[4rem] flex justify-end items-center gap-[10px]">
-            {/* <div>Search</div>
-            <div>Cart</div> */}
+          <div className="w-auto h-[4rem] flex justify-end items-center gap-[15px]">
+            <button className="cursor-pointer">
+              <FaSearch size={24} />
+            </button>
+            {usersCon?.users && (
+              <div className="flex gap-5">
+                <Link to="/cart">
+                  <FaCartPlus size={25} />
+                </Link>
+              </div>
+            )}
             <div className="w-[100px] h-[50px] flex flex-row justify-center items-center gap-[10px]">
               {usersCon?.users ? (
-                usersCon.users?.email
+                // usersCon.users?.email
+                <div className="w-[50px] h-[50px] rounded-full bg-purple-500">
+                  <h2>{usersCon.users?.email}</h2>
+                </div>
               ) : (
                 <Link to="/signin">
                   <button className="w-[100px] h-[50px] text-wite-700 border rounded-[10px] duration-500 cursor-pointer hover:bg-purple-500 hover:text-zinc-900">

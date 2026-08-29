@@ -97,3 +97,47 @@ ContextProvider MOUNT 🔄
     ↓
 useState(null)      ❌
 ```
+
+```
+WHY CHOOSE US
+
+⚡                 🛡                 ✓
+
+Fast Delivery     Warranty          Authentic
+
+Quick & reliable  Shop with         100% original
+delivery          confidence        products
+```
+
+How we can design and develop product page:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     PRODUCTS                                │
+│        Find the perfect sound for your world.               │
+│                                                             │
+│  [ 🔍 Search products...                    ] [ Sort ▾ ]     │
+├───────────────┬─────────────────────────────────────────────┤
+│               │                                             │
+│ FILTERS       │  128 Products                               │
+│               │                                             │
+│ Category      │  ┌────────┐ ┌────────┐ ┌────────┐          │
+│ ○ Headphones  │  │ 🎧     │ │ 🎧     │ │ 🎧     │          │
+│ ○ Earbuds     │  │        │ │        │ │        │          │
+│ ○ Gaming      │  │ Product│ │ Product│ │ Product│          │
+│               │  │ $149   │ │ $199   │ │ $99    │          │
+│ Brand         │  │ ★4.8   │ │ ★4.9   │ │ ★4.6   │          │
+│ □ Sony        │  └────────┘ └────────┘ └────────┘          │
+│ □ JBL         │                                             │
+│ □ Razer       │  ┌────────┐ ┌────────┐ ┌────────┐          │
+│               │  │ 🎧     │ │ 🎧     │ │ 🎧     │          │
+│ Price         │  │        │ │        │ │        │          │
+│ $50 ───●── $500│  │ Product│ │ Product│ │ Product│          │
+│               │  └────────┘ └────────┘ └────────┘          │
+│ Features      │                                             │
+│ □ Wireless    │                                             │
+│ □ ANC         │                                             │
+│ □ Gaming      │                                             │
+│               │                                             │
+└───────────────┴─────────────────────────────────────────────┘
+```

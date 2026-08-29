@@ -37,24 +37,27 @@
   "Product": [
     {
       "id": 1,
-      "name": "airpuds",
-      "category": "airpuds",
+      "name": "Headphone",
+      "category": "Headphone",
+      "brand": "Sony",
       "price": "150,000",
       "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, eaque voluptate saepe accusamus molestiae nam explicabo provident amet quaerat in, rem obcaecati. Doloribus qui culpa laboriosam molestiae autem quisquam voluptatum?",
       "image": "../assets/Headphone_Featared_2-removebg-preview.png"
     },
     {
       "id": 2,
-      "name": "Headphone",
-      "category": "Headphone",
-      "price": "150,000",
+      "name": "Redmit AirDots 2",
+      "category": "earpuds",
+      "brand": "Redmi",
+      "price": "180,000",
       "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, eaque voluptate saepe accusamus molestiae nam explicabo provident amet quaerat in, rem obcaecati. Doloribus qui culpa laboriosam molestiae autem quisquam voluptatum?",
       "image": "../assets/Headphone_Featared_1-removebg-preview.png"
     },
     {
       "id": 3,
-      "name": "airpuds",
-      "category": "airpuds",
+      "name": "Haylou",
+      "category": "eirpuds",
+      "brand": "Haylou",
       "price": "150,000",
       "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, eaque voluptate saepe accusamus molestiae nam explicabo provident amet quaerat in, rem obcaecati. Doloribus qui culpa laboriosam molestiae autem quisquam voluptatum?",
       "image": "../assets/airpuds_1-removebg-preview.png"
@@ -63,6 +66,7 @@
       "id": 4,
       "name": "Headphone",
       "category": "Headphone",
+      "brand": "Sony",
       "price": "150,000",
       "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, eaque voluptate saepe accusamus molestiae nam explicabo provident amet quaerat in, rem obcaecati. Doloribus qui culpa laboriosam molestiae autem quisquam voluptatum?",
       "image": "../assets/Headphone_Featared_2-removebg-preview.png"

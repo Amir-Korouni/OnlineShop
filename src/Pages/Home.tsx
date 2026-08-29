@@ -4,11 +4,11 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import Feataredproduct from "../Components/HomeSections/FeataredProduct";
-import Categories from "../Components/HomeSections/Categories";
 import GamingProduct from "../Components/HomeSections/GamingProduct";
 import TrendingNow from "../Components/HomeSections/TrendingNow";
 import HeroSec from "../Components/HomeSections/HeroSec";
 import Footer from "../Components/Footer";
+import WhyUs from "../Components/HomeSections/WhyUs";
 
 const Home = () => {
   const users = useContext(AuthContext);
@@ -28,7 +28,7 @@ const Home = () => {
         <HeroSec />
 
         {/* categories */}
-        <Categories />
+        <WhyUs />
 
         {/* Featared Product */}
         <Feataredproduct />
