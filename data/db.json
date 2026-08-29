@@ -47,7 +47,7 @@
     {
       "id": 2,
       "name": "Redmit AirDots 2",
-      "category": "earpuds",
+      "category": "Earpuds",
       "brand": "Redmi",
       "price": "180,000",
       "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, eaque voluptate saepe accusamus molestiae nam explicabo provident amet quaerat in, rem obcaecati. Doloribus qui culpa laboriosam molestiae autem quisquam voluptatum?",
@@ -56,7 +56,7 @@
     {
       "id": 3,
       "name": "Haylou",
-      "category": "eirpuds",
+      "category": "Earpuds",
       "brand": "Haylou",
       "price": "150,000",
       "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, eaque voluptate saepe accusamus molestiae nam explicabo provident amet quaerat in, rem obcaecati. Doloribus qui culpa laboriosam molestiae autem quisquam voluptatum?",
@@ -67,7 +67,25 @@
       "name": "Headphone",
       "category": "Headphone",
       "brand": "Sony",
-      "price": "150,000",
+      "price": "250,000",
+      "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, eaque voluptate saepe accusamus molestiae nam explicabo provident amet quaerat in, rem obcaecati. Doloribus qui culpa laboriosam molestiae autem quisquam voluptatum?",
+      "image": "../assets/Headphone_Featared_2-removebg-preview.png"
+    },
+    {
+      "id": 5,
+      "name": "Headphone Razer",
+      "category": "Gaming",
+      "brand": "Razer",
+      "price": "250,000",
+      "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, eaque voluptate saepe accusamus molestiae nam explicabo provident amet quaerat in, rem obcaecati. Doloribus qui culpa laboriosam molestiae autem quisquam voluptatum?",
+      "image": "../assets/Headphone_Featared_2-removebg-preview.png"
+    },
+    {
+      "id": 6,
+      "name": "Headphone Reddrogon",
+      "category": "Gaming",
+      "brand": "Reddrogon",
+      "price": "250,000",
       "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, eaque voluptate saepe accusamus molestiae nam explicabo provident amet quaerat in, rem obcaecati. Doloribus qui culpa laboriosam molestiae autem quisquam voluptatum?",
       "image": "../assets/Headphone_Featared_2-removebg-preview.png"
     }

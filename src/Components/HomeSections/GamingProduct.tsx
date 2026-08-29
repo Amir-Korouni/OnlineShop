@@ -1,4 +1,3 @@
-import AnimationTxt from "../AnimationTxt";
 import Image from "../../assets/VyJXe6nk5WnA4UGA9P-P_ipk10MYEHqZXm_2GzhcIPuVt_9_RojZKcHJauBbToiZMjwUyI_0HKIjuMUl1dnMqW4koFYF-M_5eI8QgdLwAQ71H2kr7tQZ4hh936V95czJ7VTX3T8qlyr72MmgsSREOXpxOtf0QRKmYo837JsWVfHCxJCJjslYc1kLq1PCq381.jpeg";
 
 const GamingProduct = () => {
