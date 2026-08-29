@@ -6,7 +6,6 @@ type filterType = {
   categories: string[];
   brands: string[];
   features: string[];
-  price: number;
 };
 
 const Products = () => {
@@ -20,24 +19,35 @@ const Products = () => {
     categories: [],
     brands: [],
     features: [],
-    price: Infinity,
   });
 
-  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.checked);
-    if (e.target.checked) {
-      setCategory(e.target.value);
-    } else {
-      setCategory("all");
-    }
+  const handleFilterChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    filterName: keyof filterType,
+  ) => {
+    const { value, checked } = e.target;
+    setFilters((prev) => ({
+      ...prev,
+      [filterName]: checked
+        ? [...prev[filterName], value]
+        : prev[filterName].filter((item) => item !== value),
+    }));
   };
 
-  const filteredProduct =
-    category === "all"
-      ? data
-      : data?.filter((product) => {
-          return product.category === category;
-        });
+  const filteredProduct = data?.filter((product) => {
+    const categoryMatch =
+      filters.categories.length === 0 ||
+      filters.categories.includes(product.category);
+
+    const brandMatch =
+      filters.brands.length === 0 || filters.brands.includes(product.brand);
+
+    const featureMatch =
+      filters.features.length === 0 ||
+      filters.features.includes(product.wireless);
+
+    return categoryMatch && brandMatch && featureMatch;
+  });
   return (
     <>
       <section className="w-full h-[250vh] bg-[#0A0A0F] p-[5px] rounded-lg ">
@@ -70,12 +80,22 @@ const Products = () => {
             <h2>Filters</h2>
             <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
               <legend>Category</legend>
+              {/* <label className="w-full flex justify-center gap-2">
+                <input
+                  type="radio"
+                  name="category"
+                  value="all"
+                  checked={category === "all"}
+                />
+                all
+              </label> */}
+
               <label className="w-full flex justify-center gap-2">
                 <input
                   type="radio"
                   name="category"
                   value="Headphone"
-                  onChange={handleCheck}
+                  onChange={(e) => handleFilterChange(e, "categories")}
                 />
                 Headphone
               </label>
@@ -85,7 +105,7 @@ const Products = () => {
                   type="radio"
                   name="category"
                   value="Earpuds"
-                  onChange={handleCheck}
+                  onChange={(e) => handleFilterChange(e, "categories")}
                 />
                 Eearpuds
               </label>
@@ -95,7 +115,7 @@ const Products = () => {
                   type="radio"
                   name="category"
                   value="Gaming"
-                  onChange={handleCheck}
+                  onChange={(e) => handleFilterChange(e, "categories")}
                 />
                 Gaming
               </label>
@@ -104,21 +124,41 @@ const Products = () => {
             <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
               <legend>Brand</legend>
               <label className="w-full flex justify-center gap-2">
-                <input type="radio" name="brand" value="Sony" />
+                <input
+                  type="radio"
+                  name="brand"
+                  value="Sony"
+                  onChange={(e) => handleFilterChange(e, "brands")}
+                />
                 Sony
               </label>
 
               <label className="w-full flex justify-center gap-2">
-                <input type="radio" name="brand" value="Haylou" />
+                <input
+                  type="radio"
+                  name="brand"
+                  value="Haylou"
+                  onChange={(e) => handleFilterChange(e, "brands")}
+                />
                 HayLou
               </label>
 
               <label className="w-full flex justify-center gap-2">
-                <input type="radio" name="brand" value="Redmi" />
+                <input
+                  type="radio"
+                  name="brand"
+                  value="Redmi"
+                  onChange={(e) => handleFilterChange(e, "brands")}
+                />
                 Redmi
               </label>
               <label className="w-full flex justify-center gap-2">
-                <input type="radio" name="brand" value="Razer" />
+                <input
+                  type="radio"
+                  name="brand"
+                  value="Razer"
+                  onChange={(e) => handleFilterChange(e, "brands")}
+                />
                 Razer
               </label>
             </fieldset>

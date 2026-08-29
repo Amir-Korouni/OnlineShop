@@ -6,4 +6,5 @@ export type Products = {
   price: string;
   description: string;
   image: string;
+  wireless: string;
 };
