@@ -24,7 +24,7 @@ const NavBar = () => {
               <Link to="/products">Products</Link>
             </li>
             <li className="text-center hover:text-[#A855F7] duration-200">
-              <Link to="/productdetail">something</Link>
+              <Link to="/productdetail"> test product details</Link>
             </li>
             <li className="text-center hover:text-[#A855F7] duration-200">
               <Link to="/orders">something</Link>
