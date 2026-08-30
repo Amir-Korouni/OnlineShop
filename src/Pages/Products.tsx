@@ -23,6 +23,13 @@ const Products = () => {
 
   const [maxRange, setMaxRenge] = useState<number>(500);
 
+  /**
+   *
+   * @version 1.0.0
+   * @param e
+   * @param filterName
+   * @description This function take an event of html change element and one element of type filterType. This function said if previouse valuestate of filterstate is e.targert.checked(it is checked) and true, set that element which user chose and pass the e.target.value.
+   */
   const handleFilterChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     filterName: keyof filterType,
@@ -36,6 +43,12 @@ const Products = () => {
     }));
   };
 
+  /**
+   * @version 1.0.0
+   * @param product
+   * @description This function is applying a multi filter of product. This function said (for categories)value of variable is ==> categories length of filters state is zero or categories of filters state includes that category comes from data(fetching api).
+   * @returns return all varialbes if all of them are true together.
+   */
   const filteredProduct = data?.filter((product) => {
     const categoryMatch =
       filters.categories.length === 0 ||
