@@ -1,17 +1,19 @@
-import useFetch from "../Hooks/useFetch";
 import type { Products } from "../Types/Product";
 import { Link } from "react-router-dom";
 
-const ProductCard = () => {
-  const { data: dataFetch, error } = useFetch<Products[]>({
-    url: "http://localhost:8000/Product",
-  });
+type ProductCartType = {
+  items: Products[] | null | undefined;
+  error: Error | null;
+  cartBtn: boolean;
+};
+
+const ProductCard = ({ items, error, cartBtn }: ProductCartType) => {
   return (
     <>
-      {dataFetch?.map((item) => (
+      {items?.map((item) => (
         <Link to={`/productdetail/${item.id}`}>
           <article
-            className="w-[250px] h-[300px] flex flex-col justify-center items-center gap-2 bg-[#1F1F27] border border-[#8B5CF6] rounded duration-300 hover:translate-y-[-10px]"
+            className="w-[250px] h-[300px] flex flex-col justify-center items-center basis-xs md:basis-[30%] lg:basis-[20%] gap-2 bg-[#1F1F27] border border-[#8B5CF6] rounded duration-300 hover:translate-y-[-10px]"
             key={item.id}
           >
             <img
@@ -21,12 +23,15 @@ const ProductCard = () => {
             />
             <h2>{item.name}</h2>
             <p>{item.price}</p>
-            <button className="w-[160px] h-[2rem] rounded duration-600 bg-[#7b55f7] hover:bg-[#A855F7] hover:text-zinc-950 text-zinc-100 mx-[15px] px-[10px] cursor-pointer">
-              Add to Cart
-            </button>
+            {cartBtn && (
+              <button className="w-[160px] h-[2rem] rounded duration-600 bg-[#7b55f7] hover:bg-[#A855F7] hover:text-zinc-950 text-zinc-100 mx-[15px] px-[10px] cursor-pointer">
+                Add to Cart
+              </button>
+            )}
           </article>
         </Link>
       ))}
+
       {error && <p>{error.message}</p>}
     </>
   );

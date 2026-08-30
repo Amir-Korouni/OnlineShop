@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import type { Products } from "../Types/Product";
+import ProductCard from "../Components/ProductCard";
 
 type filterType = {
   categories: string[];
@@ -217,20 +218,11 @@ const Products = () => {
               The number of products: {filteredProduct?.length}
             </h2>
             <div className="w-full h-auto flex justify-center items-center flex-wrap gap-5 ">
-              {filteredProduct?.map((item) => (
-                <article
-                  className="w-[250px] h-[300px] flex flex-col basis-xs md:basis-[30%] lg:basis-[20%] justify-center items-center gap-2 bg-[#1F1F27] border border-[#8B5CF6] rounded duration-300 duration-500 hover:scale-103"
-                  key={item.id}
-                >
-                  <img
-                    src={item.image}
-                    alt="item image"
-                    className="w-[150px] h-[150px] object-cover"
-                  />
-                  <h2>{item.name}</h2>
-                  <p>{item.price}</p>
-                </article>
-              ))}
+              <ProductCard
+                items={filteredProduct}
+                error={error}
+                cartBtn={false}
+              />
             </div>
           </section>
         </section>
