@@ -13,13 +13,15 @@ const Products = () => {
     url: "http://localhost:8000/Product",
   });
 
-  const [category, setCategory] = useState<string>("all");
-
   const [filters, setFilters] = useState<filterType>({
     categories: [],
     brands: [],
     features: [],
   });
+
+  const [search, setSearch] = useState<string>("");
+
+  const [maxRange, setMaxRenge] = useState<number>(500);
 
   const handleFilterChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -45,8 +47,13 @@ const Products = () => {
     const featureMatch =
       filters.features.length === 0 ||
       filters.features.includes(product.wireless);
-
-    return categoryMatch && brandMatch && featureMatch;
+    const searchMatch = product.name
+      .toLowerCase()
+      .includes(search.toLocaleLowerCase());
+    const priceMatch = Number(product.price) <= maxRange;
+    return (
+      searchMatch && categoryMatch && brandMatch && featureMatch && priceMatch
+    );
   });
   return (
     <>
@@ -55,22 +62,16 @@ const Products = () => {
         <section className="w-full h-[10rem]  bg-[#1F1F27] flex flex-col justify-center items-center">
           <h2>Products</h2>
           <h3>Find the perfect sound for your world.</h3>
-          <div className="w-[80%] h-[4rem] flex justify-between items-center mt-5">
+          <div className="w-[80%] h-[4rem] flex justify-center items-center mt-5">
             <input
               type="search"
               placeholder="Search Products..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
               className="w-[70%] h-[2rem] border border-[#A855F7] rounded p-[5px]"
             />
-            <select
-              name="Sort"
-              id="Sort"
-              className="w-[200px] h-[2rem] bg-[#A855F7] text-zinc-900 rounded"
-            >
-              <option value="Sony">Sony</option>
-              <option value="JBL">HayLou</option>
-              <option value="Redmi">Redmi</option>
-              <option value="Razer">Razer</option>
-            </select>
           </div>
         </section>
 
@@ -80,19 +81,9 @@ const Products = () => {
             <h2>Filters</h2>
             <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
               <legend>Category</legend>
-              {/* <label className="w-full flex justify-center gap-2">
-                <input
-                  type="radio"
-                  name="category"
-                  value="all"
-                  checked={category === "all"}
-                />
-                all
-              </label> */}
-
               <label className="w-full flex justify-center gap-2">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="category"
                   value="Headphone"
                   onChange={(e) => handleFilterChange(e, "categories")}
@@ -102,7 +93,7 @@ const Products = () => {
 
               <label className="w-full flex justify-center gap-2">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="category"
                   value="Earpuds"
                   onChange={(e) => handleFilterChange(e, "categories")}
@@ -112,7 +103,7 @@ const Products = () => {
 
               <label className="w-full flex justify-center gap-2">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="category"
                   value="Gaming"
                   onChange={(e) => handleFilterChange(e, "categories")}
@@ -125,7 +116,7 @@ const Products = () => {
               <legend>Brand</legend>
               <label className="w-full flex justify-center gap-2">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="brand"
                   value="Sony"
                   onChange={(e) => handleFilterChange(e, "brands")}
@@ -135,7 +126,7 @@ const Products = () => {
 
               <label className="w-full flex justify-center gap-2">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="brand"
                   value="Haylou"
                   onChange={(e) => handleFilterChange(e, "brands")}
@@ -145,7 +136,7 @@ const Products = () => {
 
               <label className="w-full flex justify-center gap-2">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="brand"
                   value="Redmi"
                   onChange={(e) => handleFilterChange(e, "brands")}
@@ -154,7 +145,7 @@ const Products = () => {
               </label>
               <label className="w-full flex justify-center gap-2">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="brand"
                   value="Razer"
                   onChange={(e) => handleFilterChange(e, "brands")}
@@ -165,8 +156,16 @@ const Products = () => {
 
             <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
               <legend>Price</legend>
-              <label className="w-full flex justify-center gap-2">
-                <input type="range" />
+              <label className="w-full flex flex-col justify-center gap-2">
+                <input
+                  type="range"
+                  min="100"
+                  max="500"
+                  step="10"
+                  value={maxRange}
+                  onChange={(e) => setMaxRenge(Number(e.target.value))}
+                />
+                <p>{maxRange}</p>
               </label>
             </fieldset>
 
@@ -174,7 +173,12 @@ const Products = () => {
               <legend>Features</legend>
 
               <label className="w-full flex justify-center gap-2">
-                <input type="checkbox" name="Wireless" value="Wireless" />
+                <input
+                  type="checkbox"
+                  name="Wireless"
+                  value="Wireless"
+                  onChange={(e) => handleFilterChange(e, "features")}
+                />
                 Wireless
               </label>
 
@@ -183,6 +187,7 @@ const Products = () => {
                   type="checkbox"
                   name="NoneWireless"
                   value="NoneWireless"
+                  onChange={(e) => handleFilterChange(e, "features")}
                 />
                 None Wireless
               </label>
