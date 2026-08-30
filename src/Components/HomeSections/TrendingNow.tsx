@@ -10,7 +10,7 @@ const TrendingNow = () => {
     <>
       <section className="w-[100%] h-[60vh] bg-[#111116] border-t border-t-[#8B5CF6] m-auto px-5">
         <div
-          className="w-[70%] h-[60vh] flex flex-col justify-start items-start gap-5 m-auto"
+          className="w-[90%] h-[60vh] flex flex-col justify-start items-start gap-1 m-auto"
           data-aos="fade-down"
         >
           <h2 className="underline p-[10px]">Trending Now</h2>
