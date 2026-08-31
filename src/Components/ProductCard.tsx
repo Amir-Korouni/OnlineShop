@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import type { Products } from "../Types/Product";
 import { Link } from "react-router-dom";
+import { contextCartItem } from "../Context/CartContext";
 
 type ProductCartType = {
   items: Products[] | null | undefined;
@@ -8,6 +10,7 @@ type ProductCartType = {
 };
 
 const ProductCard = ({ items, error, cartBtn }: ProductCartType) => {
+  const cart = useContext(contextCartItem);
   return (
     <>
       {items?.map((item) => (
@@ -24,7 +27,12 @@ const ProductCard = ({ items, error, cartBtn }: ProductCartType) => {
           <p>{item.price}</p>
           <div className="flex flex-col gap-2">
             {cartBtn && (
-              <button className="w-[160px] h-[1.8rem] rounded duration-600 bg-[#7b55f7] hover:bg-[#A855F7] hover:text-zinc-950 text-zinc-100 mx-[15px] px-[10px] cursor-pointer">
+              <button
+                className="w-[160px] h-[1.8rem] rounded duration-600 bg-[#7b55f7] hover:bg-[#A855F7] hover:text-zinc-950 text-zinc-100 mx-[15px] px-[10px] cursor-pointer"
+                onClick={() => {
+                  cart?.addToCart(item);
+                }}
+              >
                 Add to Cart
               </button>
             )}

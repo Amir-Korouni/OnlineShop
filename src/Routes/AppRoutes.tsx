@@ -17,10 +17,6 @@ const AppRoute = () => {
       <Router>
         <ContextProvider>
           <Routes>
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/products" element={<Products />} />
-
             <Route element={<Main />}>
               <Route path="/" element={<Home />} />
               <Route path="/productdetail/:id" element={<ProductDetail />} />
@@ -29,6 +25,9 @@ const AppRoute = () => {
               <Route path="/orders" element={<Orders />} />
             </Route>
 
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/products" element={<Products />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </ContextProvider>
