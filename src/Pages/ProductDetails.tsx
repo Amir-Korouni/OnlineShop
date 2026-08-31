@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../Hooks/useFetch";
 import type { Product } from "../Types/Product";
-import CartQuantity from "../Components/CartQuantity";
 import { contextCartItem } from "../Context/CartContext";
 
 const ProductDetail = () => {
@@ -12,6 +11,7 @@ const ProductDetail = () => {
   });
 
   const [color, setColor] = useState<string>("Black");
+
 
   const carts = useContext(contextCartItem);
   return (
@@ -51,7 +51,6 @@ const ProductDetail = () => {
                   />{" "}
                   White
                 </div>
-                <CartQuantity />
               </div>
               <button
                 className="w-[50%] h-[4vh] bg-[#8B5CF6] rounded cursor-pointer"
