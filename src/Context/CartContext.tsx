@@ -27,9 +27,7 @@ const CartContext = ({ children }: ContextCartProp) => {
     setCartItem((current) => {
       <Navigate to="/cart" />;
       const newCart = [...current, product];
-
-      console.log("🛒 Cart:", newCart);
-
+      localStorage.setItem("cart", JSON.stringify(newCart));
       return newCart;
     });
   };
