@@ -1,9 +1,9 @@
 import useFetch from "../../Hooks/useFetch";
-import type { Products } from "../../Types/Product";
+import type { Product } from "../../Types/Product";
 import ProductCard from "../ProductCard";
 
 const Feataredproduct = () => {
-  const { data: dataFetch, error } = useFetch<Products[]>({
+  const { data: dataFetch, error } = useFetch<Product[]>({
     url: "http://localhost:8000/Product",
   });
   return (

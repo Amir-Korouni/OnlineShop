@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useFetch from "../Hooks/useFetch";
-import type { Products } from "../Types/Product";
+import type { Product } from "../Types/Product";
 import ProductCard from "../Components/ProductCard";
 
 type filterType = {
@@ -10,7 +10,7 @@ type filterType = {
 };
 
 const Products = () => {
-  const { data, error } = useFetch<Products[]>({
+  const { data, error } = useFetch<Product[]>({
     url: "http://localhost:8000/Product",
   });
 

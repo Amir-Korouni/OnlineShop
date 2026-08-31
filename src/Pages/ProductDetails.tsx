@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../Hooks/useFetch";
-import type { Products } from "../Types/Product";
+import type { Product } from "../Types/Product";
 import CartQuantity from "../Components/CartQuantity";
+import { contextCartItem } from "../Context/CartContext";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const { data, error } = useFetch<Products>({
+  const { data, error } = useFetch<Product>({
     url: `http://localhost:8000/Product/${id}`,
   });
 
   const [color, setColor] = useState<string>("Black");
 
+  const carts = useContext(contextCartItem);
   return (
     <>
       <main className="w-full h-[90vh] bg-[#07070A] text-zinc-100">
@@ -49,9 +51,14 @@ const ProductDetail = () => {
                   />{" "}
                   White
                 </div>
-                < CartQuantity />
+                <CartQuantity />
               </div>
-              <button className="w-[50%] h-[4vh] bg-[#8B5CF6] rounded cursor-pointer">
+              <button
+                className="w-[50%] h-[4vh] bg-[#8B5CF6] rounded cursor-pointer"
+                onClick={() => {
+                  carts?.addToCart(data);
+                }}
+              >
                 Add to Cart
               </button>
             </section>

@@ -10,26 +10,32 @@ import Signup from "../Pages/Signup";
 import NotFound from "../Pages/NotFound";
 import Main from "../Pages/Main";
 import ContextProvider from "../Context/ContextProvider";
+import ProtectedRoutes from "./ProtectedRoute";
+import CartContext from "../Context/CartContext";
 
 const AppRoute = () => {
   return (
     <>
       <Router>
         <ContextProvider>
-          <Routes>
-            <Route element={<Main />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/productdetail/:id" element={<ProductDetail />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/orders" element={<Orders />} />
-            </Route>
+          <CartContext>
+            <Routes>
+              <Route element={<Main />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/productdetail/:id" element={<ProductDetail />} />
+                <Route element={<ProtectedRoutes />}>
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/orders" element={<Orders />} />
+                </Route>
+              </Route>
 
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+              <Route path="/signin" element={<Signin />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </CartContext>
         </ContextProvider>
       </Router>
     </>

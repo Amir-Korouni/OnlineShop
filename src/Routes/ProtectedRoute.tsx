@@ -1,15 +1,20 @@
-import type React from "react";
 import { useContext } from "react";
 import { AuthContext } from "../Context/ContextProvider";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-type RouteType = {
-  children: React.ReactNode;
-};
-
-const ProtectedRoutes = ({ children }: RouteType) => {
+/**
+ * @version 1.0.0
+ * @returns Outlet
+ * @description 
+ */
+const ProtectedRoutes = () => {
   const users = useContext(AuthContext);
-  return <>{users?.users !== null ? children : <Navigate to="/signin" />}</>;
+
+  if (!users?.users) {
+    return <Navigate to="/signin" replace />;
+  }
+
+  return <Outlet />;
 };
 
 export default ProtectedRoutes;

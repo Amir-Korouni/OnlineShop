@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import type { Products } from "../Types/Product";
+import type { Product } from "../Types/Product";
 import { Link } from "react-router-dom";
 import { contextCartItem } from "../Context/CartContext";
 
 type ProductCartType = {
-  items: Products[] | null | undefined;
+  items: Product[] | null | undefined;
   error: Error | null;
   cartBtn: boolean;
 };
