@@ -12,7 +12,7 @@ const ProductDetail = () => {
 
   const [color, setColor] = useState<string>("Black");
 
-
+  const [addedProductId, setAddedProductId] = useState<number | null>(null);
   const carts = useContext(contextCartItem);
   return (
     <>
@@ -56,10 +56,20 @@ const ProductDetail = () => {
                 className="w-[50%] h-[4vh] bg-[#8B5CF6] rounded cursor-pointer"
                 onClick={() => {
                   carts?.addToCart(data);
+                  setAddedProductId(data.id);
+                  setTimeout(() => {
+                    setAddedProductId(null);
+                  }, 2000);
                 }}
               >
                 Add to Cart
               </button>
+              {addedProductId === data.id && (
+                <p className="text-green-400 text-sm">
+                  {" "}
+                  Added to cart successfully!
+                </p>
+              )}
             </section>
           </section>
         )}

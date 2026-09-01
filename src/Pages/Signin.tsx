@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import type { UserLogin } from "../Types/User";
 import { AuthContext } from "../Context/ContextProvider";
+import InputsForm from "../Components/Forms/InputsForm";
 
 type SignInError = {
   email?: string;
@@ -119,26 +120,22 @@ const Signin = () => {
               <label htmlFor="Email" className="text-sm sm:text-lg">
                 Email
               </label>
-              <input
+              <InputsForm
                 name="email"
                 type="email"
                 value={user.email}
-                // required
                 onChange={(e) => handleChange(e)}
-                className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
             </div>
             <div className="w-full flex flex-col justify-cetner items-start gap-[8px] mt-[5px]">
               <label htmlFor="Password" className="text-sm sm:text-lg">
                 Password
               </label>
-              <input
+              <InputsForm
                 name="password"
                 type="password"
-                // required
                 value={user.password}
                 onChange={(e) => handleChange(e)}
-                className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
             </div>
             <div className="w-full h-[4rem] gap-2 sm:gap-3 md:gap-4 mt-1 sm:mt-2">

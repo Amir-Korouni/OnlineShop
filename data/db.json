@@ -96,5 +96,21 @@
       "image": "../assets/Headphone_Featared_2-removebg-preview.png"
     }
   ],
+  "Order": [
+    {
+      "userId": 6,
+      "items": [
+        {
+          "product": {
+            "id": 2,
+            "name": "Headphone Reddrogon",
+            "price": 100
+          },
+          "quantity": 4
+        }
+      ],
+      "totalPrice": 400
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

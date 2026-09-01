@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { UserRegister } from "../Types/User";
 import { Link, useNavigate } from "react-router-dom";
-
+import InputsForm from "../Components/Forms/InputsForm";
 type SignUpError = {
   fullname?: string;
   username?: string;
@@ -125,48 +125,44 @@ const Signup = () => {
               <label htmlFor="fullname" className="text-sm sm:text-lg ">
                 FullName
               </label>
-              <input
+              <InputsForm
                 name="fullname"
                 type="text"
                 value={SignUpUser?.fullname}
                 onChange={(e) => handleChange(e)}
-                className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
             </div>
             <div className="w-full flex flex-col justify-start items-start gap-[8px]">
               <label htmlFor="Email" className="text-sm sm:text-lg ">
                 UserName
               </label>
-              <input
+              <InputsForm
                 name="username"
                 type="text"
                 value={SignUpUser?.username}
                 onChange={(e) => handleChange(e)}
-                className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
             </div>
             <div className="w-full flex flex-col justify-start items-start gap-[8px]">
               <label htmlFor="Email" className="text-sm sm:text-lg ">
                 Email
               </label>
-              <input
+              <InputsForm
                 name="email"
                 type="email"
                 value={SignUpUser?.email}
                 onChange={(e) => handleChange(e)}
-                className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
             </div>
             <div className="w-full flex flex-col justify-cetner items-start gap-[8px] mt-[20px]">
               <label htmlFor="Password" className="text-sm sm:text-lg">
                 Password
               </label>
-              <input
-                name="password"
+              <InputsForm
+                name="passwrod"
                 type="password"
                 value={SignUpUser?.password}
                 onChange={(e) => handleChange(e)}
-                className="w-full h-[2rem] bg-[#0D0D12] text-[#F5F5F5] border border-[#27272A] rounded focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] p-[5px]"
               />
             </div>
 

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const cart = useContext(contextCartItem);
   const totalPrice = cart?.cartItem.reduce((total, item) => {
-    return total + Number(item.product.price);
+    return total + Number(item.product.price) * item.quantity;
   }, 0);
   return (
     <>
@@ -45,13 +45,11 @@ const Cart = () => {
               <h2>{totalPrice}</h2>
             </div>
             <div className="w-full h-[8rem] flex flex-col items-center gap-4">
-              <button className="w-[20%] h-[2rem] bg-[#8B5CF6] rounded cursor-pointer">
-                Continue Shopping
-              </button>
-              <Link to="/checkout">checkout</Link>
-              <button className="w-[20%] h-[2rem] bg-[#A855F7] rounded cursor-pointer">
-                Proceed to Checkout
-              </button>
+              <Link to="/checkout">
+                <button className="w-full h-[2rem] bg-[#8B5CF6] rounded cursor-pointer px-10">
+                  Continue Shopping
+                </button>
+              </Link>
             </div>
           </section>
         </section>
