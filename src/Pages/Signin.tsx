@@ -55,42 +55,34 @@ const Signin = () => {
       return;
     }
 
-    usersContext?.setUser({
-      email: user.email,
-      password: user.password,
-    });
+    fetch("http://localhost:4000/auth/login", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(usersData),
+    })
+      .then(async (res) => {
+        const response = await res.json();
+        localStorage.setItem("token", response.token);
+        console.log("STATUS:", res.status);
+        console.log(response);
 
-    history("/");
+        if (!res.ok) {
+          throw new Error(response.message || "any problem is exist.");
+        }
 
-    // fetch("http://localhost:8000/Login", {
-    //   method: "POST",
-    //   headers: { "content-type": "application/json" },
-    //   body: JSON.stringify(usersData),
-    // })
-    //   .then(async (res) => {
-    //     const data = await res.json();
+        return response;
+      })
+      .then((responseData) => {
+        console.log("API data" + responseData);
 
-    //     console.log("STATUS:", res.status);
-    //     console.log("SERVER RESPONSE:", data);
+        usersContext?.setUser(responseData.data);
+        console.log(responseData.data.username);
 
-    //     if (!res.ok) {
-    //       throw new Error(data.message || "any problem is exist.");
-    //     }
-
-    //     return data;
-    //   })
-    //   .then((response) => {
-    //     console.log("API data" + response);
-
-    //     usersContext?.setUser(response);
-
-    //     console.log("BEFORE NAVIGATE:", usersContext?.users);
-
-    //     history("/");
-    //   })
-    //   .catch((err: Error) => {
-    //     console.log(err.message);
-    //   });
+        history("/");
+      })
+      .catch((err: Error) => {
+        console.log(err.message);
+      });
   };
   console.log(usersContext?.users?.email, usersContext?.users?.password);
   return (

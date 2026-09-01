@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { contextCartItem } from "../Context/CartContext";
 import { Link } from "react-router-dom";
-import InputsForm from "../Components/Forms/InputsForm";
+// import { AuthContext } from "../Context/ContextProvider";
 
 const Checkout = () => {
   const cart = useContext(contextCartItem);
-
+  // const users = useContext(AuthContext);
   /**
    * @version 1.0.0
    * @description This function calculate total price of carts product.
@@ -22,7 +22,7 @@ const Checkout = () => {
   };
 
   const handleAddToOrder = () => {
-    fetch("http://localhost:8000/Order", {
+    fetch("http://localhost:4000/orders", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(orderBody),
@@ -45,33 +45,8 @@ const Checkout = () => {
   return (
     <>
       <main className="w-full h-[90vh] bg-[#07070A] text-zinc-100">
-        <section className="size-full m-auto flex justify-between items-center">
-          <section className="w-[50%] h-full bg-[#111116] border flex flex-col justify-center items-center gap-5">
-            <h2>Shopping information</h2>
-            <div className="w-full h-[70%] flex flex-col items-center gap-8">
-              <div className="w-[50%] flex flex-col justify-center items-start">
-                <label htmlFor="">Name</label>
-                <InputsForm name="name" type="text" />
-              </div>
-              <div className="w-[50%] flex flex-col justify-center items-start">
-                <label htmlFor="">last name</label>
-                <InputsForm name="lastname" type="text" />
-              </div>
-              <div className="w-[50%] flex flex-col justify-center items-start">
-                <label htmlFor="">address</label>
-                <textarea className="w-full border border-[#8B5CF6] rounded p-1 px-2 " />
-              </div>
-              <div className="w-[50%] flex flex-col justify-center items-start">
-                <label htmlFor="">City</label>
-                <InputsForm name="city" type="text" />
-              </div>
-              <div className="w-[50%] flex flex-col justify-center items-start">
-                <label htmlFor="">Phone</label>
-                <InputsForm name="phone" type="text" />
-              </div>
-            </div>
-          </section>
-          <section className="w-[50%] h-full bg-[#0D0D12] border flex flex-col justify-center items-center gap-5">
+        <section className="size-full m-auto flex justify-center items-center">
+          <section className="w-[85%] h-full bg-[#0D0D12] border flex flex-col justify-center items-center gap-5">
             <h2>Order Summary</h2>
             <div className="w-full h-[50%] flex flex-col items-center gap-8 overflow-y-scroll">
               {cart?.cartItem.map((item) => (
@@ -89,19 +64,19 @@ const Checkout = () => {
             </div>
             <div className="w-full h-[40%] flex justify-center items-center border-t">
               <div className="flex flex-col gap-4">
-                <div className="w-[400px] h-[2rem] flex justify-between items-center">
+                <div className="w-[70vw] h-[2rem] flex justify-between items-center">
                   <h2>Subtotal </h2>
                   <h3>{totalPrice}</h3>
                 </div>
-                <div className="w-[400px] h-[2rem] flex justify-between items-center">
+                <div className="w-[70vw] h-[2rem] flex justify-between items-center">
                   <h2>Shipping</h2>
                   <h3>0</h3>
                 </div>
-                <div className="w-[400px] h-[2rem] flex justify-between items-center">
+                <div className="w-[70vw] h-[2rem] flex justify-between items-center">
                   <h2>Tax</h2>
                   <h3>0 </h3>
                 </div>
-                <div className="w-[400px] h-[2rem] flex justify-between items-center border-t">
+                <div className="w-[70vw] h-[2rem] flex justify-between items-center border-t">
                   <h2>Total</h2>
                   <h3>{totalPrice} </h3>
                 </div>
@@ -119,6 +94,7 @@ const Checkout = () => {
                       Back
                     </button>
                   </Link>
+                  <Link to="/orders"><button>orders</button></Link>
                 </div>
               </div>
             </div>

@@ -2,9 +2,14 @@ import useFetch from "../../Hooks/useFetch";
 import type { Product } from "../../Types/Product";
 import ProductCard from "../ProductCard";
 
+export type ProductResponse = {
+  success: boolean;
+  data: Product[] | null | undefined;
+};
+
 const Feataredproduct = () => {
-  const { data: dataFetch, error } = useFetch<Product[]>({
-    url: "http://localhost:8000/Product",
+  const { data: dataFetch, error } = useFetch<ProductResponse>({
+    url: "http://localhost:4000/products",
   });
   return (
     <>
@@ -15,7 +20,7 @@ const Feataredproduct = () => {
         >
           <h2 className="underline p-[10px]">Featared Product</h2>
           <div className="size-full flex justify-center items-center gap-8">
-            <ProductCard items={dataFetch} error={error} cartBtn={true} />
+            <ProductCard items={dataFetch?.data} error={error} cartBtn={true} />
           </div>
         </div>
       </section>

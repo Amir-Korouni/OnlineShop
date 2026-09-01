@@ -9,10 +9,23 @@ type ProductCartType = {
   cartBtn: boolean;
 };
 
-const ProductCard = ({ items, error, cartBtn }: ProductCartType) => {
+const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
   const cart = useContext(contextCartItem);
 
   const [addedProductId, setAddedProductId] = useState<number | null>(null);
+
+  const handleAddCart = (item: Product) => {
+    const token = localStorage.getItem("token");
+
+    fetch("http://localhost:4000/cart/items", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(item),
+    });
+  };
   return (
     <>
       {items?.map((item) => (
@@ -33,7 +46,7 @@ const ProductCard = ({ items, error, cartBtn }: ProductCartType) => {
                 <button
                   className="w-[160px] h-[1.8rem] rounded duration-600 bg-[#7b55f7] hover:bg-[#A855F7] hover:text-zinc-950 text-zinc-100 mx-[15px] px-[10px] cursor-pointer"
                   onClick={() => {
-                    cart?.addToCart(item);
+                    handleAddCart(item);
                     setAddedProductId(item.id);
                     setTimeout(() => {
                       setAddedProductId(null);
@@ -59,7 +72,7 @@ const ProductCard = ({ items, error, cartBtn }: ProductCartType) => {
         </article>
       ))}
 
-      {error && <p>{error.message}</p>}
+      {err && <p>{err.message}</p>}
     </>
   );
 };

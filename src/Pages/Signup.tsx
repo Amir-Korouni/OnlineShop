@@ -10,7 +10,13 @@ type SignUpError = {
 };
 
 const Signup = () => {
-  const [SignUpUser, setSignUpUser] = useState({} as UserRegister);
+  const [SignUpUser, setSignUpUser] = useState<UserRegister>({
+    id: Infinity,
+    fullname: "",
+    username: "",
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState<SignUpError | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,22 +68,19 @@ const Signup = () => {
       return;
     }
 
-    fetch("http://localhost:8000/Register", {
+    fetch("http://localhost:4000/auth/register", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(SignUpBody),
     })
       .then(async (res) => {
-        const data = await res.json();
-
         console.log("STATUS:", res.status);
-        console.log("RESPONSE:", data);
 
         if (!res.ok) {
           throw new Error("Some things went wrong.");
         }
 
-        return data;
+        return await res.json();
       })
       .then((data) => {
         console.log(data);
@@ -159,7 +162,7 @@ const Signup = () => {
                 Password
               </label>
               <InputsForm
-                name="passwrod"
+                name="password"
                 type="password"
                 value={SignUpUser?.password}
                 onChange={(e) => handleChange(e)}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useFetch from "../Hooks/useFetch";
-import type { Product } from "../Types/Product";
 import ProductCard from "../Components/ProductCard";
+import type { ProductResponse } from "../Components/HomeSections/FeataredProduct";
 
 type filterType = {
   categories: string[];
@@ -10,9 +10,11 @@ type filterType = {
 };
 
 const Products = () => {
-  const { data, error } = useFetch<Product[]>({
-    url: "http://localhost:8000/Product",
+  const { data, error } = useFetch<ProductResponse>({
+    url: "http://localhost:4000/products",
   });
+
+  console.log(data);
 
   const [filters, setFilters] = useState<filterType>({
     categories: [],
@@ -50,7 +52,7 @@ const Products = () => {
    * @description This function is applying a multi filter of product. This function said (for categories)value of variable is ==> categories length of filters state is zero or categories of filters state includes that category comes from data(fetching api).
    * @returns return all varialbes if all of them are true together.
    */
-  const filteredProduct = data?.filter((product) => {
+  const filteredProduct = data?.data?.filter((product) => {
     const categoryMatch =
       filters.categories.length === 0 ||
       filters.categories.includes(product.category);
@@ -114,19 +116,9 @@ const Products = () => {
                 />
                 Eearpuds
               </label>
-
-              <label className="w-full flex justify-center gap-2">
-                <input
-                  type="checkbox"
-                  name="category"
-                  value="Gaming"
-                  onChange={(e) => handleFilterChange(e, "categories")}
-                />
-                Gaming
-              </label>
             </fieldset>
 
-            <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
+            {/* <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
               <legend>Brand</legend>
               <label className="w-full flex justify-center gap-2">
                 <input
@@ -166,7 +158,7 @@ const Products = () => {
                 />
                 Razer
               </label>
-            </fieldset>
+            </fieldset> */}
 
             <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
               <legend>Price</legend>
@@ -183,7 +175,7 @@ const Products = () => {
               </label>
             </fieldset>
 
-            <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
+            {/* <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
               <legend>Features</legend>
 
               <label className="w-full flex justify-center gap-2">
@@ -205,7 +197,7 @@ const Products = () => {
                 />
                 None Wireless
               </label>
-            </fieldset>
+            </fieldset> */}
             <button
               type="reset"
               className="w-[150px] h-[2rem] bg-[#8B5CF6] rounded text-zinc-100 cursor-pointer duration-500 hover:bg-[#A855F7]"

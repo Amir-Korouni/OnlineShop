@@ -45,7 +45,7 @@ const NavBar = () => {
               {usersCon?.users ? (
                 // usersCon.users?.email
                 <div className="w-[50px] h-[50px] rounded-full bg-purple-500">
-                  <h2>{usersCon.users?.email}</h2>
+                  <h2>{usersCon.users.username}</h2>
                 </div>
               ) : (
                 <Link to="/signin">

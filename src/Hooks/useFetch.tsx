@@ -15,15 +15,21 @@ const useFetch = <T,>({ url }: hookProp) => {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<Error | null>(null);
   useEffect(() => {
-    fetch(url)
+    const token = localStorage.getItem("token");
+    console.log("TOKEN:", token);
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(async (res) => {
         if (!res.ok) {
-          throw new Error("We can't fetch data.Please check api has a problem");
+          throw new Error(`Request failed: ${res.status}`);
         }
         return await res.json();
       })
       .then((dataRes) => {
-        console.log(dataRes);
+        console.log(dataRes.data);
         setData(dataRes);
       })
       .catch((err: Error) => {

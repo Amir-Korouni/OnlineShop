@@ -1,9 +1,9 @@
 import React, { createContext, useState } from "react";
-import type { UserLogin } from "../Types/User";
+import type {  UserRegister } from "../Types/User";
 
 export type AuthContextType = {
-  users: UserLogin | null;
-  setUser: React.Dispatch<React.SetStateAction<UserLogin | null>>;
+  users: UserRegister | null;
+  setUser: React.Dispatch<React.SetStateAction<UserRegister | null>>;
 };
 
 /**
@@ -25,7 +25,7 @@ type ContextProp = {
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 const ContextProvider = ({ children }: ContextProp) => {
-  const [users, setUser] = useState<UserLogin | null>(null);
+  const [users, setUser] = useState<UserRegister | null>(null);
   return (
     <>
       <AuthContext.Provider value={{ users, setUser }}>

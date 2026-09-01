@@ -1,10 +1,10 @@
 import useFetch from "../../Hooks/useFetch";
-import type { Product } from "../../Types/Product";
 import ProductCard from "../ProductCard";
+import type { ProductResponse } from "./FeataredProduct";
 
 const TrendingNow = () => {
-  const { data: dataFetch, error } = useFetch<Product[]>({
-    url: "http://localhost:8000/Product",
+  const { data: dataFetch, error } = useFetch<ProductResponse>({
+    url: "http://localhost:4000/products",
   });
   return (
     <>
@@ -15,7 +15,7 @@ const TrendingNow = () => {
         >
           <h2 className="underline p-[10px]">Trending Now</h2>
           <div className="size-full flex justify-center items-center gap-10">
-            <ProductCard items={dataFetch} error={error} cartBtn={true} />
+            <ProductCard items={dataFetch?.data} error={error} cartBtn={true} />
           </div>
         </div>
       </section>
