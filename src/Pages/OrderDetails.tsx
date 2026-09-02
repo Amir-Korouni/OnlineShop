@@ -1,6 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import useFetch from "../Hooks/useFetch";
+
+type Order = {
+  id: number;
+  totalAmount: string;
+  status: string;
+};
+
+type OrderResponse = {
+  success: boolean;
+  data: Order;
+};
 
 const OrderDetail = () => {
+  const { id } = useParams();
+  const { data, error } = useFetch<OrderResponse>({
+    url: `http://localhost:4000/orders/${id}`,
+  });
+  console.log(data);
+  {
+    error && console.log(error);
+  }
+
   return (
     <>
       <Link to="/orders">Back to order</Link>
@@ -12,8 +33,8 @@ const OrderDetail = () => {
           </div>
           <div className="w-full h-[20%] border rounded flex flex-col justify-center items-start p-5">
             <label htmlFor="">
-              <input type="radio" name="productstate" value="OrderConfirm" />
-              Order Confirm
+              <input type="radio" name="productstate" value="Pending" />
+              Pending
             </label>
             <label htmlFor="">
               <input type="radio" name="productstate" value="Processing" />
@@ -24,7 +45,7 @@ const OrderDetail = () => {
               Shipped
             </label>
             <label htmlFor="">
-              <input type="radio" name="productstate" value="Deliveray" />
+              <input type="radio" name="productstate" value="Cancelled" />
               Deliveray
             </label>
           </div>
@@ -32,17 +53,18 @@ const OrderDetail = () => {
             <h2>Products</h2>
             <div className="size-full flex flex-col gap-2 ">
               {/* Cart in product details */}
+
               <div className="w-full h-[4rem] bg-[#27272A] flex justify-between items-center px-5 border-t rounded">
-                <h2>Name product</h2>
-                <h2>quantity: 1</h2>
-                <h2>Price: $250.00</h2>
+                <h2>#ORD {data?.data?.id}</h2>
+                <h2>Status: {data?.data.status}</h2>
+                <h2>Price: ${data?.data.totalAmount}</h2>
               </div>
             </div>
           </div>
           <div className="w-full h-[30%] border rounded flex flex-col justify-center items-start p-5">
             <div className="w-full h-[4rem] flex justify-between items-center">
               <h2>Subtotal</h2>
-              <h2>$800</h2>
+              <h2>${data?.data.totalAmount}</h2>
             </div>
             <div className="w-full h-[4rem] flex justify-between items-center">
               <h2>Shipping</h2>
@@ -50,7 +72,7 @@ const OrderDetail = () => {
             </div>
             <div className="w-full h-[4rem] flex justify-between items-center border-t">
               <h2>Total</h2>
-              <h2>$800</h2>
+              <h2>${data?.data.totalAmount}</h2>
             </div>
           </div>
           <div className="w-full h-[4rem] flex justify-between items-center">

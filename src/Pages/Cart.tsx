@@ -3,18 +3,12 @@ import CartQuantity from "../Components/CartQuantity";
 import { contextCartItem } from "../Context/CartContext";
 import { Link } from "react-router-dom";
 import useFetch from "../Hooks/useFetch";
-
-type CartProduct = {
-  id: number;
-  name: string;
-  image: string;
-  price: string;
-};
+import type { Product } from "../Types/Product";
 
 type CartItem = {
   id: number;
   quantity: number;
-  product: CartProduct;
+  product: Product;
 };
 
 type Cart = {
@@ -58,6 +52,16 @@ const Cart = () => {
   Array.isArray(data?.data);
   console.log(data);
 
+  const handleContinue = () => {
+    if (data?.data?.items) {
+      cart?.setCartItem(
+        data.data.items.map((item) => ({
+          product: item.product,
+          quantity: item.quantity,
+        })),
+      );
+    }
+  };
   return (
     <>
       <main className="w-full h-[90vh] bg-[#07070A] text-zinc-100 m-auto">
@@ -76,7 +80,7 @@ const Cart = () => {
                 <h2 className="w-[30%] h-auto">Price ${item.product.price}</h2>
                 <CartQuantity
                   quantityCart={item.quantity}
-                  cartId={item.product.id}
+                  productId={Number(item.product.id)}
                 />
                 <button
                   className="w-[150px] h-[30px] cursor-pointer duration-400 bg-[#A855F7] hover:bg-[#8B5CF6] text-zinc-950 rounded flex justify-center items-center"
@@ -97,7 +101,12 @@ const Cart = () => {
             </div>
             <div className="w-full h-[8rem] flex flex-col items-center gap-4">
               <Link to="/checkout">
-                <button className="w-full h-[2rem] bg-[#8B5CF6] rounded cursor-pointer px-10">
+                <button
+                  className="w-full h-[2rem] bg-[#8B5CF6] rounded cursor-pointer px-10"
+                  onClick={() => {
+                    handleContinue();
+                  }}
+                >
                   Continue Shopping
                 </button>
               </Link>

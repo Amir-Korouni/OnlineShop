@@ -1,4 +1,8 @@
+import { useContext } from "react";
+import { contextCartItem } from "../Context/CartContext";
+
 const Payment = () => {
+  const cart = useContext(contextCartItem);
   return (
     <>
       <h2>Payment</h2>
@@ -61,12 +65,13 @@ const Payment = () => {
             <div className="w-full h-[50%] flex flex-col justify-center items-start p-5">
               <h2>Order Summary</h2>
               <div className="size-full flex flex-col gap-2 ">
-                {/* Cart in product details*/}
-                <div className="w-full h-[4rem] bg-[#27272A] rounded flex justify-between items-center px-5 ">
-                  <h2>Name product</h2>
-                  <h2>quantity: 1</h2>
-                  <h2>Price: $250.00</h2>
-                </div>
+                {cart?.cartItem.map((item) => (
+                  <div className="w-full h-[4rem] bg-[#27272A] rounded flex justify-between items-center px-5 ">
+                    <h2>{item.product.name}</h2>
+                    <h2>quantity: {item.quantity}</h2>
+                    <h2>Price: ${item.product.price}</h2>
+                  </div>
+                ))}
               </div>
             </div>
             <div className="w-full h-[30%]  flex flex-col justify-center items-start p-5">

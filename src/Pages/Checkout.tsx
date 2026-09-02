@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { contextCartItem } from "../Context/CartContext";
-import { Link } from "react-router-dom";
-// import { AuthContext } from "../Context/ContextProvider";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/ContextProvider";
 
 const Checkout = () => {
   const cart = useContext(contextCartItem);
-  // const users = useContext(AuthContext);
+  const users = useContext(AuthContext);
+  const history = useNavigate();
   /**
    * @version 1.0.0
    * @description This function calculate total price of carts product.
@@ -16,15 +17,19 @@ const Checkout = () => {
   }, 0);
 
   const orderBody = {
-    userId: 1,
+    userId: users?.users?.id,
     items: cart?.cartItem,
     totalPrice: totalPrice,
   };
 
   const handleAddToOrder = () => {
+    const token = localStorage.getItem("token");
     fetch("http://localhost:4000/orders", {
       method: "POST",
-      headers: { "Content-type": "application/json" },
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(orderBody),
     })
       .then(async (res) => {
@@ -37,6 +42,7 @@ const Checkout = () => {
       })
       .then((dataRes) => {
         console.log(dataRes);
+        history("/orders");
       })
       .catch((err: Error) => {
         console.log(err.message);
@@ -84,7 +90,7 @@ const Checkout = () => {
                   <button
                     className="w-[150px] h-[2rem] duration-700 bg-purple-800 hover:bg-purple-300 text-zinc-100  hover:text-zinc-900 rounded cursor-pointer"
                     onClick={() => {
-                      handleAddToOrder;
+                      handleAddToOrder();
                     }}
                   >
                     Place Order
@@ -94,7 +100,9 @@ const Checkout = () => {
                       Back
                     </button>
                   </Link>
-                  <Link to="/orders"><button>orders</button></Link>
+                  <Link to="/orders">
+                    <button>orders</button>
+                  </Link>
                 </div>
               </div>
             </div>

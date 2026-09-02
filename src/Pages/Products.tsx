@@ -56,20 +56,11 @@ const Products = () => {
     const categoryMatch =
       filters.categories.length === 0 ||
       filters.categories.includes(product.category);
-
-    const brandMatch =
-      filters.brands.length === 0 || filters.brands.includes(product.brand);
-
-    const featureMatch =
-      filters.features.length === 0 ||
-      filters.features.includes(product.wireless);
     const searchMatch = product.name
       .toLowerCase()
       .includes(search.toLocaleLowerCase());
     const priceMatch = Number(product.price) <= maxRange;
-    return (
-      searchMatch && categoryMatch && brandMatch && featureMatch && priceMatch
-    );
+    return searchMatch && categoryMatch && priceMatch;
   });
   return (
     <>
@@ -118,48 +109,6 @@ const Products = () => {
               </label>
             </fieldset>
 
-            {/* <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
-              <legend>Brand</legend>
-              <label className="w-full flex justify-center gap-2">
-                <input
-                  type="checkbox"
-                  name="brand"
-                  value="Sony"
-                  onChange={(e) => handleFilterChange(e, "brands")}
-                />
-                Sony
-              </label>
-
-              <label className="w-full flex justify-center gap-2">
-                <input
-                  type="checkbox"
-                  name="brand"
-                  value="Haylou"
-                  onChange={(e) => handleFilterChange(e, "brands")}
-                />
-                HayLou
-              </label>
-
-              <label className="w-full flex justify-center gap-2">
-                <input
-                  type="checkbox"
-                  name="brand"
-                  value="Redmi"
-                  onChange={(e) => handleFilterChange(e, "brands")}
-                />
-                Redmi
-              </label>
-              <label className="w-full flex justify-center gap-2">
-                <input
-                  type="checkbox"
-                  name="brand"
-                  value="Razer"
-                  onChange={(e) => handleFilterChange(e, "brands")}
-                />
-                Razer
-              </label>
-            </fieldset> */}
-
             <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
               <legend>Price</legend>
               <label className="w-full flex flex-col justify-center gap-2">
@@ -175,29 +124,6 @@ const Products = () => {
               </label>
             </fieldset>
 
-            {/* <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
-              <legend>Features</legend>
-
-              <label className="w-full flex justify-center gap-2">
-                <input
-                  type="checkbox"
-                  name="Wireless"
-                  value="Wireless"
-                  onChange={(e) => handleFilterChange(e, "features")}
-                />
-                Wireless
-              </label>
-
-              <label className="w-full flex justify-center gap-2">
-                <input
-                  type="checkbox"
-                  name="NoneWireless"
-                  value="NoneWireless"
-                  onChange={(e) => handleFilterChange(e, "features")}
-                />
-                None Wireless
-              </label>
-            </fieldset> */}
             <button
               type="reset"
               className="w-[150px] h-[2rem] bg-[#8B5CF6] rounded text-zinc-100 cursor-pointer duration-500 hover:bg-[#A855F7]"

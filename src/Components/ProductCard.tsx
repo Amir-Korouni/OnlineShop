@@ -15,7 +15,7 @@ const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch("http://localhost:4000/cart_items", {
+      const res = await fetch("http://localhost:4000/cart/items", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
