@@ -3,9 +3,8 @@ export type Product = {
   name: string;
   category: string;
   quantity: number;
-  brand: string;
   price: string;
   description: string;
   image: string;
-  wireless: string;
+  isActive: boolean;
 };

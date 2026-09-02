@@ -12,6 +12,8 @@ import Main from "../Pages/Main";
 import ContextProvider from "../Context/ContextProvider";
 import ProtectedRoutes from "./ProtectedRoute";
 import CartContext from "../Context/CartContext";
+import OrderDetail from "../Pages/OrderDetails";
+import Payment from "../Pages/Payment";
 
 const AppRoute = () => {
   return (
@@ -27,8 +29,10 @@ const AppRoute = () => {
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/orders" element={<Orders />} />
+                  <Route path="/orderdetail/:id" element={<OrderDetail />} />
                 </Route>
               </Route>
+                  <Route path="/payment" element={<Payment />} />
 
               <Route path="/signin" element={<Signin />} />
               <Route path="/signup" element={<Signup />} />

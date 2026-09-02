@@ -214,3 +214,32 @@ idea for cart page:
 │ [ View Details ]                 [ Buy Again ]               │
 └──────────────────────────────────────────────────────────────┘
 ```
+
+**Idea for payment**
+
+```
+                 Payment
+────────────────────────────────────────────────
+
+┌────────────────────────┐   ┌───────────────────┐
+│                        │   │ Order Summary     │
+│  Payment Method        │   │                   │
+│                        │   │ Headphone    $299  │
+│  ○ Credit Card         │   │ Airpods       $99  │
+│  ○ PayPal              │   │                   │
+│                        │   │ Subtotal    $398   │
+│  Card Number           │   │ Shipping      $0   │
+│  [ 4242 4242 4242 ]    │   │ ────────────────  │
+│                        │   │ Total       $398   │
+│  Expiry      CVV       │   │                   │
+│  [ 09/28 ]  [ 123 ]    │   │                   │
+│                        │   └───────────────────┘
+│  Card Holder           │
+│  [ Amir Korouni ]      │
+│                        │
+│  ☑ Save payment info   │
+│                        │
+│  [      Pay $398      ]│
+│                        │
+└────────────────────────┘
+```

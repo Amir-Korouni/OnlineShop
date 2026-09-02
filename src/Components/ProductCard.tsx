@@ -1,7 +1,6 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import type { Product } from "../Types/Product";
 import { Link } from "react-router-dom";
-import { contextCartItem } from "../Context/CartContext";
 
 type ProductCartType = {
   items: Product[] | null | undefined;
@@ -10,21 +9,38 @@ type ProductCartType = {
 };
 
 const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
-  const cart = useContext(contextCartItem);
-
   const [addedProductId, setAddedProductId] = useState<number | null>(null);
 
-  const handleAddCart = (item: Product) => {
+  const handleAddCart = async (item: Product) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:4000/cart/items", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(item),
-    });
+    try {
+      const res = await fetch("http://localhost:4000/cart_items", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          productId: item.id,
+          quantity: 1,
+        }),
+      });
+
+      const data = await res.json();
+
+      console.log("Status:", res.status);
+      console.log("Response:", data);
+
+      if (!res.ok) {
+        throw new Error(data.message || "Couldn't add product to cart.");
+      }
+
+      return true;
+    } catch (error) {
+      console.log("Add to cart error:", error);
+      return false;
+    }
   };
   return (
     <>

@@ -3,7 +3,30 @@ import CartQuantity from "../Components/CartQuantity";
 import { contextCartItem } from "../Context/CartContext";
 import { Link } from "react-router-dom";
 import useFetch from "../Hooks/useFetch";
-import type { ProductResponse } from "../Components/HomeSections/FeataredProduct";
+
+type CartProduct = {
+  id: number;
+  name: string;
+  image: string;
+  price: string;
+};
+
+type CartItem = {
+  id: number;
+  quantity: number;
+  product: CartProduct;
+};
+
+type Cart = {
+  id: number;
+  userId: number;
+  items: CartItem[];
+};
+
+type CartResponse = {
+  success: boolean;
+  data: Cart;
+};
 
 const Cart = () => {
   const cart = useContext(contextCartItem);
@@ -13,7 +36,7 @@ const Cart = () => {
 
   const token = localStorage.getItem("token");
 
-  const { data, error } = useFetch<ProductResponse>({
+  const { data, error } = useFetch<CartResponse>({
     url: "http://localhost:4000/cart",
   });
 
@@ -28,33 +51,37 @@ const Cart = () => {
       })
       .then((resData) => {
         console.log(resData);
+        console.log(token);
       });
   };
 
   Array.isArray(data?.data);
   console.log(data);
-  
+
   return (
     <>
       <main className="w-full h-[90vh] bg-[#07070A] text-zinc-100 m-auto">
         <section className="size-full flex flex-col justify-start items-center">
           <section className="w-full h-[70%] border bg-[#111116] flex flex-col items-center p-2 overflow-y-scroll">
-            {data?.data?.map((item) => (
+            {data?.data?.items.map((item) => (
               <div className="w-[95%] h-[25vh] border border-[#8B5CF6] rounded flex justify-between items-center bg-[#111116] rounded px-2">
                 <div className="w-[50%] flex justify-center items-center gap-5">
                   <img
-                    src={item.image}
+                    src={item.product.image}
                     alt="productImage"
                     className="w-[20%] h-[20%] object-cover border rounded"
                   />
-                  <h2>{item.name}</h2>
+                  <h2>{item.product.name}</h2>
                 </div>
-                <h2 className="w-[30%] h-auto">Price ${item.price}</h2>
-                <CartQuantity quantityCart={item.quantity} cartId={item.id} />
+                <h2 className="w-[30%] h-auto">Price ${item.product.price}</h2>
+                <CartQuantity
+                  quantityCart={item.quantity}
+                  cartId={item.product.id}
+                />
                 <button
                   className="w-[150px] h-[30px] cursor-pointer duration-400 bg-[#A855F7] hover:bg-[#8B5CF6] text-zinc-950 rounded flex justify-center items-center"
                   onClick={() => {
-                    handleDeleteCart(item.id);
+                    handleDeleteCart(item.product.id);
                   }}
                 >
                   Remove
