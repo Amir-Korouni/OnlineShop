@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import CartQuantity from "../Components/CartQuantity";
 import { contextCartItem } from "../Context/CartContext";
 import { Link } from "react-router-dom";
@@ -24,33 +24,27 @@ type CartResponse = {
 
 const Cart = () => {
   const cart = useContext(contextCartItem);
-  const totalPrice = cart?.cartItem.reduce((total, item) => {
-    return total + Number(item.product.price) * item.quantity;
-  }, 0);
 
-  const token = localStorage.getItem("token");
+  const { cartItem, setCartItem, removeFromCart } = cart!;
 
   const { data, error } = useFetch<CartResponse>({
     url: "http://localhost:4000/cart",
   });
 
-  const handleDeleteCart = (id: number) => {
-    fetch(`http://localhost:4000/cart/items/${id}`, {
-      method: "DELETE",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(id),
-    })
-      .then(async (res) => {
-        return await res.json();
-      })
-      .then((resData) => {
-        console.log(resData);
-        console.log(token);
-      });
-  };
+  useEffect(() => {
+    if (data?.data?.items) {
+      setCartItem(
+        data.data.items.map((item) => ({
+          product: item.product,
+          quantity: item.quantity,
+        })),
+      );
+    }
+  }, [data, setCartItem]);
 
-  Array.isArray(data?.data);
-  console.log(data);
+  const totalPrice = cartItem.reduce((total, item) => {
+    return total + Number(item.product.price) * item.quantity;
+  }, 0);
 
   const handleContinue = () => {
     if (data?.data?.items) {
@@ -85,7 +79,7 @@ const Cart = () => {
                 <button
                   className="w-[150px] h-[30px] cursor-pointer duration-400 bg-[#A855F7] hover:bg-[#8B5CF6] text-zinc-950 rounded flex justify-center items-center"
                   onClick={() => {
-                    handleDeleteCart(item.product.id);
+                    removeFromCart(item.product.id);
                   }}
                 >
                   Remove

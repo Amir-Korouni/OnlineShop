@@ -67,7 +67,6 @@ const CartContext = ({ children }: ContextCartProp) => {
         {
           method: "DELETE",
           headers: {
-            "Content-type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         },
@@ -95,7 +94,7 @@ const CartContext = ({ children }: ContextCartProp) => {
    *
    * @version 1.0.0
    * @param productId
-   * @description This function is called increaseQuantity and insert quantity of product.
+   * @description This function is called increaseQuantity and increase quantity of product with that id we passed it.
    *
    */
   const increaseQuantity = async (productId: number) => {
@@ -108,9 +107,19 @@ const CartContext = ({ children }: ContextCartProp) => {
 
     const newQuantity = item.quantity + 1;
 
-    const token = localStorage.getItem("token");
+    setCartItem((current) =>
+      current.map((item) =>
+        item.product.id === productId
+          ? {
+              ...item,
+              quantity: newQuantity,
+            }
+          : item,
+      ),
+    );
 
     try {
+      const token = localStorage.getItem("token");
       const response = await fetch(
         `http://localhost:4000/cart/items/${productId}`,
         {
@@ -135,17 +144,6 @@ const CartContext = ({ children }: ContextCartProp) => {
         console.log("Couldn't update quantity");
         return;
       }
-
-      setCartItem((current) =>
-        current.map((item) =>
-          item.product.id === productId
-            ? {
-                ...item,
-                quantity: newQuantity,
-              }
-            : item,
-        ),
-      );
     } catch (error) {
       console.log("❌ Increase error:", error);
     }
