@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import type { UserLogin } from "../../Types/User";
 import type { SignInError } from "../Signin";
 import { AuthContext } from "../../Context/ContextProvider";
+import { BiCheckCircle, BiCheckShield } from "react-icons/bi";
 
 const AdminLogin = () => {
   const [user, setUser] = useState<UserLogin>({ email: "", password: "" });
@@ -37,20 +38,29 @@ const AdminLogin = () => {
 
   return (
     <>
-      <section className="w-full h-[120vh] bg-[#001b24] text-[#F5F5F5] flex justify-center items-center gap-5 sm:gap-6 md:gap-8 lg:gap-0">
-        <section className="w-[50%] h-[80%] flex gap-[10px] flex-col justify-center items-center text-[#F5F5F5] ">
-          <div className="">
-            <h2>Welcome</h2>
-            <h2>Sign in admin</h2>
-          </div>
+      <section className="w-full h-[100vh] bg-[#07070A] text-[#F5F5F5] flex justify-center items-center gap-5 sm:gap-6 md:gap-8 lg:gap-0">
+        <section className="w-[45%] h-full bg-[linear-gradient(45deg,#07070A,#302055)] flex flex-col justify-center items-center border-r">
+          <h2 className="w-auto h-[6rem] flex justify-center drop-shadow-[0_5px_5px_#8B5CF6]">
+            <BiCheckCircle size={35}/>
+            Security Shop Admin Panel
+          </h2>
+          <h2 className="w-full h-[3rem] drop-shadow-[0_5px_5px_#8B5CF6]">
+            Welcome to your admin panel
+          </h2>
+          <h2 className="w-full h-[3rem] drop-shadow-[0_5px_5px_#8B5CF6]">
+            Dear admin, you can sign in and manage your shop.
+          </h2>
+        </section>
+
+        <section className="w-[55%] h-full flex flex-col justify-center items-center">
           <form
             action="/admin/dashboard"
-            className="w-[80%] h-auto bg-[#11111696] p-10 flex flex-col gap-7 "
+            className="w-[70%] h-auto bg-[#111116] p-10 flex flex-col  gap-7 rounded"
           >
             <div className="flex flex-col justify-start items-start  gap-1 sm:gap-2">
               <h2 className="text-xl sm:text-2xl md:text-3xl">Sign in</h2>
               <p className="text-xs sm:text-sm md:text-base">
-                Welcome back to head phone shop.
+                Welcome dear admin
               </p>
             </div>
 
@@ -63,7 +73,7 @@ const AdminLogin = () => {
             </div>
             <div className="w-full flex flex-col justify-start items-start">
               <label htmlFor="Email" className="text-sm sm:text-lg">
-                Email
+                Management Email
               </label>
               <InputsForm
                 name="email"
@@ -74,7 +84,7 @@ const AdminLogin = () => {
             </div>
             <div className="w-full flex flex-col justify-cetner items-start gap-[8px] mt-[5px]">
               <label htmlFor="Password" className="text-sm sm:text-lg">
-                Password
+                Management Password
               </label>
               <InputsForm
                 name="password"
@@ -86,21 +96,17 @@ const AdminLogin = () => {
             <div className="w-full h-[4rem] flex justify-between items-end mt-[10px]">
               <button
                 type="submit"
-                className="w-full h-[50px] bg-[#8B5CF6] cursor-pointer rounded hover:bg-[#A855F7] transition-colors duration-300"
+                className="w-full h-[40px] bg-[#8B5CF6] cursor-pointer rounded hover:bg-[#A855F7] transition-colors duration-300"
               >
                 Sign in
               </button>
             </div>
-          </form>
-          <div className="flex gap-2">
             <Link to="/adminresetpass">
-              <h2>Forrget password</h2>
+              <h4 className="text-blue-700">
+                If you forget password you can reset it here.
+              </h4>
             </Link>
-            <div>
-              <h3>No credentioal yet? Use Demo mode</h3>
-              <button>Preview as Management Demo</button>
-            </div>
-          </div>
+          </form>
         </section>
       </section>
     </>
