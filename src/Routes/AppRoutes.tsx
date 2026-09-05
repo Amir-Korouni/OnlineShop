@@ -14,6 +14,12 @@ import ProtectedRoutes from "./ProtectedRoute";
 import CartContext from "../Context/CartContext";
 import OrderDetail from "../Pages/OrderDetails";
 import Payment from "../Pages/Payment";
+import Admin from "../Pages/Admin";
+import AdminDashboard from "../Pages/Admin/AdminDashboard";
+import AdminProducts from "../Pages/Admin/AdminProducts";
+import AdminOrders from "../Pages/Admin/AdminOrders";
+import AdminUsers from "../Pages/Admin/AdminUsers";
+import AdminLogin from "../Pages/Admin/AdminLogin";
 
 const AppRoute = () => {
   return (
@@ -30,10 +36,18 @@ const AppRoute = () => {
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/orders" element={<Orders />} />
                   <Route path="/orderdetail/:id" element={<OrderDetail />} />
+                  <Route path="/payment" element={<Payment />} />
                 </Route>
               </Route>
-                  <Route path="/payment" element={<Payment />} />
 
+              <Route element={<Admin />}>
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/products" element={<AdminProducts />} />
+                <Route path="/admin/orders" element={<AdminOrders />} />
+                <Route path="/admin/users" element={<AdminUsers />} />
+              </Route>
+
+              <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/signin" element={<Signin />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/products" element={<Products />} />

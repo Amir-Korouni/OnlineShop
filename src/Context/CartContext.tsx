@@ -134,11 +134,11 @@ const CartContext = ({ children }: ContextCartProp) => {
         },
       );
 
-      console.log("🔥 STATUS:", response.status);
+      console.log("STATUS:", response.status);
 
       const result = await response.json();
 
-      console.log("🔥 API RESPONSE:", result);
+      console.log("API RESPONSE:", result);
 
       if (!response.ok) {
         console.log("Couldn't update quantity");
@@ -150,8 +150,8 @@ const CartContext = ({ children }: ContextCartProp) => {
   };
 
   const decreaseQuantity = async (productId: number) => {
-    console.log("🔥 DECREASE CALLED");
-    console.log("🔥 productId:", productId);
+    console.log("DECREASE CALLED");
+    console.log("productId:", productId);
 
     const item = cartItem.find((item) => item.product.id === productId);
 

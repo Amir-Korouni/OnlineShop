@@ -7,7 +7,7 @@ import type { UserLogin } from "../Types/User";
 import { AuthContext } from "../Context/ContextProvider";
 import InputsForm from "../Components/Forms/InputsForm";
 
-type SignInError = {
+export type SignInError = {
   email?: string;
   password?: string;
 };
@@ -33,7 +33,7 @@ const Signin = () => {
     if (!usersData.password) {
       newError.password = "Password is required field. please fill this field";
     } else if (usersData.password.length < 6) {
-      usersData.password = "Password must be at least 8 characters";
+      usersData.password = "Password must be at least 6 characters";
     }
     setError(newError);
 
@@ -64,7 +64,6 @@ const Signin = () => {
         const response = await res.json();
         localStorage.setItem("token", response.token);
         console.log("STATUS:", res.status);
-        console.log(response);
 
         if (!res.ok) {
           throw new Error(response.message || "any problem is exist.");
@@ -73,10 +72,7 @@ const Signin = () => {
         return response;
       })
       .then((responseData) => {
-        console.log("API data" + responseData);
-
         usersContext?.setUser(responseData.data);
-        console.log(responseData.data.username);
 
         history("/");
       })

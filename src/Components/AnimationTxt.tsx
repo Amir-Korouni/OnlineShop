@@ -13,7 +13,7 @@ type TypeWriterProps = {
  * @returns animation type text for users.
  */
 const AnimationTxt = ({ message, speed = 20 }: TypeWriterProps) => {
-  const [displayText, setDisplayText] = useState("");
+  const [displayText, setDisplayText] = useState<string>("");
 
   useEffect(() => {
     setDisplayText("");

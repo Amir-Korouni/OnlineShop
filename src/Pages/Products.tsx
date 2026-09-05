@@ -107,6 +107,16 @@ const Products = () => {
                 />
                 Eearpuds
               </label>
+
+              <label className="w-full flex justify-center gap-2">
+                <input
+                  type="checkbox"
+                  name="category"
+                  value="Handsfree"
+                  onChange={(e) => handleFilterChange(e, "categories")}
+                />
+                Handsfree
+              </label>
             </fieldset>
 
             <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
