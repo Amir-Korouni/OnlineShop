@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import ProductCard from "../Components/ProductCard";
 import type { ProductResponse } from "../Components/HomeSections/FeataredProduct";
@@ -52,16 +52,22 @@ const Products = () => {
    * @description This function is applying a multi filter of product. This function said (for categories)value of variable is ==> categories length of filters state is zero or categories of filters state includes that category comes from data(fetching api).
    * @returns return all varialbes if all of them are true together.
    */
-  const filteredProduct = data?.data?.filter((product) => {
-    const categoryMatch =
-      filters.categories.length === 0 ||
-      filters.categories.includes(product.category);
-    const searchMatch = product.name
-      .toLowerCase()
-      .includes(search.toLocaleLowerCase());
-    const priceMatch = Number(product.price) <= maxRange;
-    return searchMatch && categoryMatch && priceMatch;
-  });
+  const filteredProduct = useMemo(() => {
+    return data?.data?.filter((product) => {
+      const categoryMatch =
+        filters.categories.length === 0 ||
+        filters.categories.includes(product.category);
+
+      const searchMatch = product.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
+
+      const priceMatch = Number(product.price) <= maxRange;
+
+      return searchMatch && categoryMatch && priceMatch;
+    });
+  }, [data?.data, filters.categories, search, maxRange]);
+
   return (
     <>
       <section className="w-full h-[250vh] bg-[#0A0A0F] p-[5px] rounded-lg ">
