@@ -7,7 +7,7 @@ const NavBar = () => {
   const usersCon = useContext(AuthContext);
   return (
     <>
-      <section className="w-full h-[5rem] bg-[#0A0A0F] p-[5px] rounded-lg">
+      <header className="w-full h-[5rem] bg-[#0A0A0F] p-[5px] rounded-lg">
         <nav className="size-full bg-[#1F1F27] flex justify-between align-center rounded-lg border-b border-[#A855F7] px-[10px]">
           <div className="flex justify-center items-center w-[150px]">
             <img
@@ -57,7 +57,7 @@ const NavBar = () => {
             </div>
           </div>
         </nav>
-      </section>
+      </header>
     </>
   );
 };

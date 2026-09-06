@@ -54,7 +54,7 @@ const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
             alt={item.name}
             className="w-[150px] h-[150px] object-cover"
           />
-          <h2>{item.name}</h2>
+          <h3 className="text-2xl text-zinc-100">{item.name}</h3>
           <p>{item.price}</p>
           <div className="flex flex-col gap-2">
             {cartBtn && (

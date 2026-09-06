@@ -58,7 +58,7 @@ const AdminLogin = () => {
             className="w-[70%] h-auto bg-[#111116] p-10 flex flex-col  gap-7 rounded"
           >
             <div className="flex flex-col justify-start items-start  gap-1 sm:gap-2">
-              <h2 className="text-xl sm:text-2xl md:text-3xl">Sign in</h2>
+              <h3 className="text-xl sm:text-2xl md:text-3xl">Sign in</h3>
               <p className="text-xs sm:text-sm md:text-base">
                 Welcome dear admin
               </p>

@@ -60,10 +60,10 @@ const Checkout = () => {
                   className="w-[80%] flex justify-around items-center border"
                   key={item.product.id}
                 >
-                  <h2 className="flex gap-2">
+                  <h3 className="flex gap-2 text-zinc-100 text-2xl">
                     {item.product.name}
                     <span>({item.quantity})</span>
-                  </h2>
+                  </h3>
                   <h3>{item.product.price}</h3>
                 </div>
               ))}
@@ -71,19 +71,19 @@ const Checkout = () => {
             <div className="w-full h-[40%] flex justify-center items-center border-t">
               <div className="flex flex-col gap-4">
                 <div className="w-[70vw] h-[2rem] flex justify-between items-center">
-                  <h2>Subtotal </h2>
+                  <h3 className="text-2xl text-zinc-100">Subtotal </h3>
                   <h3>{totalPrice}</h3>
                 </div>
                 <div className="w-[70vw] h-[2rem] flex justify-between items-center">
-                  <h2>Shipping</h2>
+                  <h3 className="text-2xl text-zinc-100">Shipping</h3>
                   <h3>0</h3>
                 </div>
                 <div className="w-[70vw] h-[2rem] flex justify-between items-center">
-                  <h2>Tax</h2>
+                  <h3 className="text-2xl text-zinc-100">Tax</h3>
                   <h3>0 </h3>
                 </div>
                 <div className="w-[70vw] h-[2rem] flex justify-between items-center border-t">
-                  <h2>Total</h2>
+                  <h3 className="text-2xl text-zinc-100">Total</h3>
                   <h3>{totalPrice} </h3>
                 </div>
                 <div className="flex justify-between gap-2">

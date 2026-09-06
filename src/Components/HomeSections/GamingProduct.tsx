@@ -16,12 +16,12 @@ const GamingProduct = () => {
           data-aos="fade-left"
         >
           <h1>Gaming Collection</h1>
-          <h2>
+          <h3 className="text-2xl text-zinc-100">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut nulla
             saepe soluta, modi recusandae qui nesciunt magni velit perspiciatis
             animi id esse amet ullam ex suscipit. Modi odio quas ea. Lorem ipsum
             dolor sit amet,
-          </h2>
+          </h3>
           <button className="w-[200px] h-[3rem] m-auto mt-[40px] bg-[#A855F7] duration-[0.4s] text-zinc-950 hover:bg-[#8B5CF6] hover:text-zinc-100 rounded-[50px] cursor-pointer">
             Explorer more
           </button>

@@ -13,7 +13,9 @@ const TrendingNow = () => {
           className="w-[90%] h-[60vh] flex flex-col justify-start items-start gap-1 m-auto"
           data-aos="fade-down"
         >
-          <h2 className="underline p-[10px]">Trending Now</h2>
+          <h3 className="text-zinc-100 text-2xl underline p-[10px]">
+            Trending Now
+          </h3>
           <div className="size-full flex justify-center items-center gap-10">
             <ProductCard items={dataFetch?.data} error={error} cartBtn={true} />
           </div>

@@ -109,7 +109,7 @@ const Signup = () => {
             onSubmit={(e) => SubmitForm(e)}
           >
             <div className="flex flex-col justify-start items-start  gap-1 sm:gap-2">
-              <h2 className="text-xl sm:text-2xl md:text-3xl">Sign up</h2>
+              <h3 className="text-xl sm:text-2xl md:text-3xl">Sign up</h3>
               <p className="text-xs sm:text-sm md:text-base">
                 Please Sign up / Register
               </p>

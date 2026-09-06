@@ -85,7 +85,7 @@ const Products = () => {
         {/* Main product page and filter product */}
         <section className="w-full h-[100%] flex justify-between">
           <aside className="w-[300px] h-full border ">
-            <h2>Filters</h2>
+            <h3>Filters</h3>
             <fieldset className="w-full h-[10rem] flex flex-col justify-start items-center px-10">
               <legend>Category</legend>
               <label className="w-full flex justify-center gap-2">
@@ -142,9 +142,9 @@ const Products = () => {
             </button>
           </aside>
           <section className="w-[85%] border">
-            <h2 className="w-full h-[4rem] mt-5">
+            <h3 className="w-full h-[4rem] mt-5 text-zinc-100">
               The number of products: {filteredProduct?.length}
-            </h2>
+            </h3>
             <div className="w-full h-auto flex justify-center items-center flex-wrap gap-5 ">
               <ProductCard
                 items={filteredProduct}

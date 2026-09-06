@@ -5,12 +5,11 @@ const Payment = () => {
   const cart = useContext(contextCartItem);
   return (
     <>
-      <h2>Payment</h2>
       <main className="w-full h-[100vh] bg-[#07070A] text-zinc-100 flex justify-center items-center">
         <section className="size-full flex justify-between items-start border rounded">
           <section className="w-[60%] h-[100%] flex flex-col justify-center items-center border rounded">
             <div className="w-[70%] h-[20%] flex flex-col">
-              <h2>Payment method</h2>
+              <h3 className="text-2xl text-zinc-100">Payment method</h3>
               <label htmlFor="">
                 <input type="radio" name="payment" value="CreditCard" />
                 Credit Card
@@ -21,7 +20,7 @@ const Payment = () => {
               </label>
             </div>
             <div className="w-[70%] h-[20%] flex flex-col">
-              <h2>Card Number: </h2>
+              <h3 className="text-2xl text-zinc-100">Card Number: </h3>
               <input
                 type="text"
                 name="cardnumber"
@@ -49,7 +48,7 @@ const Payment = () => {
               </div>
             </div>
             <div className="w-[250px] h-[4rem]">
-              <h2>Card Holder</h2>
+              <h3 className="text-2xl text-zinc-100">Card Holder</h3>
               <input
                 type="text"
                 className="w-full border border-[#8B5CF6] rounded"
@@ -63,29 +62,35 @@ const Payment = () => {
           </section>
           <section className="w-[40%] border rounded">
             <div className="w-full h-[50%] flex flex-col justify-center items-start p-5">
-              <h2>Order Summary</h2>
+              <h3 className="text-2xl text-zinc-100">Order Summary</h3>
               <div className="size-full flex flex-col gap-2 ">
                 {cart?.cartItem.map((item) => (
                   <div className="w-full h-[4rem] bg-[#27272A] rounded flex justify-between items-center px-5 ">
-                    <h2>{item.product.name}</h2>
-                    <h2>quantity: {item.quantity}</h2>
-                    <h2>Price: ${item.product.price}</h2>
+                    <h3 className="text-2xl text-zinc-100">
+                      {item.product.name}
+                    </h3>
+                    <h3 className="text-2xl text-zinc-100">
+                      quantity: {item.quantity}
+                    </h3>
+                    <h3 className="text-2xl text-zinc-100">
+                      Price: ${item.product.price}
+                    </h3>
                   </div>
                 ))}
               </div>
             </div>
             <div className="w-full h-[30%]  flex flex-col justify-center items-start p-5">
               <div className="w-full h-[4rem] flex justify-between items-center">
-                <h2>Subtotal</h2>
-                <h2>$800</h2>
+                <h3>Subtotal</h3>
+                <h3>$800</h3>
               </div>
               <div className="w-full h-[4rem] flex justify-between items-center">
-                <h2>Shipping</h2>
-                <h2>$0</h2>
+                <h3>Shipping</h3>
+                <h3>$0</h3>
               </div>
               <div className="w-full h-[4rem] flex justify-between items-center border-t">
-                <h2>Total</h2>
-                <h2>$800</h2>
+                <h3>Total</h3>
+                <h3>$800</h3>
               </div>
             </div>
           </section>
