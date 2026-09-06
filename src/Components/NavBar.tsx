@@ -1,10 +1,16 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/ContextProvider";
 import { FaCartPlus, FaSearch } from "react-icons/fa";
 
 const NavBar = () => {
   const usersCon = useContext(AuthContext);
+
+  const search = useRef<HTMLInputElement | null>(null);
+
+  const searchFocus = () => {
+    search.current?.focus();
+  };
   return (
     <>
       <header className="w-full h-[5rem] bg-[#0A0A0F] p-[5px] rounded-lg">
@@ -16,7 +22,7 @@ const NavBar = () => {
               className="w-full h-[2rem] object-contain"
             />
           </div>
-          <ul className="w-[50%] h-[4rem] flex justify-between items-center ">
+          <ul className="w-[40%] h-[4rem] flex justify-between items-center">
             <li className="text-center hover:text-[#A855F7] duration-200">
               <Link to="/">Home</Link>
             </li>
@@ -24,14 +30,20 @@ const NavBar = () => {
               <Link to="/products">Products</Link>
             </li>
             <li className="text-center hover:text-[#A855F7] duration-200">
-              <Link to="/productdetail"> test product details</Link>
+              <Link to="/aboutus"> About us</Link>
             </li>
             <li className="text-center hover:text-[#A855F7] duration-200">
-              <Link to="/orders">something</Link>
+              <Link to="/contact">Contact us</Link>
             </li>
           </ul>
           <div className="w-auto h-[4rem] flex justify-end items-center gap-[15px]">
-            <button className="cursor-pointer">
+            <input
+              type="search"
+              ref={search}
+              placeholder="search..."
+              className="w-[80%] h-[2rem] text-[#F5F5F5] border border-[#343438] focus:border-zinc-100 rounded p-[5px]"
+            />
+            <button className="cursor-pointer" onClick={searchFocus}>
               <FaSearch size={24} />
             </button>
             {usersCon?.users && (

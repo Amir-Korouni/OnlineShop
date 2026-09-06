@@ -18,6 +18,7 @@ const Signup = () => {
     password: "",
   });
   const [error, setError] = useState<SignUpError | null>(null);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpUser({ ...SignUpUser, [e.target.name]: e.target.value });
@@ -74,13 +75,15 @@ const Signup = () => {
       body: JSON.stringify(SignUpBody),
     })
       .then(async (res) => {
+        const response = await res.json();
         console.log("STATUS:", res.status);
 
         if (!res.ok) {
+          setFetchError(response.message);
           throw new Error("Some things went wrong.");
         }
 
-        return await res.json();
+        return ;
       })
       .then((data) => {
         console.log(data);
@@ -121,6 +124,11 @@ const Signup = () => {
                     error.username ||
                     error.email ||
                     error.password}
+                </p>
+              )}
+              {fetchError && (
+                <p className="size-full bg-red-800">
+                  {fetchError}
                 </p>
               )}
             </div>

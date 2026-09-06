@@ -15,6 +15,7 @@ export type SignInError = {
 const Signin = () => {
   const [user, setUser] = useState<UserLogin>({ email: "", password: "" });
   const [error, setError] = useState<SignInError | null>(null);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -66,6 +67,7 @@ const Signin = () => {
         console.log("STATUS:", res.status);
 
         if (!res.ok) {
+          setFetchError(response.message);
           throw new Error(response.message || "any problem is exist.");
         }
 
@@ -97,11 +99,14 @@ const Signin = () => {
               </p>
             </div>
 
-            <div className="w-full h-[1.5rem]">
+            <div className="w-full h-[1.5rem] justify-center items-center">
               {error && (
                 <p className="size-full bg-red-800">
                   {error.email || error.password}
                 </p>
+              )}
+              {fetchError && (
+                <p className="size-full bg-red-800">{fetchError}</p>
               )}
             </div>
             <div className="w-full flex flex-col justify-start items-start">

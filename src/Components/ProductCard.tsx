@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import type { Product } from "../Types/Product";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Context/ContextProvider";
 
 type ProductCartType = {
   items: Product[] | null | undefined;
@@ -10,6 +11,7 @@ type ProductCartType = {
 
 const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
   const [addedProductId, setAddedProductId] = useState<number | null>(null);
+  const user = useContext(AuthContext);
 
   const handleAddCart = async (item: Product) => {
     const token = localStorage.getItem("token");
@@ -71,11 +73,14 @@ const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
                 >
                   Add to Cart
                 </button>
-                {addedProductId === item.id && (
+                {user?.users && addedProductId === item.id && (
                   <p className="text-green-400 text-sm">
                     {" "}
                     Added to cart successfully!
                   </p>
+                )}
+                {!user?.users && addedProductId === item.id && (
+                  <p className="text-red-400 text-sm">Please sign in first.</p>
                 )}
               </>
             )}
