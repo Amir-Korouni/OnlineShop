@@ -6,7 +6,7 @@ import { FaCartPlus, FaSearch } from "react-icons/fa";
 const NavBar = () => {
   const usersCon = useContext(AuthContext);
 
-  const search = useRef<HTMLInputElement | null>(null);
+  const search = useRef<HTMLInputElement>(null);
 
   const searchFocus = () => {
     search.current?.focus();
