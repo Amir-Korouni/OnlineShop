@@ -9,7 +9,6 @@ import Signin from "../Pages/Signin";
 import Signup from "../Pages/Signup";
 import NotFound from "../Pages/NotFound";
 import Main from "../Pages/Main";
-import ContextProvider from "../Context/ContextProvider";
 import ProtectedRoutes from "./ProtectedRoute";
 import CartContext from "../Context/CartContext";
 import OrderDetail from "../Pages/OrderDetails";
@@ -20,12 +19,14 @@ import AdminProducts from "../Pages/Admin/AdminProducts";
 import AdminOrders from "../Pages/Admin/AdminOrders";
 import AdminUsers from "../Pages/Admin/AdminUsers";
 import AdminLogin from "../Pages/Admin/AdminLogin";
+import { Provider } from "react-redux";
+import { store } from "../Reduxs/store";
 
 const AppRoute = () => {
   return (
     <>
       <Router>
-        <ContextProvider>
+        <Provider store={store}>
           <CartContext>
             <Routes>
               <Route element={<Main />}>
@@ -54,7 +55,7 @@ const AppRoute = () => {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </CartContext>
-        </ContextProvider>
+        </Provider>
       </Router>
     </>
   );

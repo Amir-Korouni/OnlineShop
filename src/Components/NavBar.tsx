@@ -1,11 +1,14 @@
-import { useContext, useRef } from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../Context/ContextProvider";
 import { FaCartPlus, FaSearch } from "react-icons/fa";
-
+import {  useSelector } from "react-redux";
+import type { RootState } from "../Reduxs/store";
 const NavBar = () => {
-  const usersCon = useContext(AuthContext);
 
+  const user = useSelector((state: RootState) => state.auth.user);
+  console.log(user);
+  
+  // const dispatch = useDispatch();
   const search = useRef<HTMLInputElement>(null);
 
   const searchFocus = () => {
@@ -46,7 +49,7 @@ const NavBar = () => {
             <button className="cursor-pointer" onClick={searchFocus}>
               <FaSearch size={24} />
             </button>
-            {usersCon?.users && (
+            {user && (
               <div className="flex gap-5">
                 <Link to="/cart">
                   <FaCartPlus size={25} />
@@ -54,10 +57,9 @@ const NavBar = () => {
               </div>
             )}
             <div className="w-[100px] h-[50px] flex flex-row justify-center items-center gap-[10px]">
-              {usersCon?.users ? (
-                // usersCon.users?.email
+              {user ? (
                 <div className="w-[50px] h-[50px] rounded-full bg-purple-500">
-                  <h2>{usersCon.users.username}</h2>
+                  <h2>{user.username}</h2>
                 </div>
               ) : (
                 <Link to="/signin">

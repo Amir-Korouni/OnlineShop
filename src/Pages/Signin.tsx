@@ -2,10 +2,11 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaGithub } from "react-icons/fa";
 import { FaThreads } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import type { UserLogin } from "../Types/User";
-import { AuthContext } from "../Context/ContextProvider";
 import InputsForm from "../Components/Forms/InputsForm";
+import { useDispatch } from "react-redux";
+import { LoginSucess } from "../Reduxs/authSlice";
 
 export type SignInError = {
   email?: string;
@@ -21,7 +22,7 @@ const Signin = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const usersContext = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   const history = useNavigate();
 
@@ -74,7 +75,7 @@ const Signin = () => {
         return response;
       })
       .then((responseData) => {
-        usersContext?.setUser(responseData.data);
+        dispatch(LoginSucess(responseData.data));
 
         history("/");
       })
@@ -82,7 +83,6 @@ const Signin = () => {
         console.log(err.message);
       });
   };
-  console.log(usersContext?.users?.email, usersContext?.users?.password);
   return (
     <>
       <section className="w-full  h-[100vh] bg-[#07070A] text-[#F5F5F5] flex justify-center items-center gap-5 sm:gap-6 md:gap-8 lg:gap-0">

@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { UserRegister } from "../Types/User";
 import { Link, useNavigate } from "react-router-dom";
 import InputsForm from "../Components/Forms/InputsForm";
+
 type SignUpError = {
   fullname?: string;
   username?: string;
@@ -83,7 +84,7 @@ const Signup = () => {
           throw new Error("Some things went wrong.");
         }
 
-        return ;
+        return;
       })
       .then((data) => {
         console.log(data);
@@ -127,9 +128,7 @@ const Signup = () => {
                 </p>
               )}
               {fetchError && (
-                <p className="size-full bg-red-800">
-                  {fetchError}
-                </p>
+                <p className="size-full bg-red-800">{fetchError}</p>
               )}
             </div>
             <div className="w-full flex flex-col justify-start items-start gap-[8px]">
