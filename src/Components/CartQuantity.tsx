@@ -10,6 +10,10 @@ type QuantityProp = {
 const CartQuantity = ({ quantityCart, productId }: QuantityProp) => {
   const dispatch = useDispatch();
 
+  /**
+   * @version 1.0.0
+   * @description This function used for increasing product in cart and sync with database.
+   */
   const handleIncrease = async () => {
     const newQuantity = quantityCart + 1;
     const token = localStorage.getItem("token");
@@ -42,6 +46,10 @@ const CartQuantity = ({ quantityCart, productId }: QuantityProp) => {
     }
   };
 
+  /**
+   * @version 1.0.0
+   * @description This function used for decreaseing product in cart and sync with database.
+   */
   const handleDecrease = async () => {
     const newQuantity = quantityCart - 1;
 

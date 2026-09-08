@@ -4,8 +4,6 @@ import type { RootState } from "../Reduxs/store";
 import { clearCart } from "../Reduxs/cartSlice";
 
 const Checkout = () => {
-  // const cart = useContext(contextCartItem);
-  // const users = useContext(AuthContext);
 
   const cart = useSelector((state: RootState) => {
     return state.cart.cartItem;
