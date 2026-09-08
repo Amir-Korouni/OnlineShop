@@ -17,7 +17,7 @@ type Cart = {
   items: CartItem[];
 };
 
-type CartResponse = {
+  type CartResponse = {
   success: boolean;
   data: Cart;
 };

@@ -10,7 +10,7 @@ type QuantityProp = {
 const CartQuantity = ({ quantityCart, productId }: QuantityProp) => {
   const cart = useContext(contextCartItem);
 
-  console.log("🟣 CartQuantity productId:", productId);
+  console.log("CartQuantity productId:", productId);
   return (
     <div className="w-[50%] h-[10vh] flex justify-center items-center gap-2">
       <h3>Quantity:</h3>

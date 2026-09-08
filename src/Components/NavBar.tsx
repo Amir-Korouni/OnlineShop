@@ -1,13 +1,12 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaCartPlus, FaSearch } from "react-icons/fa";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { RootState } from "../Reduxs/store";
 const NavBar = () => {
-
   const user = useSelector((state: RootState) => state.auth.user);
   console.log(user);
-  
+
   // const dispatch = useDispatch();
   const search = useRef<HTMLInputElement>(null);
 
