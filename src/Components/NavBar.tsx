@@ -48,7 +48,7 @@ const NavBar = () => {
             <button className="cursor-pointer" onClick={searchFocus}>
               <FaSearch size={24} />
             </button>
-            {user && (
+            {user?.username && (
               <div className="flex gap-5">
                 <Link to="/cart">
                   <FaCartPlus size={25} />

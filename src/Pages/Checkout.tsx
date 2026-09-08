@@ -1,24 +1,35 @@
-import { useContext } from "react";
-import { contextCartItem } from "../Context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../Context/ContextProvider";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../Reduxs/store";
+import { clearCart } from "../Reduxs/cartSlice";
 
 const Checkout = () => {
-  const cart = useContext(contextCartItem);
-  const users = useContext(AuthContext);
+  // const cart = useContext(contextCartItem);
+  // const users = useContext(AuthContext);
+
+  const cart = useSelector((state: RootState) => {
+    return state.cart.cartItem;
+  });
+
+  const users = useSelector((state: RootState) => {
+    return state.auth.user;
+  });
+
+  const dispatch = useDispatch();
+
   const history = useNavigate();
   /**
    * @version 1.0.0
    * @description This function calculate total price of carts product.
    * @description in reduce function total is a sum value(it is 0,becuase we don't pass initialize value) and item is our cart which have a name,product and etc.
    */
-  const totalPrice = cart?.cartItem.reduce((total, item) => {
+  const totalPrice = cart.reduce((total, item) => {
     return total + Number(item.product.price) * item.quantity;
   }, 0);
 
   const orderBody = {
-    userId: users?.users?.id,
-    items: cart?.cartItem,
+    userId: users?.id,
+    items: cart,
     totalPrice: totalPrice,
   };
 
@@ -42,6 +53,7 @@ const Checkout = () => {
       })
       .then((dataRes) => {
         console.log(dataRes);
+        dispatch(clearCart(dataRes));
         history("/orders");
       })
       .catch((err: Error) => {
@@ -55,7 +67,7 @@ const Checkout = () => {
           <section className="w-[85%] h-full bg-[#0D0D12] border flex flex-col justify-center items-center gap-5">
             <h2>Order Summary</h2>
             <div className="w-full h-[50%] flex flex-col items-center gap-8 overflow-y-scroll">
-              {cart?.cartItem.map((item) => (
+              {cart.map((item) => (
                 <div
                   className="w-[80%] flex justify-around items-center border"
                   key={item.product.id}

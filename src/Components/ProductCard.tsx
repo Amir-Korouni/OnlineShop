@@ -1,9 +1,9 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import type { Product } from "../Types/Product";
 import { Link } from "react-router-dom";
-// import { AuthContext } from "../Context/ContextProvider";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../Reduxs/store";
+import { addToCart } from "../Reduxs/cartSlice";
 
 type ProductCartType = {
   items: Product[] | null | undefined;
@@ -15,8 +15,8 @@ const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
   const [addedProductId, setAddedProductId] = useState<number | null>(null);
   // const user = useContext(AuthContext);
   const user = useSelector((state: RootState) => state.auth.user);
-  const Cart = useSelector((state: RootState) => state.cart.cartItem);
-  
+  // const Cart = useSelector((state: RootState) => state.cart.cartItem);
+  const dispatch = useDispatch();
 
   const handleAddCart = async (item: Product) => {
     const token = localStorage.getItem("token");
@@ -37,11 +37,13 @@ const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
       const data = await res.json();
 
       console.log("Status:", res.status);
-      console.log("Response:", data);
+      console.log("Response:", data.data.id);
 
       if (!res.ok) {
         throw new Error(data.message || "Couldn't add product to cart.");
       }
+
+      dispatch(addToCart(data));
 
       return true;
     } catch (error) {
