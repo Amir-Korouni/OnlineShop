@@ -25,7 +25,6 @@ type CartResponse = {
 };
 
 const Cart = () => {
-
   const cart = useSelector((state: RootState) => {
     return state.cart.cartItem;
   });
@@ -66,7 +65,6 @@ const Cart = () => {
       if (!res.ok) {
         throw new Error("Somethings went wrong " + res.status);
       }
-
       dispatch(removeFromCart(id));
     } catch (error) {
       console.log(error);
