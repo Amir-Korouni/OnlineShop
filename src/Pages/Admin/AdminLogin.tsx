@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import InputsForm from "../../Components/Forms/InputsForm";
 import { useContext, useState } from "react";
 import type { UserLogin } from "../../Types/User";
 import type { SignInError } from "../Signin";
 import { AuthContext } from "../../Context/ContextProvider";
-import { BiCheckCircle, BiCheckShield } from "react-icons/bi";
+import { BiCheckCircle } from "react-icons/bi";
+import { Input } from "../../../@/components/ui/input";
+import { Button } from "../../../@/components/ui/button";
 
 const AdminLogin = () => {
   const [user, setUser] = useState<UserLogin>({ email: "", password: "" });
@@ -41,7 +42,7 @@ const AdminLogin = () => {
       <section className="w-full h-[100vh] bg-[#07070A] text-[#F5F5F5] flex justify-center items-center gap-5 sm:gap-6 md:gap-8 lg:gap-0">
         <section className="w-[45%] h-full bg-[linear-gradient(45deg,#07070A,#302055)] flex flex-col justify-center items-center border-r">
           <h2 className="w-auto h-[6rem] flex justify-center drop-shadow-[0_5px_5px_#8B5CF6]">
-            <BiCheckCircle size={35}/>
+            <BiCheckCircle size={35} />
             Security Shop Admin Panel
           </h2>
           <h2 className="w-full h-[3rem] drop-shadow-[0_5px_5px_#8B5CF6]">
@@ -75,31 +76,30 @@ const AdminLogin = () => {
               <label htmlFor="Email" className="text-sm sm:text-lg">
                 Management Email
               </label>
-              <InputsForm
+              <Input
                 name="email"
                 type="email"
                 value={user.email}
                 onChange={(e) => handleChange(e)}
-              />
+                className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
+              ></Input>
             </div>
             <div className="w-full flex flex-col justify-cetner items-start gap-[8px] mt-[5px]">
               <label htmlFor="Password" className="text-sm sm:text-lg">
                 Management Password
               </label>
-              <InputsForm
+              <Input
                 name="password"
                 type="password"
                 value={user.password}
                 onChange={(e) => handleChange(e)}
-              />
+                className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
+              ></Input>
             </div>
             <div className="w-full h-[4rem] flex justify-between items-end mt-[10px]">
-              <button
-                type="submit"
-                className="w-full h-[40px] bg-[#8B5CF6] cursor-pointer rounded hover:bg-[#A855F7] transition-colors duration-300"
-              >
+              <Button type="submit" className="w-full h-[40px] cursor-pointer">
                 Sign in
-              </button>
+              </Button>
             </div>
             <Link to="/adminresetpass">
               <h4 className="text-blue-700">

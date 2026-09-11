@@ -25,16 +25,16 @@ const NavBar = () => {
             />
           </div>
           <ul className="w-[40%] h-[4rem] flex justify-between items-center">
-            <li className="text-center hover:text-[#A855F7] duration-200">
+            <li className="text-center text-zinc-100 hover:text-[#A855F7] duration-200">
               <Link to="/">Home</Link>
             </li>
-            <li className="text-center hover:text-[#A855F7] duration-200">
+            <li className="text-center text-zinc-100 hover:text-[#A855F7] duration-200">
               <Link to="/products">Products</Link>
             </li>
-            <li className="text-center hover:text-[#A855F7] duration-200">
+            <li className="text-center text-zinc-100 hover:text-[#A855F7] duration-200">
               <Link to="/aboutus"> About us</Link>
             </li>
-            <li className="text-center hover:text-[#A855F7] duration-200">
+            <li className="text-center text-zinc-100 hover:text-[#A855F7] duration-200">
               <Link to="/contact">Contact us</Link>
             </li>
           </ul>

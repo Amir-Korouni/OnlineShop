@@ -4,9 +4,10 @@ import { FaThreads } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import type { UserLogin } from "../Types/User";
-import InputsForm from "../Components/Forms/InputsForm";
 import { useDispatch } from "react-redux";
 import { LoginSucess } from "../Reduxs/authSlice";
+import { Button } from "../../@/components/ui/button";
+import { Input } from "../../@/components/ui/input";
 
 export type SignInError = {
   email?: string;
@@ -113,23 +114,25 @@ const Signin = () => {
               <label htmlFor="Email" className="text-sm sm:text-lg">
                 Email
               </label>
-              <InputsForm
+              <Input
                 name="email"
                 type="email"
                 value={user.email}
                 onChange={(e) => handleChange(e)}
-              />
+                className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
+              ></Input>
             </div>
             <div className="w-full flex flex-col justify-cetner items-start gap-[8px] mt-[5px]">
               <label htmlFor="Password" className="text-sm sm:text-lg">
                 Password
               </label>
-              <InputsForm
+              <Input
                 name="password"
                 type="password"
                 value={user.password}
                 onChange={(e) => handleChange(e)}
-              />
+                className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
+              ></Input>
             </div>
             <div className="w-full h-[4rem] gap-2 sm:gap-3 md:gap-4 mt-1 sm:mt-2">
               <h3 className="text-sm sm:text-base md:text-lg">
@@ -189,12 +192,12 @@ const Signin = () => {
                 </Link>{" "}
                 here
               </p>
-              <button
+              <Button
                 type="submit"
-                className="w-[180px] h-[50px] bg-[#8B5CF6] cursor-pointer rounded hover:bg-[#A855F7] transition-colors duration-300"
+                className="w-[200px] h-[50px] cursor-pointer"
               >
                 Sign in
-              </button>
+              </Button>
             </div>
           </form>
           <div className="w-[50%] h-full">

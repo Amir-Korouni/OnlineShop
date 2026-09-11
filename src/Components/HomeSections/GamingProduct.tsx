@@ -1,4 +1,5 @@
 import Image from "../../assets/VyJXe6nk5WnA4UGA9P-P_ipk10MYEHqZXm_2GzhcIPuVt_9_RojZKcHJauBbToiZMjwUyI_0HKIjuMUl1dnMqW4koFYF-M_5eI8QgdLwAQ71H2kr7tQZ4hh936V95czJ7VTX3T8qlyr72MmgsSREOXpxOtf0QRKmYo837JsWVfHCxJCJjslYc1kLq1PCq381.jpeg";
+import { Button } from "../../../@/components/ui/button";
 
 const GamingProduct = () => {
   return (
@@ -22,9 +23,10 @@ const GamingProduct = () => {
             animi id esse amet ullam ex suscipit. Modi odio quas ea. Lorem ipsum
             dolor sit amet,
           </h3>
-          <button className="w-[200px] h-[3rem] m-auto mt-[40px] bg-[#A855F7] duration-[0.4s] text-zinc-950 hover:bg-[#8B5CF6] hover:text-zinc-100 rounded-[50px] cursor-pointer">
-            Explorer more
-          </button>
+          <Button className="w-[200px] h-[3.5rem] mt-[40px] duration-[0.4s] text-zinc-950 hover:bg-[#A855F7] hover:text-zinc-100 rounded-[30px] cursor-pointer">
+            {" "}
+            Explore products
+          </Button>
         </div>
         <div
           className="

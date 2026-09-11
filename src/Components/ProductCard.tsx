@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../Reduxs/store";
 import { addToCart } from "../Reduxs/cartSlice";
+import { Button } from "../../@/components/ui/button";
+import { Card, CardContent } from "../../@/components/ui/card";
 
 type ProductCartType = {
   items: Product[] | null | undefined;
@@ -54,50 +56,55 @@ const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
   return (
     <>
       {items?.map((item) => (
-        <article
-          className="w-[300px] h-[350px] flex flex-col justify-center items-center basis-xs md:basis-[30%] lg:basis-[20%] gap-2 bg-[#1F1F27] border border-[#8B5CF6] rounded duration-300 hover:translate-y-[-10px]"
+        <Card
           key={item.id}
+          className="basis-xs md:basis-[30%] lg:basis-[20%] gap-2  border border-[#8B5CF6] duration-300 hover:translate-y-[-10px]"
         >
-          <img
-            src={item.image}
-            alt={item.name}
-            className="w-[150px] h-[150px] object-cover"
-          />
-          <h3 className="text-2xl text-zinc-100">{item.name}</h3>
-          <p>{item.price}</p>
-          <div className="flex flex-col gap-2">
-            {cartBtn && (
-              <>
-                <button
-                  className="w-[160px] h-[1.8rem] rounded duration-600 bg-[#7b55f7] hover:bg-[#A855F7] hover:text-zinc-950 text-zinc-100 mx-[15px] px-[10px] cursor-pointer"
-                  onClick={() => {
-                    handleAddCart(item);
-                    setAddedProductId(item.id);
-                    setTimeout(() => {
-                      setAddedProductId(null);
-                    }, 2000);
-                  }}
-                >
-                  Add to Cart
-                </button>
-                {user && addedProductId === item.id && (
-                  <p className="text-green-400 text-sm">
+          <CardContent>
+            <img
+              src={item.image}
+              alt={item.name}
+              className="w-[150px] h-[150px] object-cover"
+            />
+            <h3 className="text-2xl text-zinc-100">{item.name}</h3>
+            <p>{item.price}</p>
+            <div className="flex flex-col gap-2 justify-center items-center">
+              {cartBtn && (
+                <>
+                  <Button
+                    className="w-[160px] hover:bg-[#A855F7] duration-600 hover:text-zinc-950 cursor-pointer"
+                    onClick={() => {
+                      handleAddCart(item);
+                      setAddedProductId(item.id);
+                      setTimeout(() => {
+                        setAddedProductId(null);
+                      }, 2000);
+                    }}
+                  >
                     {" "}
-                    Added to cart successfully!
-                  </p>
-                )}
-                {!user && addedProductId === item.id && (
-                  <p className="text-red-400 text-sm">Please sign in first.</p>
-                )}
-              </>
-            )}
-            <Link to={`/productdetail/${item.id}`}>
-              <button className="w-[160px] h-[1.5rem] rounded bg-[#A855F7] duration-600 hover:text-zinc-950 text-zinc-100 mx-[15px] px-[10px] cursor-pointer">
-                See details
-              </button>
-            </Link>
-          </div>
-        </article>
+                    Add to Cart
+                  </Button>
+                  {user && addedProductId === item.id && (
+                    <p className="text-green-400 text-sm">
+                      {" "}
+                      Added to cart successfully!
+                    </p>
+                  )}
+                  {!user && addedProductId === item.id && (
+                    <p className="text-red-400 text-sm">
+                      Please sign in first.
+                    </p>
+                  )}
+                </>
+              )}
+              <Link to={`/productdetail/${item.id}`}>
+                <Button className="w-[160px] bg-[#A855F7] cursor-pointer">
+                  See details
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
       ))}
 
       {err && <p>{err.message}</p>}

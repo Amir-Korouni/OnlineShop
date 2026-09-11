@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import useFetch from "../Hooks/useFetch";
 import type { Product } from "../Types/Product";
 import { contextCartItem } from "../Context/CartContext";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/Reduxs/store";
 
 type ProductResponseDetail = {
   success: boolean;
@@ -14,6 +16,8 @@ const ProductDetail = () => {
   const { data, error } = useFetch<ProductResponseDetail>({
     url: `http://localhost:4000/products/${id}`,
   });
+
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const [color, setColor] = useState<string>("Black");
 
@@ -69,11 +73,14 @@ const ProductDetail = () => {
               >
                 Add to Cart
               </button>
-              {addedProductId === data.data?.id && (
+              {user && addedProductId === data.data?.id && (
                 <p className="text-green-400 text-sm">
                   {" "}
                   Added to cart successfully!
                 </p>
+              )}
+              {!user && addedProductId === data.data?.id && (
+                <p className="text-red-400 text-sm">Please sign in first.</p>
               )}
             </section>
           </section>

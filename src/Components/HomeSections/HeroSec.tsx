@@ -1,6 +1,6 @@
 import AnimationTxt from "../AnimationTxt";
 import heroImage from "../../assets/Hero_headphone-removebg-preview.png";
-
+import { Button } from "../../../@/components/ui/button";
 
 const HeroSec = () => {
   return (
@@ -16,9 +16,10 @@ const HeroSec = () => {
           <div className="w-[450px] h-[4rem] mt-6 text-lg text-[#A1A1AA]">
             <AnimationTxt message="   Amazing audio for musics, gaming and every things that you need." />
           </div>
-          <button className="w-[200px] h-[3rem] mt-[40px] bg-[#8B5CF6] duration-[0.4s] text-zinc-950 hover:bg-[#A855F7] hover:text-zinc-100 rounded-[50px] cursor-pointer">
+          <Button className="w-[200px] h-[3.5rem] mt-[40px] duration-[0.4s] text-zinc-950 hover:bg-[#A855F7] hover:text-zinc-100 rounded-[30px] cursor-pointer">
+            {" "}
             Explore products
-          </button>
+          </Button>
         </div>
         <div data-aos="fade-left">
           <img

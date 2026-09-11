@@ -1,7 +1,8 @@
 import { useState } from "react";
 import type { UserRegister } from "../Types/User";
 import { Link, useNavigate } from "react-router-dom";
-import InputsForm from "../Components/Forms/InputsForm";
+import { Button } from "../../@/components/ui/button";
+import { Input } from "../../@/components/ui/input";
 
 type SignUpError = {
   fullname?: string;
@@ -135,54 +136,59 @@ const Signup = () => {
               <label htmlFor="fullname" className="text-sm sm:text-lg ">
                 FullName
               </label>
-              <InputsForm
+              <Input
                 name="fullname"
                 type="text"
                 value={SignUpUser?.fullname}
                 onChange={(e) => handleChange(e)}
-              />
+                className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
+              ></Input>
             </div>
             <div className="w-full flex flex-col justify-start items-start gap-[8px]">
               <label htmlFor="Email" className="text-sm sm:text-lg ">
                 UserName
               </label>
-              <InputsForm
+              <Input
                 name="username"
                 type="text"
                 value={SignUpUser?.username}
                 onChange={(e) => handleChange(e)}
-              />
+                className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
+              ></Input>
             </div>
             <div className="w-full flex flex-col justify-start items-start gap-[8px]">
               <label htmlFor="Email" className="text-sm sm:text-lg ">
                 Email
               </label>
-              <InputsForm
+              <Input
                 name="email"
                 type="email"
                 value={SignUpUser?.email}
                 onChange={(e) => handleChange(e)}
-              />
+                className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
+              ></Input>
             </div>
             <div className="w-full flex flex-col justify-cetner items-start gap-[8px] mt-[20px]">
               <label htmlFor="Password" className="text-sm sm:text-lg">
                 Password
               </label>
-              <InputsForm
+              <Input
                 name="password"
                 type="password"
                 value={SignUpUser?.password}
                 onChange={(e) => handleChange(e)}
-              />
+                className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
+              ></Input>
             </div>
 
             <div className="w-full h-[4rem] flex flex-col justify-between items-end gap-[10px] mt-[10px]">
-              <button
+              <Button
                 type="submit"
-                className="w-full h-[50px] bg-[#8B5CF6] cursor-pointer rounded hover:bg-[#A855F7] transition-colors duration-300"
+                className="w-full h-[50px] duration-200 cursor-pointer"
               >
                 Sign up
-              </button>
+              </Button>
+
               <p className="w-full flex justify-center ">
                 If you have already account, please{" "}
                 <Link
