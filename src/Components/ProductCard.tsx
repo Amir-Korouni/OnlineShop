@@ -70,7 +70,9 @@ const ProductCard = ({
           className="basis-xs md:basis-[30%] lg:basis-[20%] gap-2  border border-[#8B5CF6] duration-300 hover:translate-y-[-10px]"
         >
           <CardContent>
-            {badgeState && <Badge>{badge}</Badge>}
+            {badgeState && (
+              <Badge>{badge}</Badge>
+            )}
             <img
               src={item.image}
               alt={item.name}
