@@ -7,18 +7,25 @@ import { addToCart } from "../Reduxs/cartSlice";
 import { Button } from "../../@/components/ui/button";
 import { Card, CardContent } from "../../@/components/ui/card";
 import { toast } from "sonner";
+import { Badge } from "../../@/components/ui/badge";
 
 type ProductCartType = {
   items: Product[] | null | undefined;
   error: Error | null;
   cartBtn: boolean;
+  badgeState?: boolean;
+  badge?: string | null;
 };
 
-const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
+const ProductCard = ({
+  items,
+  error: err,
+  cartBtn,
+  badgeState,
+  badge,
+}: ProductCartType) => {
   const [addedProductId, setAddedProductId] = useState<number | null>(null);
-  // const user = useContext(AuthContext);
   const user = useSelector((state: RootState) => state.auth.user);
-  // const Cart = useSelector((state: RootState) => state.cart.cartItem);
   const dispatch = useDispatch();
 
   const handleAddCart = async (item: Product) => {
@@ -63,6 +70,7 @@ const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
           className="basis-xs md:basis-[30%] lg:basis-[20%] gap-2  border border-[#8B5CF6] duration-300 hover:translate-y-[-10px]"
         >
           <CardContent>
+            {badgeState && <Badge>{badge}</Badge>}
             <img
               src={item.image}
               alt={item.name}

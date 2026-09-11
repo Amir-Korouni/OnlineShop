@@ -17,7 +17,13 @@ const TrendingNow = () => {
             Trending Now
           </h3>
           <div className="size-full flex justify-center items-center gap-10">
-            <ProductCard items={dataFetch?.data} error={error} cartBtn={true} />
+            <ProductCard
+              items={dataFetch?.data}
+              error={error}
+              cartBtn={true}
+              badgeState={true}
+              badge={"New"}
+            />
           </div>
         </div>
       </section>
