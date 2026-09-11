@@ -1,10 +1,12 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../Hooks/useFetch";
 import type { Product } from "../Types/Product";
-import { contextCartItem } from "../Context/CartContext";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/Reduxs/store";
+import { addToCart } from "@/Reduxs/cartSlice";
+import { Button } from "@base-ui/react/button";
+import { toast } from "sonner";
 
 type ProductResponseDetail = {
   success: boolean;
@@ -18,11 +20,46 @@ const ProductDetail = () => {
   });
 
   const user = useSelector((state: RootState) => state.auth.user);
-
+  // const product = useSelector((state: RootState) => state.cart.cartItem);
+  const dispatch = useDispatch();
   const [color, setColor] = useState<string>("Black");
 
   const [addedProductId, setAddedProductId] = useState<number | null>(null);
-  const carts = useContext(contextCartItem);
+
+  const handleAddCart = async (item: Product) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await fetch("http://localhost:4000/cart/items", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          productId: item.id,
+          quantity: 1,
+        }),
+      });
+
+      const data = await res.json();
+
+      console.log("Status:", res.status);
+      console.log("Response:", data.data.id);
+
+      if (!res.ok) {
+        throw new Error(data.message || "Couldn't add product to cart.");
+      }
+
+      dispatch(addToCart(data));
+
+      return true;
+    } catch (error) {
+      console.log("Add to cart error:", error);
+      return false;
+    }
+  };
+
   return (
     <>
       <main className="w-full h-[90vh] bg-[#07070A] text-zinc-100">
@@ -61,10 +98,10 @@ const ProductDetail = () => {
                   White
                 </div>
               </div>
-              <button
+              <Button
                 className="w-[50%] h-[4vh] bg-[#8B5CF6] rounded cursor-pointer"
                 onClick={() => {
-                  carts?.addToCart(data?.data);
+                  handleAddCart(data.data);
                   setAddedProductId(Number(data.data?.id));
                   setTimeout(() => {
                     setAddedProductId(null);
@@ -72,16 +109,13 @@ const ProductDetail = () => {
                 }}
               >
                 Add to Cart
-              </button>
-              {user && addedProductId === data.data?.id && (
-                <p className="text-green-400 text-sm">
-                  {" "}
-                  Added to cart successfully!
-                </p>
-              )}
-              {!user && addedProductId === data.data?.id && (
-                <p className="text-red-400 text-sm">Please sign in first.</p>
-              )}
+              </Button>
+              {user &&
+                addedProductId === data.data?.id &&
+                toast.success("Product added to cart!")}
+              {!user &&
+                addedProductId === data.data?.id &&
+                toast.error("Some things went wrong | Please sign in first.")}
             </section>
           </section>
         )}

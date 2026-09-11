@@ -6,6 +6,7 @@ import type { RootState } from "../Reduxs/store";
 import { addToCart } from "../Reduxs/cartSlice";
 import { Button } from "../../@/components/ui/button";
 import { Card, CardContent } from "../../@/components/ui/card";
+import { toast } from "sonner";
 
 type ProductCartType = {
   items: Product[] | null | undefined;
@@ -53,6 +54,7 @@ const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
       return false;
     }
   };
+
   return (
     <>
       {items?.map((item) => (
@@ -84,17 +86,14 @@ const ProductCard = ({ items, error: err, cartBtn }: ProductCartType) => {
                     {" "}
                     Add to Cart
                   </Button>
-                  {user && addedProductId === item.id && (
-                    <p className="text-green-400 text-sm">
-                      {" "}
-                      Added to cart successfully!
-                    </p>
-                  )}
-                  {!user && addedProductId === item.id && (
-                    <p className="text-red-400 text-sm">
-                      Please sign in first.
-                    </p>
-                  )}
+                  {user &&
+                    addedProductId === item.id &&
+                    toast.success("Product added to cart!")}
+                  {!user &&
+                    addedProductId === item.id &&
+                    toast.error(
+                      "Some things went wrong | Please sign in first.",
+                    )}
                 </>
               )}
               <Link to={`/productdetail/${item.id}`}>

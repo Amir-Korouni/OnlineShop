@@ -21,6 +21,7 @@ import AdminUsers from "../Pages/Admin/AdminUsers";
 import AdminLogin from "../Pages/Admin/AdminLogin";
 import { Provider } from "react-redux";
 import { store } from "../Reduxs/store";
+import { Toaster } from "../../@/components/ui/sonner";
 
 const AppRoute = () => {
   return (
@@ -54,6 +55,7 @@ const AppRoute = () => {
               <Route path="/products" element={<Products />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <Toaster />
           </CartContext>
         </Provider>
       </Router>
