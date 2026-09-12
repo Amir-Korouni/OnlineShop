@@ -4,7 +4,6 @@ import type { RootState } from "../Reduxs/store";
 import { clearCart } from "../Reduxs/cartSlice";
 
 const Checkout = () => {
-
   const cart = useSelector((state: RootState) => {
     return state.cart.cartItem;
   });
@@ -30,6 +29,13 @@ const Checkout = () => {
     items: cart,
     totalPrice: totalPrice,
   };
+
+  /**
+   *
+   * @version 1.0.0
+   * @description This function is a logic of sending data to backend. we use fetch, but we should use react-query(useMutation) for control this function.
+   * @description This function take a order data and add order to database.
+   */
 
   const handleAddToOrder = () => {
     const token = localStorage.getItem("token");

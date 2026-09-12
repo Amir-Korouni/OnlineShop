@@ -9,6 +9,11 @@ type filterType = {
   features: string[];
 };
 
+/**
+ * @version 1.0.0
+ * @returns jsx element
+ * @description This function get data from backend(api) with useQuery and fetch data. Afte all this work render data.
+ */
 const Products = () => {
   const { data, error, isLoading } = useQuery<ProductResponse>({
     queryKey: ["productsPage"],

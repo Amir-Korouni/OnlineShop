@@ -16,9 +16,6 @@ type ProductResponseDetail = {
 
 const ProductDetail = () => {
   const { id } = useParams();
-  // const { data, error } = useFetch<ProductResponseDetail>({
-  //   url: `http://localhost:4000/products/${id}`,
-  // });
 
   const { data, error, isLoading } = useQuery<ProductResponseDetail>({
     queryKey: ["productDetail"],
@@ -37,6 +34,13 @@ const ProductDetail = () => {
 
   const [addedProductId, setAddedProductId] = useState<number | null>(null);
 
+  /**
+   *
+   * @param item
+   * @returns response
+   * @description This function is a logic of sending data to backend. we use fetch, but we should use react-query(useMutation) for control this function.
+   * @description This function take an id of prodect and add product to database.
+   */
   const addToCartFn = async (item: Product) => {
     const token = localStorage.getItem("token");
     const res = await fetch("http://localhost:4000/cart/items", {

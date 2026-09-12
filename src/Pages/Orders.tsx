@@ -13,6 +13,11 @@ type OrderResponse = {
   data: Order[];
 };
 
+/**
+ * @version 1.0.0
+ * @returns jsx element
+ * @description This function get data from backend(api) with useQuery and fetch data. Afte all this work render data.
+ */
 const Orders = () => {
   const token = localStorage.getItem("token");
   const { data, error, isLoading } = useQuery<OrderResponse>({

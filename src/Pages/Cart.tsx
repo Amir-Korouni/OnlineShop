@@ -69,6 +69,13 @@ const Cart = () => {
     return total + Number(item.product.price) * item.quantity;
   }, 0);
 
+  /**
+   * @version 1.0.0
+   * @param id
+   * @returns response
+   * @description This function is a logic of deleting data from backend. we use fetch, but we should use react-query(useMutation) for control this function.
+   * @description This function take an id of prodect and delete that product.
+   */
   const deleteCartItem = async (id: number) => {
     const token = localStorage.getItem("token");
     const res = await fetch(`http://localhost:4000/cart/items/${id}`, {
@@ -86,7 +93,7 @@ const Cart = () => {
     return response;
   };
 
-  const { mutate, isPending } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: deleteCartItem,
 
     onSuccess: (id) => {
@@ -94,6 +101,11 @@ const Cart = () => {
     },
   });
 
+  /**
+   * @version 1.0.0
+   * @param id
+   * @description This function take an id from product and delete that product. I use react-query for sending a Post request to database and add user to database.
+   */
   const handleRemove = (id: number) => {
     mutate(id);
   };
@@ -104,10 +116,6 @@ const Cart = () => {
 
   if (error) {
     return <p>{error.message}</p>;
-  }
-
-  if (isPending) {
-    return <p>is Pending...</p>;
   }
 
   return (

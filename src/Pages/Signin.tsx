@@ -46,8 +46,13 @@ const Signin = () => {
 
   const usersData = { ...user };
 
-  // ========================================================== Analysis these codes
-
+  /**
+   * @version 1.0.0
+   * @param userData
+   * @returns response
+   * @description This function is a logic of sending data to backend. we use fetch, but we should use react-query(useMutation) for control this function.
+   * @description This function take a userData and send it to backend for checking more(if this account exist? or etc).
+   */
   const login = async (userData: UserLogin) => {
     const res = await fetch("http://localhost:4000/auth/login", {
       method: "POST",
@@ -80,7 +85,7 @@ const Signin = () => {
 
   /**
    * @version 1.0.0
-   * @description This function is sending a POST request(evey users data for sign in such as email & password) for sign in user and wait for response and then it works.
+   * @description This function is sending a POST request(evey users data for sign in such as email & password) for sign in user and wait for response.
    * @example Use it for form submit attribute. onSubmit((e)=>SubmitForm);
    */
   const SubmitForm = (e: React.SubmitEvent<HTMLFormElement>) => {

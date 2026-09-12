@@ -58,6 +58,13 @@ const Signup = () => {
 
   const SignUpBody = { ...SignUpUser };
 
+  /**
+   * @version 1.0.0
+   * @param userData
+   * @returns response
+   * @description This function is a logic of sending data to backend. we use fetch, but we should use react-query(useMutation) for control this function.
+   * @description This function take a userData and add user to database.
+   */
   const signup = async (user: UserRegister) => {
     const res = await fetch("http://localhost:4000/auth/register", {
       method: "POST",
