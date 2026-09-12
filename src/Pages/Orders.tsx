@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import useFetch from "../Hooks/useFetch";
+// import useFetch from "../Hooks/useFetch";
+import { useQuery } from "@tanstack/react-query";
 
 type Order = {
   id: number;
@@ -13,10 +14,30 @@ type OrderResponse = {
 };
 
 const Orders = () => {
-  const { data, error } = useFetch<OrderResponse>({
-    url: "http://localhost:4000/orders",
+  const token = localStorage.getItem("token");
+  const { data, error, isLoading } = useQuery<OrderResponse>({
+    queryKey: ["Orders"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:4000/orders", {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) {
+        throw new Error("Faild to fetch any data.");
+      }
+      return res.json();
+    },
   });
-  // console.log(data);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error.message}</p>;
+  }
 
   return (
     <>
@@ -56,7 +77,7 @@ const Orders = () => {
                 </div>
               ))}
             </div>
-            <div>{error?.message}</div>
+            <div>{error}</div>
           </section>
         </section>
       </main>

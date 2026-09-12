@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import useFetch from "../Hooks/useFetch";
+import { useQuery } from "@tanstack/react-query";
 
 type Order = {
   id: number;
@@ -14,12 +14,29 @@ type OrderResponse = {
 
 const OrderDetail = () => {
   const { id } = useParams();
-  const { data, error } = useFetch<OrderResponse>({
-    url: `http://localhost:4000/orders/${id}`,
+  const token = localStorage.getItem("token");
+  const { data, error, isLoading } = useQuery<OrderResponse>({
+    queryKey: ["Cartkey"],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:4000/orders/${id}`, {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) {
+        throw new Error("Faild to fetch.");
+      }
+      return res.json();
+    },
   });
-  console.log(data);
-  {
-    error && console.log(error);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error.message}</p>;
   }
 
   return (
@@ -28,8 +45,8 @@ const OrderDetail = () => {
       <main className="w-full h-[100vh] bg-[#07070A] text-zinc-100 flex justify-center items-center">
         <section className="w-[85%] h-full flex flex-col gap-2 bg-[#111116] border border-purple-800 rounded px-5">
           <div className="w-full h-[2rem] flex justify-between items-center">
-            <h3 className="text-zinc-100 text-2xl">Order Id = #10293</h3 >
-            <h3 className="text-zinc-100 text-2xl">Date of shopping</h3 >
+            <h3 className="text-zinc-100 text-2xl">Order Id = #10293</h3>
+            <h3 className="text-zinc-100 text-2xl">Date of shopping</h3>
           </div>
           <div className="w-full h-[20%] border rounded flex flex-col justify-center items-start p-5">
             <label htmlFor="">
@@ -55,16 +72,24 @@ const OrderDetail = () => {
               {/* Cart in product details */}
 
               <div className="w-full h-[4rem] bg-[#27272A] flex justify-between items-center px-5 border-t rounded">
-                <h3 className="text-2xl text-zinc-100">#ORD {data?.data?.id}</h3>
-                <h3 className="text-2xl text-zinc-100">Status: {data?.data.status}</h3>
-                <h3 className="text-2xl text-zinc-100">Price: ${data?.data.totalAmount}</h3>
+                <h3 className="text-2xl text-zinc-100">
+                  #ORD {data?.data?.id}
+                </h3>
+                <h3 className="text-2xl text-zinc-100">
+                  Status: {data?.data.status}
+                </h3>
+                <h3 className="text-2xl text-zinc-100">
+                  Price: ${data?.data.totalAmount}
+                </h3>
               </div>
             </div>
           </div>
           <div className="w-full h-[30%] border rounded flex flex-col justify-center items-start p-5">
             <div className="w-full h-[4rem] flex justify-between items-center">
               <h3 className="text-2xl text-zinc-100">Subtotal</h3>
-              <h3 className="text-2xl text-zinc-100">${data?.data.totalAmount}</h3>
+              <h3 className="text-2xl text-zinc-100">
+                ${data?.data.totalAmount}
+              </h3>
             </div>
             <div className="w-full h-[4rem] flex justify-between items-center">
               <h3 className="text-2xl text-zinc-100">Shipping</h3>
@@ -72,7 +97,9 @@ const OrderDetail = () => {
             </div>
             <div className="w-full h-[4rem] flex justify-between items-center border-t">
               <h3 className="text-2xl text-zinc-100">Total</h3>
-              <h3 className="text-2xl text-zinc-100">${data?.data.totalAmount}</h3>
+              <h3 className="text-2xl text-zinc-100">
+                ${data?.data.totalAmount}
+              </h3>
             </div>
           </div>
           <div className="w-full h-[4rem] flex justify-between items-center">

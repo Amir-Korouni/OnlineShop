@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import CartQuantity from "../Components/CartQuantity";
 import { Link } from "react-router-dom";
-// import useFetch from "../Hooks/useFetch";
 import type { Product } from "../Types/Product";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../Reduxs/store";
@@ -32,34 +31,26 @@ const Cart = () => {
 
   const dispatch = useDispatch();
 
-  // const { data, error } = useFetch<CartResponse>({
-  //   url: "http://localhost:4000/cart",
-  // });
-
-  // const { data, error, isLoading } = useFetch("http://localhost:4000/cart", [
-  //   "cartData",
-  // ]);
-
+  const token = localStorage.getItem("token");
   const { data, error, isLoading } = useQuery<CartResponse>({
     queryKey: ["Cartkey"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:4000/cart");
+      const res = await fetch("http://localhost:4000/cart", {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res.status);
+
       if (!res.ok) {
-        throw new Error("Faild to fetch.");
+        throw new Error("Faild to fetch." + res.status);
       }
       return res.json();
     },
   });
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error.message}</p>;
-  }
-
-  console.log();
+  console.log(data);
 
   useEffect(() => {
     if (data?.data) {
@@ -96,6 +87,15 @@ const Cart = () => {
       console.log(error);
     }
   };
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error.message}</p>;
+  }
+
   return (
     <>
       <main className="w-full h-[90vh] bg-[#07070A] text-zinc-100 m-auto">

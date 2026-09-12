@@ -10,10 +10,6 @@ type filterType = {
 };
 
 const Products = () => {
-  // const { data, error } = useFetch<ProductResponse>({
-  //   url: "http://localhost:4000/products",
-  // });
-
   const { data, error, isLoading } = useQuery<ProductResponse>({
     queryKey: ["productsPage"],
     queryFn: async () => {
@@ -78,6 +74,14 @@ const Products = () => {
       return searchMatch && categoryMatch && priceMatch;
     });
   }, [data?.data, filters.categories, search, maxRange]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error.message}</p>;
+  }
 
   return (
     <>

@@ -31,14 +31,6 @@ const ProductDetail = () => {
     },
   });
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Faild {error.message}</p>;
-  }
-
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
   const [color, setColor] = useState<string>("Black");
@@ -78,6 +70,14 @@ const ProductDetail = () => {
       return false;
     }
   };
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Faild {error.message}</p>;
+  }
 
   return (
     <>
