@@ -3,6 +3,7 @@ import type { UserRegister } from "../Types/User";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../@/components/ui/button";
 import { Input } from "../../@/components/ui/input";
+import { useMutation } from "@tanstack/react-query";
 
 type SignUpError = {
   fullname?: string;
@@ -19,7 +20,7 @@ const Signup = () => {
     email: "",
     password: "",
   });
-  const [error, setError] = useState<SignUpError | null>(null);
+  const [errorSignup, setError] = useState<SignUpError | null>(null);
   const [fetchError, setFetchError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +58,37 @@ const Signup = () => {
 
   const SignUpBody = { ...SignUpUser };
 
+  const signup = async (user: UserRegister) => {
+    const res = await fetch("http://localhost:4000/auth/register", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(user),
+    });
+
+    const response = await res.json();
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data ${res.status}`);
+    }
+
+    return response;
+  };
+
+  const { mutate, error, isPending } = useMutation({
+    mutationFn: signup,
+
+    onSuccess: (response) => {
+      console.log(response);
+      console.log("New User was added.");
+      history("/signin");
+    },
+
+    onError: (err) => {
+      console.log(err.message);
+      setFetchError(err.message);
+    },
+  });
+
   /**
    * @version 1.0.0
    * @description This function sending a POST request to backend and wait for response and then sign up users.
@@ -71,31 +103,17 @@ const Signup = () => {
       return;
     }
 
-    fetch("http://localhost:4000/auth/register", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(SignUpBody),
-    })
-      .then(async (res) => {
-        const response = await res.json();
-        console.log("STATUS:", res.status);
+    mutate(SignUpBody);
 
-        if (!res.ok) {
-          setFetchError(response.message);
-          throw new Error("Some things went wrong.");
-        }
+    if (isPending) {
+      return <p>Loading...</p>;
+    }
 
-        return;
-      })
-      .then((data) => {
-        console.log(data);
-        console.log("New User was added.");
-        history("/signin");
-      })
-      .catch((err: Error) => {
-        console.log(err.message);
-      });
+    if (error) {
+      return <p>{error.message}</p>;
+    }
   };
+
   return (
     <>
       <section className="w-full  h-[100vh] bg-[#07070A] text-[#F5F5F5] flex justify-center items-center gap-5 sm:gap-6 md:gap-8 lg:gap-0">
@@ -120,12 +138,12 @@ const Signup = () => {
               </p>
             </div>
             <div className="w-full h-[1.5rem]">
-              {error && (
+              {errorSignup && (
                 <p className="size-full bg-red-800">
-                  {error.fullname ||
-                    error.username ||
-                    error.email ||
-                    error.password}
+                  {errorSignup.fullname ||
+                    errorSignup.username ||
+                    errorSignup.email ||
+                    errorSignup.password}
                 </p>
               )}
               {fetchError && (

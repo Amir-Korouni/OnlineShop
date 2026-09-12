@@ -5,7 +5,7 @@ import type { Product } from "../Types/Product";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../Reduxs/store";
 import { removeFromCart, setCart } from "../Reduxs/cartSlice";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 type CartItem = {
   id: number;
@@ -69,23 +69,33 @@ const Cart = () => {
     return total + Number(item.product.price) * item.quantity;
   }, 0);
 
-  const handleRemove = async (id: number) => {
+  const deleteCartItem = async (id: number) => {
     const token = localStorage.getItem("token");
-    try {
-      const res = await fetch(`http://localhost:4000/cart/items/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    const res = await fetch(`http://localhost:4000/cart/items/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const response = await res.json();
 
-      if (!res.ok) {
-        throw new Error("Somethings went wrong " + res.status);
-      }
-      dispatch(removeFromCart(id));
-    } catch (error) {
-      console.log(error);
+    if (!res.ok) {
+      throw new Error("Failed to delete item. " + res.status);
     }
+
+    return response;
+  };
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: deleteCartItem,
+
+    onSuccess: (id) => {
+      dispatch(removeFromCart(id));
+    },
+  });
+
+  const handleRemove = (id: number) => {
+    mutate(id);
   };
 
   if (isLoading) {
@@ -94,6 +104,10 @@ const Cart = () => {
 
   if (error) {
     return <p>{error.message}</p>;
+  }
+
+  if (isPending) {
+    return <p>is Pending...</p>;
   }
 
   return (

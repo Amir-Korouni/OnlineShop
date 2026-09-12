@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { LoginSucess } from "../Reduxs/authSlice";
 import { Button } from "../../@/components/ui/button";
 import { Input } from "../../@/components/ui/input";
+import { useMutation } from "@tanstack/react-query";
 
 export type SignInError = {
   email?: string;
@@ -16,7 +17,7 @@ export type SignInError = {
 
 const Signin = () => {
   const [user, setUser] = useState<UserLogin>({ email: "", password: "" });
-  const [error, setError] = useState<SignInError | null>(null);
+  const [errorSignin, setError] = useState<SignInError | null>(null);
   const [fetchError, setFetchError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +46,38 @@ const Signin = () => {
 
   const usersData = { ...user };
 
+  // ========================================================== Analysis these codes
+
+  const login = async (userData: UserLogin) => {
+    const res = await fetch("http://localhost:4000/auth/login", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(userData),
+    });
+
+    const response = await res.json();
+
+    if (!res.ok) {
+      throw new Error("Login failed.");
+    }
+    return response;
+  };
+
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: login,
+
+    onSuccess: (response) => {
+      localStorage.setItem("token", response.token);
+
+      dispatch(LoginSucess(response.data));
+      history("/");
+    },
+    onError: (err) => {
+      console.log(err.message);
+      setFetchError(err.message);
+    },
+  });
+
   /**
    * @version 1.0.0
    * @description This function is sending a POST request(evey users data for sign in such as email & password) for sign in user and wait for response and then it works.
@@ -58,31 +91,15 @@ const Signin = () => {
       return;
     }
 
-    fetch("http://localhost:4000/auth/login", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(usersData),
-    })
-      .then(async (res) => {
-        const response = await res.json();
-        localStorage.setItem("token", response.token);
-        console.log("STATUS:", res.status);
+    mutate(usersData);
 
-        if (!res.ok) {
-          setFetchError(response.message);
-          throw new Error(response.message || "any problem is exist.");
-        }
+    if (isPending) {
+      return <p>Logging in ...</p>;
+    }
 
-        return response;
-      })
-      .then((responseData) => {
-        dispatch(LoginSucess(responseData.data));
-
-        history("/");
-      })
-      .catch((err: Error) => {
-        console.log(err.message);
-      });
+    if (error) {
+      return <p>{error.message}</p>;
+    }
   };
   return (
     <>
@@ -101,9 +118,9 @@ const Signin = () => {
             </div>
 
             <div className="w-full h-[1.5rem] justify-center items-center">
-              {error && (
+              {errorSignin && (
                 <p className="size-full bg-red-800">
-                  {error.email || error.password}
+                  {errorSignin.email || errorSignin.password}
                 </p>
               )}
               {fetchError && (

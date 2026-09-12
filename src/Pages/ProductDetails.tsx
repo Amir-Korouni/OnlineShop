@@ -7,7 +7,7 @@ import type { RootState } from "@/Reduxs/store";
 import { addToCart } from "@/Reduxs/cartSlice";
 import { Button } from "@base-ui/react/button";
 import { toast } from "sonner";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 type ProductResponseDetail = {
   success: boolean;
@@ -37,38 +37,39 @@ const ProductDetail = () => {
 
   const [addedProductId, setAddedProductId] = useState<number | null>(null);
 
-  const handleAddCart = async (item: Product) => {
+  const addToCartFn = async (item: Product) => {
     const token = localStorage.getItem("token");
+    const res = await fetch("http://localhost:4000/cart/items", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        productId: item.id,
+        quantity: 1,
+      }),
+    });
 
-    try {
-      const res = await fetch("http://localhost:4000/cart/items", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          productId: item.id,
-          quantity: 1,
-        }),
-      });
+    const response = await res.json();
 
-      const data = await res.json();
-
-      console.log("Status:", res.status);
-      console.log("Response:", data.data.id);
-
-      if (!res.ok) {
-        throw new Error(data.message || "Couldn't add product to cart.");
-      }
-
-      dispatch(addToCart(data));
-
-      return true;
-    } catch (error) {
-      console.log("Add to cart error:", error);
-      return false;
+    if (!res.ok) {
+      throw new Error("Failed to send data. " + res.status);
     }
+
+    return response;
+  };
+
+  const { mutate } = useMutation({
+    mutationFn: addToCartFn,
+
+    onSuccess: (response) => {
+      dispatch(addToCart(response));
+    },
+  });
+
+  const handleAddCart = async (item: Product) => {
+    mutate(item);
   };
 
   if (isLoading) {

@@ -41,7 +41,7 @@ const Orders = () => {
 
   return (
     <>
-      <main className="w-full h-[90vh] bg-[#07070A] text-zinc-100">
+      <main className="w-full h-auto bg-[#07070A] text-zinc-100">
         <section className="size-full m-auto flex justify-center items-center">
           <section className="w-[85%] h-full flex flex-col gap-2 bg-[#111116] border border-purple-800 rounded">
             <div className="w-full h-[20%] flex justify-between items-center px-10">

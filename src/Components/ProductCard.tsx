@@ -8,6 +8,7 @@ import { Button } from "../../@/components/ui/button";
 import { Card, CardContent } from "../../@/components/ui/card";
 import { toast } from "sonner";
 import { Badge } from "../../@/components/ui/badge";
+import { useMutation } from "@tanstack/react-query";
 
 type ProductCartType = {
   items: Product[] | null | undefined;
@@ -28,40 +29,52 @@ const ProductCard = ({
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
 
-  const handleAddCart = async (item: Product) => {
+  const addToCartFn = async (item: Product) => {
     const token = localStorage.getItem("token");
+    const res = await fetch("http://localhost:4000/cart/items", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        productId: item.id,
+        quantity: 1,
+      }),
+    });
 
-    try {
-      const res = await fetch("http://localhost:4000/cart/items", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          productId: item.id,
-          quantity: 1,
-        }),
-      });
+    const response = await res.json();
 
-      const data = await res.json();
-
-      console.log("Status:", res.status);
-      console.log("Response:", data.data.id);
-
-      if (!res.ok) {
-        throw new Error(data.message || "Couldn't add product to cart.");
-      }
-
-      dispatch(addToCart(data));
-
-      return true;
-    } catch (error) {
-      console.log("Add to cart error:", error);
-      return false;
+    if (!res.ok) {
+      throw new Error("Failed to send data. " + res.status);
     }
+
+    return response;
   };
 
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: addToCartFn,
+
+    onSuccess: (response) => {
+      dispatch(addToCart(response));
+    },
+
+    onError: (err) => {
+      console.log("Add to cart error:", { err });
+    },
+  });
+
+  const handleAddCart = async (item: Product) => {
+    mutate(item);
+
+    if (isPending) {
+      return <p>isPending ....</p>;
+    }
+
+    if (error) {
+      return <p>{error.message}</p>;
+    }
+  };
   return (
     <>
       {items?.map((item) => (
@@ -70,9 +83,7 @@ const ProductCard = ({
           className="basis-xs md:basis-[30%] lg:basis-[20%] gap-2  border border-[#8B5CF6] duration-300 hover:translate-y-[-10px]"
         >
           <CardContent>
-            {badgeState && (
-              <Badge>{badge}</Badge>
-            )}
+            {badgeState && <Badge>{badge}</Badge>}
             <img
               src={item.image}
               alt={item.name}
