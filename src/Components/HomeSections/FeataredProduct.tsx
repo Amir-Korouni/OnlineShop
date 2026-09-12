@@ -1,4 +1,4 @@
-import useFetch from "../../Hooks/useFetch";
+import { useQuery } from "@tanstack/react-query";
 import type { Product } from "../../Types/Product";
 import ProductCard from "../ProductCard";
 
@@ -8,9 +8,25 @@ export type ProductResponse = {
 };
 
 const Feataredproduct = () => {
-  const { data: dataFetch, error } = useFetch<ProductResponse>({
-    url: "http://localhost:4000/products",
+  const { data, error, isLoading } = useQuery<ProductResponse>({
+    queryKey: ["featared"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:4000/products");
+      if (!res.ok) {
+        throw new Error("Faild to fetch any data.");
+      }
+      return res.json();
+    },
   });
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error.message}</p>;
+  }
+
   return (
     <>
       <section className="w-[100%] h-[60vh] bg-[#1F1F27] border-t border-t-[#8B5CF6] m-auto mt-20 px-5">
@@ -20,7 +36,7 @@ const Feataredproduct = () => {
         >
           <h2 className="underline p-[10px]">Featared Product</h2>
           <div className="size-full flex justify-center items-center gap-8">
-            <ProductCard items={dataFetch?.data} error={error} cartBtn={true} />
+            <ProductCard items={data?.data} error={error} cartBtn={true} />
           </div>
         </div>
       </section>

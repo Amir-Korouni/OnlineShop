@@ -1,11 +1,26 @@
-import useFetch from "../../Hooks/useFetch";
+import { useQuery } from "@tanstack/react-query";
 import ProductCard from "../ProductCard";
 import type { ProductResponse } from "./FeataredProduct";
 
 const TrendingNow = () => {
-  const { data: dataFetch, error } = useFetch<ProductResponse>({
-    url: "http://localhost:4000/products",
+  const { data, error, isLoading } = useQuery<ProductResponse>({
+    queryKey: ["Trend"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:4000/products");
+      if (!res.ok) {
+        throw new Error("Faild to fetch any data.");
+      }
+      return res.json();
+    },
   });
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error.message}</p>;
+  }
   return (
     <>
       <section className="w-[100%] h-[60vh] bg-[#111116] border-t border-t-[#8B5CF6] m-auto px-5">
@@ -18,7 +33,7 @@ const TrendingNow = () => {
           </h3>
           <div className="size-full flex justify-center items-center gap-10">
             <ProductCard
-              items={dataFetch?.data}
+              items={data?.data}
               error={error}
               cartBtn={true}
               badgeState={true}

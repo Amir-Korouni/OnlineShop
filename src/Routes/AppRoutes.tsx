@@ -22,43 +22,51 @@ import AdminLogin from "../Pages/Admin/AdminLogin";
 import { Provider } from "react-redux";
 import { store } from "../Reduxs/store";
 import { Toaster } from "../../@/components/ui/sonner";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const shopQuery = new QueryClient();
 
 const AppRoute = () => {
   return (
     <>
-      <Router>
-        <Provider store={store}>
-          <CartContext>
-            <Routes>
-              <Route element={<Main />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/productdetail/:id" element={<ProductDetail />} />
-                <Route element={<ProtectedRoutes />}>
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/orders" element={<Orders />} />
-                  <Route path="/orderdetail/:id" element={<OrderDetail />} />
-                  <Route path="/payment" element={<Payment />} />
+      <QueryClientProvider client={shopQuery}>
+        <Router>
+          <Provider store={store}>
+            <CartContext>
+              <Routes>
+                <Route element={<Main />}>
+                  <Route path="/" element={<Home />} />
+                  <Route
+                    path="/productdetail/:id"
+                    element={<ProductDetail />}
+                  />
+                  <Route element={<ProtectedRoutes />}>
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/orders" element={<Orders />} />
+                    <Route path="/orderdetail/:id" element={<OrderDetail />} />
+                    <Route path="/payment" element={<Payment />} />
+                  </Route>
                 </Route>
-              </Route>
 
-              <Route element={<Admin />}>
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                <Route path="/admin/products" element={<AdminProducts />} />
-                <Route path="/admin/orders" element={<AdminOrders />} />
-                <Route path="/admin/users" element={<AdminUsers />} />
-              </Route>
+                <Route element={<Admin />}>
+                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                  <Route path="/admin/products" element={<AdminProducts />} />
+                  <Route path="/admin/orders" element={<AdminOrders />} />
+                  <Route path="/admin/users" element={<AdminUsers />} />
+                </Route>
 
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/signin" element={<Signin />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <Toaster />
-          </CartContext>
-        </Provider>
-      </Router>
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <Toaster />
+            </CartContext>
+          </Provider>
+        </Router>
+      </QueryClientProvider>
     </>
   );
 };

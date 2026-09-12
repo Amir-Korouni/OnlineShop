@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import useFetch from "../Hooks/useFetch";
+// import useFetch from "../Hooks/useFetch";
 import type { Product } from "../Types/Product";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/Reduxs/store";
 import { addToCart } from "@/Reduxs/cartSlice";
 import { Button } from "@base-ui/react/button";
 import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
 
 type ProductResponseDetail = {
   success: boolean;
@@ -15,12 +16,30 @@ type ProductResponseDetail = {
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const { data, error } = useFetch<ProductResponseDetail>({
-    url: `http://localhost:4000/products/${id}`,
+  // const { data, error } = useFetch<ProductResponseDetail>({
+  //   url: `http://localhost:4000/products/${id}`,
+  // });
+
+  const { data, error, isLoading } = useQuery<ProductResponseDetail>({
+    queryKey: ["productDetail"],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:4000/products/${id}`);
+      if (!res.ok) {
+        throw new Error("Failed to fetch any data.");
+      }
+      return res.json();
+    },
   });
 
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Faild {error.message}</p>;
+  }
+
   const user = useSelector((state: RootState) => state.auth.user);
-  // const product = useSelector((state: RootState) => state.cart.cartItem);
   const dispatch = useDispatch();
   const [color, setColor] = useState<string>("Black");
 
@@ -119,7 +138,7 @@ const ProductDetail = () => {
             </section>
           </section>
         )}
-        {error && <p>{error.message}</p>}
+        {error && <p>{error}</p>}
         <section className="w-full h-[30%] bg-[#111116] flex justify-center items-center">
           <section className="w-[60%]"></section>
         </section>

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import useFetch from "../Hooks/useFetch";
 import ProductCard from "../Components/ProductCard";
 import type { ProductResponse } from "../Components/HomeSections/FeataredProduct";
+import { useQuery } from "@tanstack/react-query";
 
 type filterType = {
   categories: string[];
@@ -10,8 +10,19 @@ type filterType = {
 };
 
 const Products = () => {
-  const { data, error } = useFetch<ProductResponse>({
-    url: "http://localhost:4000/products",
+  // const { data, error } = useFetch<ProductResponse>({
+  //   url: "http://localhost:4000/products",
+  // });
+
+  const { data, error, isLoading } = useQuery<ProductResponse>({
+    queryKey: ["productsPage"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:4000/products");
+      if (!res.ok) {
+        throw new Error("Faild to fetch any data. maybe api is bolshit.");
+      }
+      return res.json();
+    },
   });
 
   console.log(data);

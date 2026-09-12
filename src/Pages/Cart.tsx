@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import CartQuantity from "../Components/CartQuantity";
 import { Link } from "react-router-dom";
-import useFetch from "../Hooks/useFetch";
+// import useFetch from "../Hooks/useFetch";
 import type { Product } from "../Types/Product";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../Reduxs/store";
 import { removeFromCart, setCart } from "../Reduxs/cartSlice";
+import { useQuery } from "@tanstack/react-query";
 
 type CartItem = {
   id: number;
@@ -31,12 +32,37 @@ const Cart = () => {
 
   const dispatch = useDispatch();
 
-  const { data, error } = useFetch<CartResponse>({
-    url: "http://localhost:4000/cart",
+  // const { data, error } = useFetch<CartResponse>({
+  //   url: "http://localhost:4000/cart",
+  // });
+
+  // const { data, error, isLoading } = useFetch("http://localhost:4000/cart", [
+  //   "cartData",
+  // ]);
+
+  const { data, error, isLoading } = useQuery<CartResponse>({
+    queryKey: ["Cartkey"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:4000/cart");
+      if (!res.ok) {
+        throw new Error("Faild to fetch.");
+      }
+      return res.json();
+    },
   });
 
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error.message}</p>;
+  }
+
+  console.log();
+
   useEffect(() => {
-    if (data?.data?.items) {
+    if (data?.data) {
       dispatch(
         setCart(
           data.data.items.map((item) => ({
@@ -98,7 +124,7 @@ const Cart = () => {
                 </button>
               </div>
             ))}
-            <p>{error?.message}</p>
+            <p>{error}</p>
           </section>
           <section className="w-full h-[30%] border bg-[#111116] flex flex-col items-center gap-6 p-2 ">
             <div className="w-full h-[4rem] flex justify-around items-center">
