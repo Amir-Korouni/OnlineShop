@@ -133,24 +133,28 @@ const Signin = () => {
               )}
             </div>
             <div className="w-full flex flex-col justify-start items-start">
-              <label htmlFor="Email" className="text-sm sm:text-lg">
+              <label htmlFor="email" className="text-sm sm:text-lg">
                 Email
               </label>
               <Input
+                id="email"
                 name="email"
                 type="email"
                 value={user.email}
+                placeholder="email..."
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
               ></Input>
             </div>
             <div className="w-full flex flex-col justify-cetner items-start gap-[8px] mt-[5px]">
-              <label htmlFor="Password" className="text-sm sm:text-lg">
+              <label htmlFor="password" className="text-sm sm:text-lg">
                 Password
               </label>
               <Input
+                id="password"
                 name="password"
                 type="password"
+                placeholder="password..."
                 value={user.password}
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
