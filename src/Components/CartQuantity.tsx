@@ -93,6 +93,7 @@ const CartQuantity = ({ quantityCart, productId }: QuantityProp) => {
       <button
         className="w-[30px] h-[30px] cursor-pointer bg-[#07070A] text-zinc-950 rounded flex justify-center items-center"
         onClick={handleDecrease}
+        aria-label="decrease quantity"
       >
         <FaMinus size={20} color="#8B5CF6" />
       </button>
@@ -102,6 +103,7 @@ const CartQuantity = ({ quantityCart, productId }: QuantityProp) => {
       <button
         className="w-[30px] h-[30px] cursor-pointer bg-[#07070A] text-zinc-950 rounded flex justify-center items-center"
         onClick={handleIncrease}
+        aria-label="increase quantity"
       >
         <FaPlus size={20} color="#8B5CF6" />
       </button>

@@ -50,7 +50,7 @@ const Cart = () => {
     },
   });
 
-  console.log(data);
+  console.log(data?.data.items);
 
   useEffect(() => {
     if (data?.data) {
