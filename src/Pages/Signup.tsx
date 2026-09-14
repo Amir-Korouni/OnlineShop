@@ -164,6 +164,7 @@ const Signup = () => {
               <Input
                 name="fullname"
                 type="text"
+                placeholder="fullname"
                 value={SignUpUser?.fullname}
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
@@ -176,6 +177,7 @@ const Signup = () => {
               <Input
                 name="username"
                 type="text"
+                placeholder="username"
                 value={SignUpUser?.username}
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
@@ -188,6 +190,7 @@ const Signup = () => {
               <Input
                 name="email"
                 type="email"
+                placeholder="email"
                 value={SignUpUser?.email}
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
@@ -200,6 +203,7 @@ const Signup = () => {
               <Input
                 name="password"
                 type="password"
+                placeholder="password"
                 value={SignUpUser?.password}
                 onChange={(e) => handleChange(e)}
                 className="w-full h-[2.2rem] bg-[#0D0D12] border border-[#343438] rounded-[4px]"
