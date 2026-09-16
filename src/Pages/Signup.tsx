@@ -21,7 +21,6 @@ const Signup = () => {
     password: "",
   });
   const [errorSignup, setError] = useState<SignUpError | null>(null);
-  const [fetchError, setFetchError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpUser({ ...SignUpUser, [e.target.name]: e.target.value });
@@ -92,7 +91,6 @@ const Signup = () => {
 
     onError: (err) => {
       console.log(err.message);
-      setFetchError(err.message);
     },
   });
 
@@ -153,9 +151,7 @@ const Signup = () => {
                     errorSignup.password}
                 </p>
               )}
-              {fetchError && (
-                <p className="size-full bg-red-800">{fetchError}</p>
-              )}
+              {error && <p className="size-full bg-red-800">{error.message}</p>}
             </div>
             <div className="w-full flex flex-col justify-start items-start gap-[8px]">
               <label htmlFor="fullname" className="text-sm sm:text-lg ">

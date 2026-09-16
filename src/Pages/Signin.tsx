@@ -18,7 +18,6 @@ export type SignInError = {
 const Signin = () => {
   const [user, setUser] = useState<UserLogin>({ email: "", password: "" });
   const [errorSignin, setError] = useState<SignInError | null>(null);
-  const [fetchError, setFetchError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -79,7 +78,6 @@ const Signin = () => {
     },
     onError: (err) => {
       console.log(err.message);
-      setFetchError(err.message);
     },
   });
 
@@ -128,9 +126,7 @@ const Signin = () => {
                   {errorSignin.email || errorSignin.password}
                 </p>
               )}
-              {fetchError && (
-                <p className="size-full bg-red-800">{fetchError}</p>
-              )}
+              {error && <p className="size-full bg-red-800">{error.message}</p>}
             </div>
             <div className="w-full flex flex-col justify-start items-start">
               <label htmlFor="email" className="text-sm sm:text-lg">
