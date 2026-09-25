@@ -1,82 +1,29 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
-// import useFetch from "../Hooks/useFetch";
 import type { Product } from "../Types/Product";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { RootState } from "@/Reduxs/store";
-import { addToCart } from "@/Reduxs/cartSlice";
 import { Button } from "@base-ui/react/button";
 import { toast } from "sonner";
-import { useMutation, useQuery } from "@tanstack/react-query";
-
-type ProductResponseDetail = {
-  success: boolean;
-  data: Product;
-};
+import { useProduct, useProductDetail } from "@/Hooks/useProduct";
+import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
   const { id } = useParams();
 
-  const { data, error, isLoading } = useQuery<ProductResponseDetail>({
-    queryKey: ["productDetail"],
-    queryFn: async () => {
-      const res = await fetch(`http://localhost:4000/products/${id}`);
-      if (!res.ok) {
-        throw new Error("Failed to fetch any data.");
-      }
-      return res.json();
-    },
-  });
+  const { data, error, isLoading } = useProductDetail(String(id));
 
   const user = useSelector((state: RootState) => state.auth.user);
-  const dispatch = useDispatch();
   const [color, setColor] = useState<string>("Black");
 
   const [addedProductId, setAddedProductId] = useState<number | null>(null);
 
-  /**
-   *
-   * @param item
-   * @returns response
-   * @description This function is a logic of sending data to backend. we use fetch, but we should use react-query(useMutation) for control this function.
-   * @description This function take an id of prodect and add product to database.
-   */
-  const addToCartFn = async (item: Product) => {
-    const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:4000/cart/items", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        productId: item.id,
-        quantity: 1,
-      }),
-    });
-
-    const response = await res.json();
-
-    if (!res.ok) {
-      throw new Error("Failed to send data. " + res.status);
-    }
-
-    return response;
-  };
-
-  const { mutate } = useMutation({
-    mutationFn: addToCartFn,
-
-    onSuccess: (response) => {
-      dispatch(addToCart(response));
-    },
-  });
+  const { mutate, isPending } = useProduct();
 
   const handleAddCart = async (item: Product) => {
     mutate(item);
   };
 
-  if (isLoading) {
+  if (isLoading || isPending) {
     return <p>Loading...</p>;
   }
 

@@ -1,35 +1,11 @@
 import { Link, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useOrderDetail } from "@/Hooks/useOrder";
 
-type Order = {
-  id: number;
-  totalAmount: string;
-  status: string;
-};
-
-type OrderResponse = {
-  success: boolean;
-  data: Order;
-};
 
 const OrderDetail = () => {
   const { id } = useParams();
   const token = localStorage.getItem("token");
-  const { data, error, isLoading } = useQuery<OrderResponse>({
-    queryKey: ["Cartkey"],
-    queryFn: async () => {
-      const res = await fetch(`http://localhost:4000/orders/${id}`, {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!res.ok) {
-        throw new Error("Faild to fetch.");
-      }
-      return res.json();
-    },
-  });
+  const { data, error, isLoading } = useOrderDetail(String(id), String(token));
 
   if (isLoading) {
     return <p>Loading...</p>;

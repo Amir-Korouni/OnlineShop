@@ -1,8 +1,6 @@
 import { apiCall } from "./Client";
 
-export function getCartApi() {
-  const token = localStorage.getItem("token");
-
+export function getCartApi(token: string) {
   return apiCall({
     endPoint: "/cart",
     option: {

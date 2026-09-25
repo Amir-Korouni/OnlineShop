@@ -23,3 +23,12 @@ export function postProductApi(item: Product) {
     },
   });
 }
+
+export function getProductDetailApi(id: string) {
+  return apiCall({
+    endPoint: `/products/${id}`,
+    option: {
+      method: "GET",
+    },
+  });
+}

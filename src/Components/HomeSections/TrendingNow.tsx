@@ -1,13 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
 import ProductCard from "../ProductCard";
-import type { ProductResponse } from "./FeataredProduct";
-import { getProductApi } from "@/api/Product";
+import { useProductGet } from "@/Hooks/useProduct";
 
 const TrendingNow = () => {
-  const { data, error, isLoading } = useQuery<ProductResponse>({
-    queryKey: ["Trend"],
-    queryFn: getProductApi,
-  });
+  const { data, error, isLoading } = useProductGet();
 
   if (isLoading) {
     return <p>Loading...</p>;

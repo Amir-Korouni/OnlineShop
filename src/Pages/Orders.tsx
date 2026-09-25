@@ -1,18 +1,5 @@
 import { Link } from "react-router-dom";
-// import useFetch from "../Hooks/useFetch";
-import { useQuery } from "@tanstack/react-query";
-import { getOrder } from "@/api/Orders";
-
-type Order = {
-  id: number;
-  totalAmount: string;
-  status: "PENDING" | "PROCESSING" | "SHIPPED" | "CANCELLED" | "DELIVERED";
-};
-
-type OrderResponse = {
-  success: boolean;
-  data: Order[];
-};
+import { useOrderGet } from "@/Hooks/useOrder";
 
 /**
  * @version 1.0.0
@@ -20,10 +7,7 @@ type OrderResponse = {
  * @description This function get data from backend(api) with useQuery and fetch data. Afte all this work render data.
  */
 const Orders = () => {
-  const { data, error, isLoading } = useQuery<OrderResponse>({
-    queryKey: ["Orders"],
-    queryFn: getOrder,
-  });
+  const { data, error, isLoading } = useOrderGet();
 
   if (isLoading) {
     return <p>Loading...</p>;

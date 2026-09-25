@@ -1,8 +1,6 @@
 import { useMemo, useState } from "react";
 import ProductCard from "../Components/ProductCard";
-import type { ProductResponse } from "../Components/HomeSections/FeataredProduct";
-import { useQuery } from "@tanstack/react-query";
-import { getProductApi } from "@/api/Product";
+import { useProductGet } from "@/Hooks/useProduct";
 
 type filterType = {
   categories: string[];
@@ -16,10 +14,7 @@ type filterType = {
  * @description This function get data from backend(api) with useQuery and fetch data. Afte all this work render data.
  */
 const Products = () => {
-  const { data, error, isLoading } = useQuery<ProductResponse>({
-    queryKey: ["productsPage"],
-    queryFn: getProductApi,
-  });
+  const { data, error, isLoading } = useProductGet();
 
   console.log(data);
 

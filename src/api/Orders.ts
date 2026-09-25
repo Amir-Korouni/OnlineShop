@@ -13,3 +13,16 @@ export function getOrder() {
     },
   });
 }
+
+export function getOrderDetails(id: string, token: string) {
+  return apiCall({
+    endPoint: `/orders/${id}`,
+    option: {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  });
+}

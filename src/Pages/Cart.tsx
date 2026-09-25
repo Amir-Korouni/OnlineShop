@@ -5,9 +5,8 @@ import type { Product } from "../Types/Product";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../Reduxs/store";
 import { setCart } from "../Reduxs/cartSlice";
-import { useQuery } from "@tanstack/react-query";
-import { getCartApi } from "@/api/Cart";
 import { useDelCart } from "@/Hooks/useDelCart";
+import { useCartGet } from "@/Hooks/useCart";
 
 type CartItem = {
   id: number;
@@ -21,7 +20,7 @@ type Cart = {
   items: CartItem[];
 };
 
-type CartResponse = {
+export type CartResponse = {
   success: boolean;
   data: Cart;
 };
@@ -33,10 +32,8 @@ const Cart = () => {
 
   const dispatch = useDispatch();
 
-  const { data, error, isLoading } = useQuery<CartResponse>({
-    queryKey: ["Cartkey"],
-    queryFn: getCartApi,
-  });
+  const token = localStorage.getItem("token");
+  const { data, error, isLoading } = useCartGet(String(token));
 
   console.log(data?.data.items);
 

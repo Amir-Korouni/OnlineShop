@@ -1,9 +1,7 @@
 import type { orderBodyType } from "@/Pages/Checkout";
 import { apiCall } from "./Client";
 
-export function postCheckoutApi(item: orderBodyType) {
-  const token = localStorage.getItem("token");
-
+export function postCheckoutApi(item: orderBodyType, token: string) {
   return apiCall({
     endPoint: "/orders",
     option: {

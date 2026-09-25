@@ -34,7 +34,8 @@ const Checkout = () => {
     totalPrice: totalPrice,
   };
 
-  const { mutate } = useCheckout();
+  const token = localStorage.getItem("token");
+  const { mutate } = useCheckout(orderBody, String(token));
 
   /**
    *
@@ -44,7 +45,7 @@ const Checkout = () => {
    */
 
   const handleAddToOrder = () => {
-    mutate(orderBody);
+    mutate();
   };
   return (
     <>
