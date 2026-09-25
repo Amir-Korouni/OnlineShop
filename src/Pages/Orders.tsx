@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 // import useFetch from "../Hooks/useFetch";
 import { useQuery } from "@tanstack/react-query";
+import { getOrder } from "@/api/Orders";
 
 type Order = {
   id: number;
@@ -19,21 +20,9 @@ type OrderResponse = {
  * @description This function get data from backend(api) with useQuery and fetch data. Afte all this work render data.
  */
 const Orders = () => {
-  const token = localStorage.getItem("token");
   const { data, error, isLoading } = useQuery<OrderResponse>({
     queryKey: ["Orders"],
-    queryFn: async () => {
-      const res = await fetch("http://localhost:4000/orders", {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!res.ok) {
-        throw new Error("Faild to fetch any data.");
-      }
-      return res.json();
-    },
+    queryFn: getOrder,
   });
 
   if (isLoading) {

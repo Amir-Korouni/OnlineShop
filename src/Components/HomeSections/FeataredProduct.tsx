@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Product } from "../../Types/Product";
 import ProductCard from "../ProductCard";
+import { getProductApi } from "@/api/Product";
 
 export type ProductResponse = {
   success: boolean;
@@ -10,13 +11,7 @@ export type ProductResponse = {
 const Feataredproduct = () => {
   const { data, error, isLoading } = useQuery<ProductResponse>({
     queryKey: ["featared"],
-    queryFn: async () => {
-      const res = await fetch("http://localhost:4000/products");
-      if (!res.ok) {
-        throw new Error("Faild to fetch any data.");
-      }
-      return res.json();
-    },
+    queryFn: getProductApi,
   });
 
   if (isLoading) {

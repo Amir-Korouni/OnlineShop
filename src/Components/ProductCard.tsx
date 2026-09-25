@@ -1,14 +1,13 @@
 import { useState } from "react";
 import type { Product } from "../Types/Product";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { RootState } from "../Reduxs/store";
-import { addToCart } from "../Reduxs/cartSlice";
 import { Button } from "../../@/components/ui/button";
 import { Card, CardContent } from "../../@/components/ui/card";
 import { toast } from "sonner";
 import { Badge } from "../../@/components/ui/badge";
-import { useMutation } from "@tanstack/react-query";
+import { useProduct } from "@/Hooks/useProduct";
 
 type ProductCartType = {
   items: Product[] | null | undefined;
@@ -27,42 +26,8 @@ const ProductCard = ({
 }: ProductCartType) => {
   const [addedProductId, setAddedProductId] = useState<number | null>(null);
   const user = useSelector((state: RootState) => state.auth.user);
-  const dispatch = useDispatch();
 
-  const addToCartFn = async (item: Product) => {
-    const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:4000/cart/items", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        productId: item.id,
-        quantity: 1,
-      }),
-    });
-
-    const response = await res.json();
-
-    if (!res.ok) {
-      throw new Error("Failed to send data. " + res.status);
-    }
-
-    return response;
-  };
-
-  const { mutate, isPending, error } = useMutation({
-    mutationFn: addToCartFn,
-
-    onSuccess: (response) => {
-      dispatch(addToCart(response));
-    },
-
-    onError: (err) => {
-      console.log("Add to cart error:", { err });
-    },
-  });
+  const { mutate, error, isPending } = useProduct();
 
   const handleAddCart = async (item: Product) => {
     mutate(item);

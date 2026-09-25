@@ -1,17 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import ProductCard from "../ProductCard";
 import type { ProductResponse } from "./FeataredProduct";
+import { getProductApi } from "@/api/Product";
 
 const TrendingNow = () => {
   const { data, error, isLoading } = useQuery<ProductResponse>({
     queryKey: ["Trend"],
-    queryFn: async () => {
-      const res = await fetch("http://localhost:4000/products");
-      if (!res.ok) {
-        throw new Error("Faild to fetch any data.");
-      }
-      return res.json();
-    },
+    queryFn: getProductApi,
   });
 
   if (isLoading) {

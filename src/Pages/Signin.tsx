@@ -1,14 +1,12 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaGithub } from "react-icons/fa";
 import { FaThreads } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import type { UserLogin } from "../Types/User";
-import { useDispatch } from "react-redux";
-import { LoginSucess } from "../Reduxs/authSlice";
 import { Button } from "../../@/components/ui/button";
 import { Input } from "../../@/components/ui/input";
-import { useMutation } from "@tanstack/react-query";
+import { useSignin } from "@/Hooks/useSignin";
 
 export type SignInError = {
   email?: string;
@@ -22,10 +20,6 @@ const Signin = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-
-  const dispatch = useDispatch();
-
-  const history = useNavigate();
 
   const validate = () => {
     const newError: SignInError = {};
@@ -45,41 +39,7 @@ const Signin = () => {
 
   const usersData = { ...user };
 
-  /**
-   * @version 1.0.0
-   * @param userData
-   * @returns response
-   * @description This function is a logic of sending data to backend. we use fetch, but we should use react-query(useMutation) for control this function.
-   * @description This function take a userData and send it to backend for checking more(if this account exist? or etc).
-   */
-  const login = async (userData: UserLogin) => {
-    const res = await fetch("http://localhost:4000/auth/login", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(userData),
-    });
-
-    const response = await res.json();
-
-    if (!res.ok) {
-      throw new Error("Login failed.");
-    }
-    return response;
-  };
-
-  const { mutate, isPending, error } = useMutation({
-    mutationFn: login,
-
-    onSuccess: (response) => {
-      localStorage.setItem("token", response.token);
-
-      dispatch(LoginSucess(response.data));
-      history("/");
-    },
-    onError: (err) => {
-      console.log(err.message);
-    },
-  });
+  const { mutate, error, isPending } = useSignin();
 
   /**
    * @version 1.0.0
@@ -126,7 +86,6 @@ const Signin = () => {
                   {errorSignin.email || errorSignin.password}
                 </p>
               )}
-              {error && <p className="size-full bg-red-800">{error.message}</p>}
             </div>
             <div className="w-full flex flex-col justify-start items-start">
               <label htmlFor="email" className="text-sm sm:text-lg">

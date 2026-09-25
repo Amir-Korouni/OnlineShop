@@ -273,3 +273,39 @@ Idea for Admin Panel:
 └──────────────┴──────────────────────────────────────────────┘
 
 ```
+
+---
+
+Flowchart of Clean Architecture
+
+```
+                  Login Component
+                         │
+                         │ mutate(userData)
+                         ▼
+                  useLogin()
+                         │
+                         │ mutationFn
+                         ▼
+                    login()
+                         │
+                         ▼
+                    apiFetch()
+                         │
+                         ├── VITE_API_URL
+                         │
+                         ▼
+                 POST /auth/login
+                         │
+                         ▼
+                    Backend
+                         │
+                         ▼
+                   Response
+                         │
+                         ▼
+                  TanStack Query
+                    /    |     \
+                   /     |      \
+             data    isPending   error
+```

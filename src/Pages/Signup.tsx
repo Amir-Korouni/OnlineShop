@@ -1,9 +1,9 @@
 import { useState } from "react";
 import type { UserRegister } from "../Types/User";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "../../@/components/ui/button";
 import { Input } from "../../@/components/ui/input";
-import { useMutation } from "@tanstack/react-query";
+import { useSignup } from "@/Hooks/useSignup";
 
 type SignUpError = {
   fullname?: string;
@@ -25,8 +25,6 @@ const Signup = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpUser({ ...SignUpUser, [e.target.name]: e.target.value });
   };
-
-  const history = useNavigate();
 
   const validate = () => {
     const newError: SignUpError = {};
@@ -57,42 +55,7 @@ const Signup = () => {
 
   const SignUpBody = { ...SignUpUser };
 
-  /**
-   * @version 1.0.0
-   * @param userData
-   * @returns response
-   * @description This function is a logic of sending data to backend. we use fetch, but we should use react-query(useMutation) for control this function.
-   * @description This function take a userData and add user to database.
-   */
-  const signup = async (user: UserRegister) => {
-    const res = await fetch("http://localhost:4000/auth/register", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(user),
-    });
-
-    const response = await res.json();
-
-    if (!res.ok) {
-      throw new Error(`Failed to fetch data ${res.status}`);
-    }
-
-    return response;
-  };
-
-  const { mutate, error, isPending } = useMutation({
-    mutationFn: signup,
-
-    onSuccess: (response) => {
-      console.log(response);
-      console.log("New User was added.");
-      history("/signin");
-    },
-
-    onError: (err) => {
-      console.log(err.message);
-    },
-  });
+  const { mutate, error, isPending } = useSignup();
 
   /**
    * @version 1.0.0

@@ -1,7 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import type { RootState } from "../Reduxs/store";
-import { clearCart } from "../Reduxs/cartSlice";
+import { type CartItem } from "../Reduxs/cartSlice";
+import { useCheckout } from "@/Hooks/useCheckout";
+
+export type orderBodyType = {
+  userId: number | undefined;
+  items: CartItem[];
+  totalPrice: number;
+};
 
 const Checkout = () => {
   const cart = useSelector((state: RootState) => {
@@ -12,9 +19,6 @@ const Checkout = () => {
     return state.auth.user;
   });
 
-  const dispatch = useDispatch();
-
-  const history = useNavigate();
   /**
    * @version 1.0.0
    * @description This function calculate total price of carts product.
@@ -24,11 +28,13 @@ const Checkout = () => {
     return total + Number(item.product.price) * item.quantity;
   }, 0);
 
-  const orderBody = {
+  const orderBody: orderBodyType = {
     userId: users?.id,
     items: cart,
     totalPrice: totalPrice,
   };
+
+  const { mutate } = useCheckout();
 
   /**
    *
@@ -38,31 +44,7 @@ const Checkout = () => {
    */
 
   const handleAddToOrder = () => {
-    const token = localStorage.getItem("token");
-    fetch("http://localhost:4000/orders", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(orderBody),
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          throw new Error(
-            "Some things went wrong. we have a problem in connecting to api.",
-          );
-        }
-        return await res.json();
-      })
-      .then((dataRes) => {
-        console.log(dataRes);
-        dispatch(clearCart(dataRes));
-        history("/orders");
-      })
-      .catch((err: Error) => {
-        console.log(err.message);
-      });
+    mutate(orderBody);
   };
   return (
     <>

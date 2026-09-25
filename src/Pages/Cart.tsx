@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import type { Product } from "../Types/Product";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../Reduxs/store";
-import { removeFromCart, setCart } from "../Reduxs/cartSlice";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { setCart } from "../Reduxs/cartSlice";
+import { useQuery } from "@tanstack/react-query";
+import { getCartApi } from "@/api/Cart";
+import { useDelCart } from "@/Hooks/useDelCart";
 
 type CartItem = {
   id: number;
@@ -31,23 +33,9 @@ const Cart = () => {
 
   const dispatch = useDispatch();
 
-  const token = localStorage.getItem("token");
   const { data, error, isLoading } = useQuery<CartResponse>({
     queryKey: ["Cartkey"],
-    queryFn: async () => {
-      const res = await fetch("http://localhost:4000/cart", {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(res.status);
-
-      if (!res.ok) {
-        throw new Error("Faild to fetch." + res.status);
-      }
-      return res.json();
-    },
+    queryFn: getCartApi,
   });
 
   console.log(data?.data.items);
@@ -69,37 +57,7 @@ const Cart = () => {
     return total + Number(item.product.price) * item.quantity;
   }, 0);
 
-  /**
-   * @version 1.0.0
-   * @param id
-   * @returns response
-   * @description This function is a logic of deleting data from backend. we use fetch, but we should use react-query(useMutation) for control this function.
-   * @description This function take an id of prodect and delete that product.
-   */
-  const deleteCartItem = async (id: number) => {
-    const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:4000/cart/items/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const response = await res.json();
-
-    if (!res.ok) {
-      throw new Error("Failed to delete item. " + res.status);
-    }
-
-    return response;
-  };
-
-  const { mutate } = useMutation({
-    mutationFn: deleteCartItem,
-
-    onSuccess: (id) => {
-      dispatch(removeFromCart(id));
-    },
-  });
+  const { mutate, isPending } = useDelCart();
 
   /**
    * @version 1.0.0
@@ -110,7 +68,7 @@ const Cart = () => {
     mutate(id);
   };
 
-  if (isLoading) {
+  if (isLoading || isPending) {
     return <p>Loading...</p>;
   }
 
