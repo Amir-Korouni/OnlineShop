@@ -1,3 +1,5 @@
+import axios from "axios";
+
 type apiType = {
   endPoint: string;
   option?: RequestInit;
@@ -14,3 +16,20 @@ export async function apiCall({ endPoint, option }: apiType) {
 
   return response.json();
 }
+
+export const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});

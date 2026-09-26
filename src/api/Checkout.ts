@@ -1,16 +1,7 @@
 import type { orderBodyType } from "@/Pages/Checkout";
-import { apiCall } from "./Client";
+import { apiClient } from "./Client";
 
-export function postCheckoutApi(item: orderBodyType, token: string) {
-  return apiCall({
-    endPoint: "/orders",
-    option: {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ item }),
-    },
-  });
+export async function postCheckout(item: orderBodyType) {
+  const response = await apiClient.post("/orders", { ...item });
+  return response.data;
 }

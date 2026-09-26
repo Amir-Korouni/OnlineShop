@@ -34,8 +34,7 @@ const Checkout = () => {
     totalPrice: totalPrice,
   };
 
-  const token = localStorage.getItem("token");
-  const { mutate } = useCheckout(orderBody, String(token));
+  const { mutate } = useCheckout(orderBody);
 
   /**
    *

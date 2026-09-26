@@ -1,4 +1,4 @@
-import { getSigninApi } from "@/api/Signin";
+import { postSignin } from "@/api/Signin";
 import { LoginSucess } from "@/Reduxs/authSlice";
 import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
@@ -9,7 +9,7 @@ export function useSignin() {
   const history = useNavigate();
 
   return useMutation({
-    mutationFn: getSigninApi,
+    mutationFn: postSignin,
 
     onSuccess: (response) => {
       localStorage.setItem("token", response.token);

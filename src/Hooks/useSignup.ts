@@ -1,4 +1,4 @@
-import { getSignupApi } from "@/api/Signup";
+import { postSignup } from "@/api/Signup";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -6,7 +6,7 @@ export function useSignup() {
   const history = useNavigate();
 
   return useMutation({
-    mutationFn: getSignupApi,
+    mutationFn: postSignup,
 
     onSuccess: (response) => {
       console.log(response);

@@ -32,8 +32,7 @@ const Cart = () => {
 
   const dispatch = useDispatch();
 
-  const token = localStorage.getItem("token");
-  const { data, error, isLoading } = useCartGet(String(token));
+  const { data, error, isLoading } = useCartGet();
 
   console.log(data?.data.items);
 
@@ -62,7 +61,7 @@ const Cart = () => {
    * @description This function take an id from product and delete that product. I use react-query for sending a Post request to database and add user to database.
    */
   const handleRemove = (id: number) => {
-    mutate(id);
+    mutate(String(id));
   };
 
   if (isLoading || isPending) {

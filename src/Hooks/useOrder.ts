@@ -30,9 +30,9 @@ type OrderResponse = {
   data: Order;
 };
 
-export function useOrderDetail(id: string, token: string) {
+export function useOrderDetail(id: string) {
   return useQuery<OrderResponse>({
     queryKey: ["OrderDetail", id],
-    queryFn: () => getOrderDetails(id, token),
+    queryFn: () => getOrderDetails(id),
   });
 }

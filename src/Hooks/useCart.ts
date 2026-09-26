@@ -1,10 +1,10 @@
-import { getCartApi } from "@/api/Cart";
+import { getCart } from "@/api/Cart";
 import type { CartResponse } from "@/Pages/Cart";
 import { useQuery } from "@tanstack/react-query";
 
-export function useCartGet(token: string) {
+export function useCartGet() {
   return useQuery<CartResponse>({
     queryKey: ["Cartkey"],
-    queryFn: () => getCartApi(token),
+    queryFn:  getCart,
   });
 }

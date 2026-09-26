@@ -1,28 +1,11 @@
-import { apiCall } from "./Client";
+import { apiClient } from "./Client";
 
-export function getOrder() {
-  const token = localStorage.getItem("token");
-
-  return apiCall({
-    endPoint: "/orders",
-    option: {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  });
+export async function getOrder() {
+  const response = await apiClient.get("/orders");
+  return response.data;
 }
 
-export function getOrderDetails(id: string, token: string) {
-  return apiCall({
-    endPoint: `/orders/${id}`,
-    option: {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  });
+export async function getOrderDetails(id: string) {
+  const response = await apiClient(`/orders/${id}`);
+  return response.data;
 }

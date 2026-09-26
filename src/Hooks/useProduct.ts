@@ -1,8 +1,4 @@
-import {
-  getProductApi,
-  getProductDetailApi,
-  postProductApi,
-} from "@/api/Product";
+import { getProduct, getProductDetail, postProduct } from "@/api/Product";
 import type { ProductResponse } from "@/Components/HomeSections/FeataredProduct";
 import { addToCart } from "@/Reduxs/cartSlice";
 import type { Product } from "@/Types/Product";
@@ -17,7 +13,7 @@ export type ProductResponseDetail = {
 export function useProductGet() {
   return useQuery<ProductResponse>({
     queryKey: ["productsPage"],
-    queryFn: getProductApi,
+    queryFn: getProduct,
   });
 }
 
@@ -25,7 +21,7 @@ export function useProduct() {
   const dispatch = useDispatch();
 
   return useMutation({
-    mutationFn: postProductApi,
+    mutationFn: postProduct,
 
     onSuccess: (response) => {
       dispatch(addToCart(response));
@@ -40,6 +36,6 @@ export function useProduct() {
 export function useProductDetail(id: string) {
   return useQuery<ProductResponseDetail>({
     queryKey: ["productDetail", id],
-    queryFn: () => getProductDetailApi(id),
+    queryFn: () => getProductDetail(id),
   });
 }

@@ -1,13 +1,7 @@
 import type { UserRegister } from "@/Types/User";
-import { apiCall } from "./Client";
+import { apiClient } from "./Client";
 
-export function getSignupApi(SignupBody: UserRegister) {
-  return apiCall({
-    endPoint: "/auth/register",
-    option: {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(SignupBody),
-    },
-  });
+export async function postSignup(SignupBody: UserRegister) {
+  const response = await apiClient.post("/auth/register", { ...SignupBody });
+  return response.data;
 }

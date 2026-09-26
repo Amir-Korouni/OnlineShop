@@ -1,11 +1,9 @@
 import { Link, useParams } from "react-router-dom";
 import { useOrderDetail } from "@/Hooks/useOrder";
 
-
 const OrderDetail = () => {
   const { id } = useParams();
-  const token = localStorage.getItem("token");
-  const { data, error, isLoading } = useOrderDetail(String(id), String(token));
+  const { data, error, isLoading } = useOrderDetail(String(id));
 
   if (isLoading) {
     return <p>Loading...</p>;
